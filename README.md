@@ -21,8 +21,9 @@ showCards()
     [x] Weight
     [x] Wins
     [x] Age
-[] Fighter Filtering
-    [] Weightclass
+[x] Fighter Filtering
+    [x] Weightclass (BUGGED)
+    [] Record
 [] Favorite fighters
 [] Add/Update/Delete roster management
 [] Alternative list display
@@ -50,3 +51,5 @@ showCards()
 
 - Implemeneted sorting by name
 - Added ascending and descending sorting for all cases and utilized a switch statement to handle the "select" element
+
+- utilized list to implement weightclass filtering.
