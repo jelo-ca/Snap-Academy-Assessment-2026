@@ -103,7 +103,8 @@ function editCardContent(card, fighter_object) {
     fighterLink.href = fighter_object.url;
     fighterLink.textContent = "View Fighter";
 
-    console.log("new card:", fighter_object.fighter_name, "- html: ", card);
+    // Debugging
+    // console.log("new card:", fighter_object.fighter_name, "- html: ", card);
 }
 
 // This calls the addCards() function when the page is first loaded
@@ -123,19 +124,36 @@ function removeLastCard() {
 }
 
 // =========== SORTING FUNCTIONS ===========
-function sortCardsByName() {
+function sortCardsByNameAsc() {
     sortedFighters = fighters_data.sort((a, b) =>
         a.fighter_name.localeCompare(b.fighter_name),
     );
     showCards(sortedFighters);
 }
 
-function sortCardsByWins() {
+function sortCardsByNameDesc() {
+    sortedFighters = fighters_data.sort((a, b) =>
+        b.fighter_name.localeCompare(a.fighter_name),
+    );
+    showCards(sortedFighters);
+}
+
+function sortCardsByWinsAsc() {
     sortedFighters = fighters_data.sort((a, b) => b.wins - a.wins);
     showCards(sortedFighters);
 }
 
-function sortCardsByAge() {
+function sortCardsByWinsDesc() {
+    sortedFighters = fighters_data.sort((a, b) => b.wins - a.wins);
+    showCards(sortedFighters);
+}
+
+function sortCardsByAgeAsc() {
+    sortedFighters = fighters_data.sort((a, b) => a.age - b.age);
+    showCards(sortedFighters);
+}
+
+function sortCardsByAgeDesc() {
     sortedFighters = fighters_data.sort((a, b) => a.age - b.age);
     showCards(sortedFighters);
 }
@@ -143,19 +161,22 @@ function sortCardsByAge() {
 function sortCards(sortBy) {
     switch (sortBy) {
         case "name-asc":
-            sortCardsByName();
+            sortCardsByNameAsc();
             break;
         case "name-desc":
-            sortCardsByName();
+            sortCardsByNameDesc();
+            break;
+        case "wins-asc":
+            sortCardsByWinsAsc();
             break;
         case "wins-desc":
-            sortCardsByWins();
+            sortCardsByWinsDesc();
             break;
         case "age-asc":
-            sortCardsByAge();
+            sortCardsByAgeAsc();
             break;
         case "age-desc":
-            sortCardsByAge();
+            sortCardsByAgeDesc();
             break;
     }
 }

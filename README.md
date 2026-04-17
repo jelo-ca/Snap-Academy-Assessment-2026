@@ -16,11 +16,13 @@ showCards()
 ### MVP
 
 [x] Card display for fighters
-[] Fighter Sorting
+[x] Fighter Sorting
     [x] Name
-    [] Weight
-    [] Wins
-    [] Age
+    [x] Weight
+    [x] Wins
+    [x] Age
+[] Fighter Filtering
+    [] Weightclass
 [] Favorite fighters
 [] Add/Update/Delete roster management
 [] Alternative list display
