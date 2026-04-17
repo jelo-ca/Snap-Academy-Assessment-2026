@@ -1,0 +1,19 @@
+---
+description: Restrict genAI to HTML/CSS only; no AI-generated JavaScript in this repo
+alwaysApply: true
+---
+
+# Snap Academy — generative AI scope (project policy)
+
+This project follows a strict rule: **only HTML and CSS may be created or changed with generative AI assistance.** All **JavaScript** (including `scripts.js` and any logic in `data/` files) must be **written and owned by the human author** — not generated or auto-edited by AI in the codebase.
+
+## For AI assistants
+
+- **Allowed:** Suggest or apply edits to `*.html` and `*.css` (and related assets if purely presentational).
+- **Not allowed:** Generate, rewrite, refactor, or paste code into `*.js` files (or inline `<script>` blocks) in this repository.
+- **If the user asks for JS help:** Explain concepts, patterns, or show **read-only** examples in chat only; do **not** write or modify project JavaScript files.
+- **Reading JS** for context (e.g. to align HTML/CSS with existing structure) is fine; **changing** JS is not.
+
+## Rationale
+
+Course / submission requirements: demonstrate your own understanding in JavaScript; genAI assistance is limited to markup and styling.
