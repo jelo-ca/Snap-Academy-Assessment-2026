@@ -119,6 +119,29 @@ span {
     letter-spacing: 0.02em;
 }
 
+.card-content .fighter-link,
+.card-content .fighter-link:link,
+.card-content .fighter-link:visited,
+.card-content .fighter-link:hover,
+.card-content .fighter-link:active,
+.card-content .fighter-link:focus {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    padding: 8px 12px;
+    border: 1px solid #ffd100;
+    border-radius: 999px;
+    background: transparent;
+    color: #ffd100;
+    text-decoration: none;
+    font-family: "Barlow Condensed", Impact, sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
 .footer {
     display: flex;
     justify-content: center;

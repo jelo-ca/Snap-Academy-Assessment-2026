@@ -43,3 +43,10 @@ showCards()
 - Updated editCardContent() to use objects as parameters and value assignment
 
 - Updated UI using https://www.onefc.com/ as style reference.
+
+- Added helper function setCardField() to exercise DRY 
+
+- Updated Card styling and added a sort/filter button to html/css using AI
+
+- Implemeneted sorting by name
+- Added ascending and descending sorting for all cases and utilized a switch statement to handle the "select" element

@@ -45,6 +45,9 @@
 // }
 let fighters_data = window.one_champion_fighters;
 
+let weight_class_filters = [];
+let record_filters = [];
+
 // =========== STARTING FUNCTIONS ===========
 
 // This function adds cards the page to display the data in the array
@@ -101,14 +104,14 @@ function editCardContent(card, fighter_object) {
 
     const fighterLink = card.querySelector(".fighter-link");
     fighterLink.href = fighter_object.url;
-    fighterLink.textContent = "View Fighter";
+    fighterLink.textContent = "Fighter Page";
 
     // Debugging
     // console.log("new card:", fighter_object.fighter_name, "- html: ", card);
 }
 
 // This calls the addCards() function when the page is first loaded
-document.addEventListener("DOMContentLoaded", () => showCards());
+document.addEventListener("DOMContentLoaded", () => sortCardsByNameAsc());
 
 function quoteAlert() {
     console.log("Button Clicked!");
@@ -158,6 +161,8 @@ function sortCardsByAgeDesc() {
     showCards(sortedFighters);
 }
 
+// Switch statement due to the number of possible sorting options within
+// the select element
 function sortCards(sortBy) {
     switch (sortBy) {
         case "name-asc":
@@ -182,6 +187,57 @@ function sortCards(sortBy) {
 }
 
 // =========== FILTERING FUNCTIONS ===========
+
+function updateFilters(element) {
+    if (element.checked) {
+        addFilter(element.name, element.value);
+    } else {
+        removeFilter(element.name, element.value);
+    }
+    applyFilters();
+}
+
+function addFilter(filter, value) {
+    if (filter === "weight-class") {
+        weight_class_filters.push(value);
+    } else if (filter === "record-filter") {
+        record_filters.push(value);
+    }
+
+    // console.log("addFilter", filter, value);
+    // console.log(weight_class_filters, record_filters);
+}
+
+function removeFilter(filter, value) {
+    if (filter === "weight-class") {
+        weight_class_filters = weight_class_filters.filter((f) => f !== value);
+    } else if (filter === "record-filter") {
+        record_filters = record_filters.filter((f) => f !== value);
+    }
+
+    // console.log("removeFilter", filter, value);
+    // console.log(weight_class_filters, record_filters);
+}
+
+function applyFilters() {
+    // Uses sortedFighters rather than fighters_data to avoid sorting the data again
+    let filteredFighters = sortedFighters;
+    if (weight_class_filters.length > 0) {
+        filteredFighters = filteredFighters.filter((fighter) =>
+            weight_class_filters.includes(fighter.weight_class.toLowerCase()),
+        );
+    }
+    if (record_filters.length > 0) {
+        filteredFighters = filteredFighters.filter(
+            (fighter) =>
+            // TODO:Add switch case to handle the different record filters
+            pass,
+        );
+    }
+    showCards(filteredFighters);
+
+    console.log("filteredFighters", filteredFighters);
+}
 
 // =========== HELPER FUNCTIONS ===========
 
