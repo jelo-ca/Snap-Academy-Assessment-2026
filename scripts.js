@@ -26,33 +26,27 @@
 // Get the object array from global variable
 // The data structure for each fighter is:
 // {
-//   "url": "/fighter/Kharun-Atlangeriev-167431",
-//   "fighter_name": "Kharun Atlangeriev",
-//   "nickname": "Predator",
-//   "birth_date": "05/10/1992",
-//   "age": 28,
-//   "death_date": "",
-//   "location": "",
-//   "country": "Russia",
-//   "height": "5'10",
-//   "weight": "155 lbs",
-//   "association": "OFS Team",
-//   "weight_class": "Lightweight",
-//   "wins": 11,
-//   "wins_ko": 5,
-//   "wins_submission": 5,
-//   "wins_decision": 1,
-//   "wins_other": "",
-//   "lossess": 11,
-//   "losses_ko": 0,
-//   "losses_submission": 1,
-//   "losses_decision": 1,
-//   "losses_other": ""
+//   url: "",
+//   photo_url: "",
+//   fighter_name: "",
+//   nickname: "",
+//   age: ,
+//   country: "",
+//   height: "",
+//   weight: "",
+//   association: "",
+//   weight_class: "",
+//   wins: ,
+//   wins_ko: ,
+//   wins_submission: ,
+//   losses: ,
+//   losses_ko: ,
+//   losses_submission: ,
 // }
-let pro_mma_fighters_data = window.pro_mma_fighters;
+let fighters_data = window.one_champion_fighters;
 
 for (let i = 0; i < 5; i++) {
-  let fighter = pro_mma_fighters_data[i];
+  let fighter = fighters_data[i];
   console.log(fighter.fighter_name);
 }
 
