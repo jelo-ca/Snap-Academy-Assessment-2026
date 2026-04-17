@@ -79,8 +79,14 @@ span {
 
 .card-content li {
     color: #ffffff;
-    margin-bottom: 6px;
-    line-height: 1.35;
+    margin-bottom: 0;
+    line-height: 1.25;
+    padding: 8px 0;
+    border-top: 1px solid #2d2d2d;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 10px;
 }
 
 .card img {
@@ -92,8 +98,25 @@ span {
 }
 
 .card-content ul {
-    margin: 12px 0 0 0;
-    padding-left: 20px;
+    margin: 8px 0 0 0;
+    padding-left: 0;
+    list-style: none;
+}
+
+.card-content .stat-label {
+    color: #9f9f9f;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.card-content .stat-value {
+    color: #ffffff;
+    font-family: "Barlow Condensed", Impact, sans-serif;
+    font-size: 1.08rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
 }
 
 .footer {

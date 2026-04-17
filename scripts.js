@@ -134,5 +134,10 @@ function sortCardsByName() {
 
 function setCardField(card, selector, value) {
     const el = card.querySelector(selector);
-    el.textContent = `${selector.substring(1).split("-")}: ${value}`;
+    const label = selector
+        .substring(1)
+        .split("-")
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ");
+    el.innerHTML = `<span class="stat-label">${label}</span><span class="stat-value">${value}</span>`;
 }
