@@ -45,19 +45,16 @@
 // }
 let fighters_data = window.one_champion_fighters;
 
-for (let i = 0; i < 5; i++) {
-    let fighter = fighters_data[i];
-    console.log(fighter.fighter_name);
-}
+// =========== STARTING FUNCTIONS ===========
 
 // This function adds cards the page to display the data in the array
-function showCards() {
+function showCards(data = fighters_data) {
     const cardContainer = document.getElementById("card-container");
     cardContainer.innerHTML = "";
     const templateCard = document.querySelector(".card");
 
-    for (let i = 0; i < fighters_data.length; i++) {
-        let fighter = fighters_data[i];
+    for (let i = 0; i < data.length; i++) {
+        let fighter = data[i];
 
         // This part of the code doesn't scale very well! After you add your
         // own data, you'll need to do something totally different here.
@@ -93,29 +90,14 @@ function editCardContent(card, fighter_object) {
         "\u00A0";
     nickname.innerHTML = `<span>${nicknameValue}</span>`;
 
-    const age = card.querySelector(".age");
-    age.textContent += ": " + fighter_object.age;
-
-    const country = card.querySelector(".country");
-    country.textContent += ": " + fighter_object.country;
-
-    const height = card.querySelector(".height");
-    height.textContent += ": " + fighter_object.height;
-
-    const weight = card.querySelector(".weight");
-    weight.textContent += ": " + fighter_object.weight;
-
-    const association = card.querySelector(".association");
-    association.textContent += ": " + fighter_object.association;
-
-    const weight_class = card.querySelector(".weight-class");
-    weight_class.textContent += ": " + fighter_object.weight_class;
-
-    const wins = card.querySelector(".wins");
-    wins.textContent += ": " + fighter_object.wins;
-
-    const losses = card.querySelector(".losses");
-    losses.textContent += ": " + fighter_object.losses;
+    setCardField(card, ".age", fighter_object.age);
+    setCardField(card, ".country", fighter_object.country);
+    setCardField(card, ".height", fighter_object.height);
+    setCardField(card, ".weight", fighter_object.weight);
+    setCardField(card, ".association", fighter_object.association);
+    setCardField(card, ".weight-class", fighter_object.weight_class);
+    setCardField(card, ".wins", fighter_object.wins);
+    setCardField(card, ".losses", fighter_object.losses);
 
     const fighterLink = card.querySelector(".fighter-link");
     fighterLink.href = fighter_object.url;
@@ -125,7 +107,7 @@ function editCardContent(card, fighter_object) {
 }
 
 // This calls the addCards() function when the page is first loaded
-document.addEventListener("DOMContentLoaded", showCards);
+document.addEventListener("DOMContentLoaded", () => showCards());
 
 function quoteAlert() {
     console.log("Button Clicked!");
@@ -134,7 +116,23 @@ function quoteAlert() {
     );
 }
 
+// For Roster Management
 function removeLastCard() {
     titles.pop(); // Remove last item in titles array
     showCards(); // Call showCards again to refresh
+}
+
+// =========== SORTING FUNCTIONS ===========
+function sortCardsByName() {
+    sortedFighters = fighters_data.sort((a, b) =>
+        a.fighter_name.localeCompare(b.fighter_name),
+    );
+    showCards(sortedFighters);
+}
+
+// =========== HELPER FUNCTIONS ===========
+
+function setCardField(card, selector, value) {
+    const el = card.querySelector(selector);
+    el.textContent = `${selector.substring(1).split("-")}: ${value}`;
 }

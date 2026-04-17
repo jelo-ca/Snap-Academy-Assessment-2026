@@ -4,13 +4,20 @@
 
 A UFC fighter catalog that uses data extracted from kaggle to display, compare, and explore the talented fighters of UFC
 
+## Initial Features (From Sample)
+
+removeLastCard()
+quoteAlert()
+editCardContent()
+showCards()
+
 ## Planned Features
 
 ### MVP
 
 [x] Card display for fighters
 [] Fighter Sorting
-    [] Name
+    [x] Name
     [] Weight
     [] Wins
     [] Age
