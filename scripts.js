@@ -23,21 +23,38 @@
  *
  */
 
-const FRESH_PRINCE_URL =
-  "https://upload.wikimedia.org/wikipedia/en/3/33/Fresh_Prince_S1_DVD.jpg";
-const CURB_POSTER_URL =
-  "https://m.media-amazon.com/images/M/MV5BZDY1ZGM4OGItMWMyNS00MDAyLWE2Y2MtZTFhMTU0MGI5ZDFlXkEyXkFqcGdeQXVyMDc5ODIzMw@@._V1_FMjpg_UX1000_.jpg";
-const EAST_LOS_HIGH_POSTER_URL =
-  "https://static.wikia.nocookie.net/hulu/images/6/64/East_Los_High.jpg";
+// Get the object array from global variable
+// The data structure for each fighter is:
+// {
+//   "url": "/fighter/Kharun-Atlangeriev-167431",
+//   "fighter_name": "Kharun Atlangeriev",
+//   "nickname": "Predator",
+//   "birth_date": "05/10/1992",
+//   "age": 28,
+//   "death_date": "",
+//   "location": "",
+//   "country": "Russia",
+//   "height": "5'10",
+//   "weight": "155 lbs",
+//   "association": "OFS Team",
+//   "weight_class": "Lightweight",
+//   "wins": 11,
+//   "wins_ko": 5,
+//   "wins_submission": 5,
+//   "wins_decision": 1,
+//   "wins_other": "",
+//   "lossess": 11,
+//   "losses_ko": 0,
+//   "losses_submission": 1,
+//   "losses_decision": 1,
+//   "losses_other": ""
+// }
+let pro_mma_fighters_data = window.pro_mma_fighters;
 
-// This is an array of strings (TV show titles)
-let titles = [
-  "Fresh Prince of Bel Air",
-  "Curb Your Enthusiasm",
-  "East Los High",
-];
-// Your final submission should have much more data than this, and
-// you should use more than just an array of strings to store it all.
+for (let i = 0; i < 5; i++) {
+  let fighter = pro_mma_fighters_data[i];
+  console.log(fighter.fighter_name);
+}
 
 // This function adds cards the page to display the data in the array
 function showCards() {
