@@ -46,63 +46,92 @@
 let fighters_data = window.one_champion_fighters;
 
 for (let i = 0; i < 5; i++) {
-  let fighter = fighters_data[i];
-  console.log(fighter.fighter_name);
+    let fighter = fighters_data[i];
+    console.log(fighter.fighter_name);
 }
 
 // This function adds cards the page to display the data in the array
 function showCards() {
-  const cardContainer = document.getElementById("card-container");
-  cardContainer.innerHTML = "";
-  const templateCard = document.querySelector(".card");
+    const cardContainer = document.getElementById("card-container");
+    cardContainer.innerHTML = "";
+    const templateCard = document.querySelector(".card");
 
-  for (let i = 0; i < titles.length; i++) {
-    let title = titles[i];
+    for (let i = 0; i < fighters_data.length; i++) {
+        let fighter = fighters_data[i];
 
-    // This part of the code doesn't scale very well! After you add your
-    // own data, you'll need to do something totally different here.
-    let imageURL = "";
-    if (i == 0) {
-      imageURL = FRESH_PRINCE_URL;
-    } else if (i == 1) {
-      imageURL = CURB_POSTER_URL;
-    } else if (i == 2) {
-      imageURL = EAST_LOS_HIGH_POSTER_URL;
+        // This part of the code doesn't scale very well! After you add your
+        // own data, you'll need to do something totally different here.
+        // let imageURL = "";
+        // if (i == 0) {
+        //   imageURL = FRESH_PRINCE_URL;
+        // } else if (i == 1) {
+        //   imageURL = CURB_POSTER_URL;
+        // } else if (i == 2) {
+        //   imageURL = EAST_LOS_HIGH_POSTER_URL;
+        // }
+
+        // Image URL is handled in the editCardContent function
+        const nextCard = templateCard.cloneNode(true); // Copy the template card
+        editCardContent(nextCard, fighter); // Edit title and image
+        cardContainer.appendChild(nextCard); // Add new card to the container
     }
-
-    const nextCard = templateCard.cloneNode(true); // Copy the template card
-    editCardContent(nextCard, title, imageURL); // Edit title and image
-    cardContainer.appendChild(nextCard); // Add new card to the container
-  }
 }
 
-function editCardContent(card, newTitle, newImageURL) {
-  card.style.display = "block";
+function editCardContent(card, fighter_object) {
+    card.style.display = "block";
 
-  const cardHeader = card.querySelector("h2");
-  cardHeader.textContent = newTitle;
+    const cardHeader = card.querySelector("h2");
+    cardHeader.textContent = fighter_object.fighter_name;
 
-  const cardImage = card.querySelector("img");
-  cardImage.src = newImageURL;
-  cardImage.alt = newTitle + " Poster";
+    const cardImage = card.querySelector("img");
+    cardImage.src = fighter_object.photo_url;
+    cardImage.alt = fighter_object.fighter_name + " Photo";
 
-  // You can use console.log to help you debug!
-  // View the output by right clicking on your website,
-  // select "Inspect", then click on the "Console" tab
-  console.log("new card:", newTitle, "- html: ", card);
+    const nickname = card.querySelector(".nickname");
+    nickname.textContent += ": " + fighter_object.nickname;
+
+    const age = card.querySelector(".age");
+    age.textContent += ": " + fighter_object.age;
+
+    const country = card.querySelector(".country");
+    country.textContent += ": " + fighter_object.country;
+
+    const height = card.querySelector(".height");
+    height.textContent += ": " + fighter_object.height;
+
+    const weight = card.querySelector(".weight");
+    weight.textContent += ": " + fighter_object.weight;
+
+    const association = card.querySelector(".association");
+    association.textContent += ": " + fighter_object.association;
+
+    const weight_class = card.querySelector(".weight-class");
+    weight_class.textContent += ": " + fighter_object.weight_class;
+
+    const wins = card.querySelector(".wins");
+    wins.textContent += ": " + fighter_object.wins;
+
+    const losses = card.querySelector(".losses");
+    losses.textContent += ": " + fighter_object.losses;
+
+    const fighterLink = card.querySelector(".fighter-link");
+    fighterLink.href = fighter_object.url;
+    fighterLink.textContent = "View Fighter";
+
+    console.log("new card:", fighter_object.fighter_name, "- html: ", card);
 }
 
 // This calls the addCards() function when the page is first loaded
 document.addEventListener("DOMContentLoaded", showCards);
 
 function quoteAlert() {
-  console.log("Button Clicked!");
-  alert(
-    "I guess I can kiss heaven goodbye, because it got to be a sin to look this good!",
-  );
+    console.log("Button Clicked!");
+    alert(
+        "I guess I can kiss heaven goodbye, because it got to be a sin to look this good!",
+    );
 }
 
 function removeLastCard() {
-  titles.pop(); // Remove last item in titles array
-  showCards(); // Call showCards again to refresh
+    titles.pop(); // Remove last item in titles array
+    showCards(); // Call showCards again to refresh
 }
