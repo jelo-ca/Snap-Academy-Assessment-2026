@@ -15,32 +15,85 @@
         <summary class="settings-btn">Sort &amp; Filter</summary>
         <form class="controls-panel" aria-label="Sort and filter fighters">
           <label for="sort-by">Sort by</label>
-          <select id="sort-by" name="sort-by">
+          <select id="sort-by" name="sort-by" onchange="sortCards(this.value)">
             <option value="name-asc">Name (A-Z)</option>
             <option value="name-desc">Name (Z-A)</option>
             <option value="age-asc">Age (Low-High)</option>
             <option value="age-desc">Age (High-Low)</option>
             <option value="wins-desc">Wins (Most-Least)</option>
+            <option value="wins-asc">Wins (Least-Most)</option>
           </select>
 
           <fieldset>
             <legend>Weight Class</legend>
-            <label><input type="checkbox" name="weight-class" value="atomweight" /> Atomweight</label>
-            <label><input type="checkbox" name="weight-class" value="strawweight" /> Strawweight</label>
-            <label><input type="checkbox" name="weight-class" value="flyweight" /> Flyweight</label>
-            <label><input type="checkbox" name="weight-class" value="bantamweight" /> Bantamweight</label>
-            <label><input type="checkbox" name="weight-class" value="featherweight" /> Featherweight</label>
-            <label><input type="checkbox" name="weight-class" value="lightweight" /> Lightweight</label>
-            <label><input type="checkbox" name="weight-class" value="welterweight" /> Welterweight</label>
-            <label><input type="checkbox" name="weight-class" value="middleweight" /> Middleweight</label>
-            <label><input type="checkbox" name="weight-class" value="heavyweight" /> Heavyweight</label>
+            <label
+              ><input type="checkbox" name="weight-class" value="atomweight" />
+              Atomweight</label
+            >
+            <label
+              ><input type="checkbox" name="weight-class" value="strawweight" />
+              Strawweight</label
+            >
+            <label
+              ><input type="checkbox" name="weight-class" value="flyweight" />
+              Flyweight</label
+            >
+            <label
+              ><input
+                type="checkbox"
+                name="weight-class"
+                value="bantamweight"
+              />
+              Bantamweight</label
+            >
+            <label
+              ><input
+                type="checkbox"
+                name="weight-class"
+                value="featherweight"
+              />
+              Featherweight</label
+            >
+            <label
+              ><input type="checkbox" name="weight-class" value="lightweight" />
+              Lightweight</label
+            >
+            <label
+              ><input
+                type="checkbox"
+                name="weight-class"
+                value="welterweight"
+              />
+              Welterweight</label
+            >
+            <label
+              ><input
+                type="checkbox"
+                name="weight-class"
+                value="middleweight"
+              />
+              Middleweight</label
+            >
+            <label
+              ><input type="checkbox" name="weight-class" value="heavyweight" />
+              Heavyweight</label
+            >
           </fieldset>
 
           <fieldset>
             <legend>Record</legend>
-            <label><input type="radio" name="record-filter" value="all" checked /> Show all</label>
-            <label><input type="radio" name="record-filter" value="winning" /> Winning record only</label>
-            <label><input type="radio" name="record-filter" value="undefeated" /> Undefeated only</label>
+            <label
+              ><input type="radio" name="record-filter" value="all" checked />
+              Show all</label
+            >
+            <label
+              ><input type="radio" name="record-filter" value="winning" />
+              Winning record only</label
+            >
+            <label
+              ><input type="radio" name="record-filter" value="undefeated" />
+              Undefeated only</label
+            >
           </fieldset>
         </form>
       </details>

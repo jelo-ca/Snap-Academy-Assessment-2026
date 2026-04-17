@@ -130,6 +130,38 @@ function sortCardsByName() {
     showCards(sortedFighters);
 }
 
+function sortCardsByWins() {
+    sortedFighters = fighters_data.sort((a, b) => b.wins - a.wins);
+    showCards(sortedFighters);
+}
+
+function sortCardsByAge() {
+    sortedFighters = fighters_data.sort((a, b) => a.age - b.age);
+    showCards(sortedFighters);
+}
+
+function sortCards(sortBy) {
+    switch (sortBy) {
+        case "name-asc":
+            sortCardsByName();
+            break;
+        case "name-desc":
+            sortCardsByName();
+            break;
+        case "wins-desc":
+            sortCardsByWins();
+            break;
+        case "age-asc":
+            sortCardsByAge();
+            break;
+        case "age-desc":
+            sortCardsByAge();
+            break;
+    }
+}
+
+// =========== FILTERING FUNCTIONS ===========
+
 // =========== HELPER FUNCTIONS ===========
 
 function setCardField(card, selector, value) {
