@@ -88,7 +88,10 @@ function editCardContent(card, fighter_object) {
     cardImage.alt = fighter_object.fighter_name + " Photo";
 
     const nickname = card.querySelector(".nickname");
-    nickname.textContent += ": " + fighter_object.nickname;
+    const nicknameValue = fighter_object.nickname ?
+        fighter_object.nickname :
+        "\u00A0";
+    nickname.innerHTML = `<span>${nicknameValue}</span>`;
 
     const age = card.querySelector(".age");
     age.textContent += ": " + fighter_object.age;
