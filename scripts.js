@@ -26,6 +26,7 @@
 // Get the object array from global variable
 // The data structure for each fighter is:
 // {
+//   uid: number,
 //   url: "",
 //   photo_url: "",
 //   fighter_name: "",
@@ -45,7 +46,7 @@
 // }
 const FIGHTERS_DATA = window.one_champion_fighters;
 
-// Copies so we have source of truth for the data
+// Same array reference as loaded data; each fighter has uid from data/one_champion_fighters.js
 let fighters_data = FIGHTERS_DATA;
 
 // Metric units are initially enabled
@@ -56,7 +57,7 @@ let isMetric = true;
 let sortedFighters = [];
 sortedFighters = sortCardsByNameAsc();
 
-// This calls the addCards() function when the page is first loaded (From Starter Code)
+// This calls the ~~addCards()~~ refreshDisplay() function when the page is first loaded (From Starter Code)
 document.addEventListener("DOMContentLoaded", () => {
     refreshDisplay();
 });
@@ -76,6 +77,7 @@ function showCards(data = fighters_data) {
 
     for (let i = 0; i < data.length; i++) {
         let fighter = data[i];
+        const uid = fighter.uid;
 
         // This part of the code doesn't scale very well! After you add your
         // own data, you'll need to do something totally different here.
@@ -90,15 +92,16 @@ function showCards(data = fighters_data) {
 
         // Image URL is handled in the editCardContent function
         const nextCard = templateCard.cloneNode(true); // Copy the template card
-        editCardContent(nextCard, fighter, i); // Edit title and image
+        nextCard.dataset.fighterUid = String(uid);
+        editCardContent(nextCard, fighter, uid); // uid indexes the dataset
         cardContainer.appendChild(nextCard); // Add new card to the container
     }
 }
 
-function editCardContent(card, fighter_object, index = 0) {
+function editCardContent(card, fighter_object, uid = 0) {
     card.style.display = "block";
 
-    const flipId = `card-flip-${index}`;
+    const flipId = `card-flip-${uid}`;
     const flipInput = card.querySelector(".card-flip-input");
     if (flipInput) {
         flipInput.id = flipId;

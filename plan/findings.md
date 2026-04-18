@@ -14,14 +14,15 @@
 - [x] Fighter sorting — Name, Wins, Age, **Weight (kg)** *(low-high / high-low in `<select>`)*
 - [x] Fighter filtering — Weight class
 - [x] Fighter filtering — Record *(all / winning / undefeated in `applyFilters`)*
-- [ ] Favorite fighters
-- [ ] Add / Update / Delete roster management
+- [ ] **Four-fighter tournament roster + stat-based bracket simulation** *(HTML/CSS scaffold; JS = author — see `plan/task_plan.md` Phase 4)*
+- ~~Favorite fighters *(optional separate from roster)*~~ *(README strike-through — deferred)*
+- [ ] Add / Update / Delete **full** roster management **beyond tournament picks**
 - [ ] Alternative list display
 
 **Planned Features — Stretch**
 
 - [ ] Carousel-style card selection
-- [ ] Compare 2 fighters with theoretical fight outcome
+- [ ] Compare **4** fighters — small elimination bracket *(probabilistic; README: same planned item as MVP tournament)*
 - [ ] Make pretty
 
 **Initial Features (from sample, per README):** `removeLastCard()`, `quoteAlert()`, `editCardContent()`, `showCards()`.
@@ -35,6 +36,11 @@
 - **`refreshDisplay`:** `showCards(applyFilters())`.
 - **`applyFilters`:** Starts from `sortedFighters`, narrows by `weight_class_filters` (lowercase match), then `record_filter` switch (`winning`, `undefeated`, `all`). **Returns** array passed to `showCards`.
 - **Units:** `isMetric` toggles; `editCardContent` uses `formatHeight` / `formatWeight` for display.
+- **Mini tournament (planned):** `index.html` exposes **Tournament roster** (`#roster-slots`, 4 slots), **Run bracket** (`#btn-run-tournament`), and a **semis + final** graph (`#bracket-graph`, `#bracket-sf1-a` … `#bracket-champion`). Styling in `style.css` under `.roster-section` / `.tournament-section`. **Logic** (roster state, probabilistic bouts, DOM updates) is **not** in scope for genAI in repo — implement in `scripts.js` per README Progress.
+
+## QA
+
+- **2026-04-18:** Local smoke test — all sort modes, weight-class multi-select, record filters, combined filters + units toggle; **passed** (no issues noted).
 
 ## Implemented features
 
@@ -61,7 +67,8 @@ Fields used in UI include: `fighter_name`, `nickname`, `photo_url`, `url`, `age`
 
 1. **`removeLastCard` / `titles`** — Starter still broken if invoked (references removed sample array).
 2. **Optional:** Lightweight checkbox for one dataset row.
-3. **MVP not yet built:** favorites, roster CRUD, alternate list view, stretch items.
+3. **Mini tournament (README MVP):** wire roster + bracket simulation in author JS (Phase 4 in `task_plan.md`).
+4. **MVP not yet built:** full CRUD beyond tournament picks, alternate list view, stretch items (carousel, “make pretty”).
 
 ## External / rubric
 

@@ -1,5 +1,21 @@
 # Progress log
 
+## 2026-04-18 (plan sync — README mini tournament)
+
+- **`plan/task_plan.md`:** Goal + README tables updated for **four-fighter roster + stat-based bracket** (MVP), deferred favorites per README strike-through, CRUD wording “beyond tournament picks,” Stretch “compare 4” = same feature; codebase snapshot + **Phase 4 — Mini tournament** with roster / run / simulation / README checkoff bullets; decisions row for tournament scope.
+- **`plan/findings.md`:** README MVP/Stretch lists + architecture note on `#roster-slots` / bracket hooks; open issues include tournament wiring.
+
+## 2026-04-18 (Phase 2 — manual smoke test)
+
+- **Manual QA** (sort all modes, weight multi-select, record radios, combined filters, units toggle): **passed** locally; no regressions logged.
+- **`plan/task_plan.md`:** Phase 2 manual QA checkbox marked complete.
+
+## 2026-04-18 (`/planning-with-files` — restore)
+
+- Re-read `plan/task_plan.md`, `plan/findings.md`, `plan/progress.md`.
+- `session-catchup.py` (cache path): exit **0**, no stdout.
+- `git status`: branch **main**, **ahead of `origin/main` by 3**, working tree **clean**.
+
 ## 2026-04-18 (planning-with-files — restore)
 
 - Re-read `plan/task_plan.md`, `plan/findings.md`, `plan/progress.md`.

@@ -1,4 +1,5 @@
 window.one_champion_fighters = [{
+        uid: 0,
         url: "https://www.onefc.com/athletes/demetrious-johnson/",
         photo_url: "https://cdn.onefc.com/wp-content/uploads/2019/01/Demetrious_Johnson-hero-1200x1165-2-600x583.jpg",
         fighter_name: "Demetrious  Johnson",
@@ -17,6 +18,7 @@ window.one_champion_fighters = [{
         losses_submission: 0,
     },
     {
+        uid: 1,
         url: "https://www.onefc.com/athletes/tatsumitsu-wada/",
         photo_url: "https://cdn.onefc.com/wp-content/uploads/2018/06/Tatsumitsu_Wada-Hero-1200x1165-2.jpg",
         fighter_name: "Tatsumitsu Wada",
@@ -35,6 +37,7 @@ window.one_champion_fighters = [{
         losses_submission: 0,
     },
     {
+        uid: 2,
         url: "https://www.onefc.com/athletes/rodtang/",
         photo_url: "https://cdn.onefc.com/wp-content/uploads/2018/08/Rodtang-hero-1200x1165-1.jpg",
         fighter_name: "Rodtang Jitmuangnon",
@@ -53,6 +56,7 @@ window.one_champion_fighters = [{
         losses_submission: 1,
     },
     {
+        uid: 3,
         url: "https://www.onefc.com/athletes/superlek/",
         photo_url: "https://cdn.onefc.com/wp-content/uploads/2025/03/Superlek-hero-champ-1200x1165-1.jpg",
         fighter_name: "Superlek",
@@ -71,6 +75,7 @@ window.one_champion_fighters = [{
         losses_submission: 0,
     },
     {
+        uid: 4,
         url: "https://www.onefc.com/athletes/roman-kryklia/",
         photo_url: "https://cdn.onefc.com/wp-content/uploads/2019/10/Roman_Kryklia-champ-hero-1200x1165-1.jpg",
         fighter_name: "Roman Kryklia",
@@ -89,6 +94,7 @@ window.one_champion_fighters = [{
         losses_submission: 0,
     },
     {
+        uid: 5,
         url: "https://www.onefc.com/athletes/smilla-sundell/",
         photo_url: "https://cdn.onefc.com/wp-content/uploads/2024/05/Smilla-Sundell-Hero-1200x1165-1.jpg",
         fighter_name: "Smilla Sundell",
@@ -107,6 +113,7 @@ window.one_champion_fighters = [{
         losses_submission: 0,
     },
     {
+        uid: 6,
         url: "https://www.onefc.com/athletes/angela-lee/",
         photo_url: "https://cdn.onefc.com/wp-content/uploads/2016/11/Angela_Lee-hero-1200x1165-champion.jpg",
         fighter_name: "Angela Lee",
@@ -125,6 +132,7 @@ window.one_champion_fighters = [{
         losses_submission: 0,
     },
     {
+        uid: 7,
         url: "https://www.onefc.com/athletes/abdulgadzhi-gaziev/",
         photo_url: "https://cdn.onefc.com/wp-content/uploads/2025/04/Abdulgadzhi_Gaziev-Hero-1200x1165-1.jpg",
         fighter_name: "Abdulgadzhi Gaziev",
@@ -143,6 +151,7 @@ window.one_champion_fighters = [{
         losses_submission: 0,
     },
     {
+        uid: 8,
         url: "https://www.onefc.com/athletes/norika-ryu/",
         photo_url: "https://cdn.onefc.com/wp-content/uploads/2024/10/Norika_Ryu-Hero-1200x1165-1.jpg",
         fighter_name: "Norika Ryu",
@@ -161,6 +170,7 @@ window.one_champion_fighters = [{
         losses_submission: 0,
     },
     {
+        uid: 9,
         url: "https://www.onefc.com/athletes/adilet-mamytov/",
         photo_url: "https://cdn.onefc.com/wp-content/uploads/2023/10/Adilet_Mamytov-Hero-1200x1165-1.jpg",
         fighter_name: "Adilet Mamytov",
@@ -179,6 +189,7 @@ window.one_champion_fighters = [{
         losses_submission: 0,
     },
     {
+        uid: 10,
         url: "https://www.onefc.com/athletes/adnan-larry/",
         photo_url: "https://cdn.onefc.com/wp-content/uploads/2024/02/Adnan-Larry-Hero-1200x1165-1.jpg",
         fighter_name: "Adnan Larry",
@@ -197,6 +208,7 @@ window.one_champion_fighters = [{
         losses_submission: 0,
     },
     {
+        uid: 11,
         url: "https://www.onefc.com/athletes/osamah-almarwai/",
         photo_url: "https://cdn.onefc.com/wp-content/uploads/2023/02/Osamah_Almarwai-hero-1200x1165-2.jpg",
         fighter_name: "Osamah Almarwai",
@@ -215,6 +227,7 @@ window.one_champion_fighters = [{
         losses_submission: 2,
     },
     {
+        uid: 12,
         url: "https://www.onefc.com/athletes/zhamoliddin-rakhmonzhonov/",
         photo_url: "https://cdn.onefc.com/wp-content/uploads/2024/08/Zhamoliddin_Rakhmonzhonov-Hero-1200x1165-1.jpg",
         fighter_name: "Zhamoliddin Rakhmonzhonov",
@@ -233,6 +246,7 @@ window.one_champion_fighters = [{
         losses_submission: 0,
     },
     {
+        uid: 13,
         url: "https://www.onefc.com/athletes/uzair-ismoiljonov/",
         photo_url: "https://cdn.onefc.com/wp-content/uploads/2024/10/Uzair_Ismoiljonov-Hero-1200x1165-1.jpg",
         fighter_name: "Uzair Ismoiljonov",
