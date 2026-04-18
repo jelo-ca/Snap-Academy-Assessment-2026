@@ -142,7 +142,7 @@ function sortCardsByNameDesc() {
 }
 
 function sortCardsByWinsAsc() {
-    sortedFighters = fighters_data.sort((a, b) => b.wins - a.wins);
+    sortedFighters = fighters_data.sort((a, b) => a.wins - b.wins);
     showCards(sortedFighters);
 }
 
@@ -157,7 +157,7 @@ function sortCardsByAgeAsc() {
 }
 
 function sortCardsByAgeDesc() {
-    sortedFighters = fighters_data.sort((a, b) => a.age - b.age);
+    sortedFighters = fighters_data.sort((a, b) => b.age - a.age);
     showCards(sortedFighters);
 }
 
