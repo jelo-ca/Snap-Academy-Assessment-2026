@@ -1,5 +1,22 @@
 # Progress log
 
+## 2026-04-17 (plan sync — `refreshDisplay` / `applyFilters`)
+
+- **`scripts.js`:** `FIGHTERS_DATA`; `refreshDisplay()` → `showCards(applyFilters())`; `applyFilters` returns filtered list + record `switch` filled; `updateFilters` sets `record_filter` for radios; removed broken `record_filters` usage in add/remove.
+- **`plan/task_plan.md`:** Phase 1 marked **complete** (optional Lightweight remains); README MVP table notes code vs README; snapshot + errors updated.
+- **`plan/findings.md`:** Architecture + README goals aligned with above; old “filter gap” / `record_filters` issues moved to **Resolved**; open = `removeLastCard`, README lag, optional Lightweight.
+
+## 2026-04-17 (README goals in planning docs)
+
+- Added **`README.md` goals** to **`plan/task_plan.md`** (under Goal: MVP/Stretch tables + sample-feature line) and **`plan/findings.md`** (dedicated section + notes on UFC vs One branding and sort UI vs README “Weight” line).
+- No changes to `README.md` itself in this step.
+
+## 2026-04-17 (plan update — `scripts.js` refactor)
+
+- Re-synced **`plan/task_plan.md`**, **`plan/findings.md`**, **`plan/progress.md`** to latest `scripts.js`.
+- **Code changes reflected:** Sort helpers now **`return`** `fighters_data.sort(...)` — initial `sortedFighters = sortCardsByNameAsc()` is valid; `applyFilters` uses `switch (record_filter)` with **empty** winning/undefeated arms; **`showCards` calls `applyFilters()`** but still iterates over **`data`** so filtered results are not applied to the card loop; **`pass` removed**; **`record_filters` still undeclared** in add/remove.
+- **Plan focus:** Wire `filteredFighters` into display; finish record predicates; fix `record_filters` / `record_filter` consistency; optional Lightweight checkbox.
+
 ## 2026-04-17 (plan documents sync)
 
 - Synced **`plan/task_plan.md`**, **`plan/findings.md`**, and **`plan/progress.md`** to current `scripts.js` / `index.html` / data.

@@ -4,39 +4,60 @@
 
 - **Cursor:** `.cursor/rules/snap-academy-genai-limits.mdc` — AI may edit **HTML/CSS only**; JS in repo is author-written per submission rules.
 
+## README goals (`README.md`)
+
+**Branding:** README title/summary still say **UFC** / Kaggle; implementation uses **One Championship** data and styling.
+
+**Planned Features — MVP**
+
+- [x] Card display for fighters
+- [x] Fighter sorting — Name, **Weight** (README line only), Wins, Age — *`<select>` has name, age, wins (no separate weight-stat sort)*
+- [x] Fighter filtering — Weight class *(README still says **BUGGED**; code uses `applyFilters` + `refreshDisplay`)*
+- [x] Fighter filtering — Record *(winning / undefeated / all — in `applyFilters`; README checkbox may still be `[ ]` until you edit README)*
+- [ ] Favorite fighters
+- [ ] Add / Update / Delete roster management
+- [ ] Alternative list display
+
+**Planned Features — Stretch**
+
+- [ ] Carousel-style card selection
+- [ ] Compare 2 fighters with theoretical fight outcome
+- [ ] Make pretty
+
+**Initial Features (from sample, per README):** `removeLastCard()`, `quoteAlert()`, `editCardContent()`, `showCards()`.
+
 ## Architecture
 
 - **Stack:** Plain HTML/CSS/JS, no bundler. Open `index.html` in a browser.
-- **Data loading:** `data/one_champion_fighters.js` defines a global array; `scripts.js` reads `window.one_champion_fighters` into `fighters_data`.
-- **Rendering:** A hidden `.card` template is cloned per fighter; `setCardField()` injects label/value pairs for stats.
-- **Sort:** Individual `sortCardsBy*` helpers mutate `sortedFighters`; `sortCards(sortBy)` runs the switch and then **`showCards(sortedFighters)`** once (sort helpers do not call `showCards`).
-- **Initial load:** `sortCardsByNameAsc()` runs at parse time (after hoisted function declarations); `DOMContentLoaded` runs `showCards(sortedFighters)`.
+- **Data:** `const FIGHTERS_DATA = window.one_champion_fighters`; `let fighters_data = FIGHTERS_DATA` (same reference; comment in code says “copies” but no structural clone — fine if you never reassign `fighters_data` to a new array).
+- **Sort:** `sortCardsBy*` return `fighters_data.sort(...)` (mutates in place). `sortedFighters` holds initial return value — same array reference as `fighters_data`, so order stays consistent for `applyFilters` base list.
+- **Refresh path:** `sortCards` → `refreshDisplay()`; `updateFilters` → `refreshDisplay()`. `DOMContentLoaded` → `refreshDisplay()`.
+- **`refreshDisplay`:** `showCards(applyFilters())`.
+- **`applyFilters`:** Starts from `sortedFighters`, narrows by `weight_class_filters` (lowercase match), then `record_filter` switch (`winning`, `undefeated`, `all`). **Returns** array passed to `showCards`.
 
 ## Implemented features
 
-- **Sort:** `<select>` → `sortCards()` → per-metric functions → `showCards(sortedFighters)`.
-- **Filter UI:** Checkboxes (`weight-class`) and radios (`record-filter`) → `updateFilters` → `addFilter` / `removeFilter` → `applyFilters()`.
+- **Sort:** `<select>` → `sortCards` → in-place sort → `refreshDisplay`.
+- **Filter:** Weight checkboxes + record radios → `updateFilters` → `refreshDisplay` → `applyFilters` inside `showCards` argument chain.
 
 ## Data shape (per fighter)
 
-Fields used in UI include: `fighter_name`, `nickname`, `photo_url`, `url`, `age`, `country`, `height`, `weight`, `association`, `weight_class`, `wins`, `losses`. There is **no** `record` property — record filtering must be **derived** from wins/losses.
+Fields used in UI include: `fighter_name`, `nickname`, `photo_url`, `url`, `age`, `country`, `height`, `weight`, `association`, `weight_class`, `wins`, `losses`. No `record` field — derived from wins/losses.
 
-**Weight classes present in data (sample):** Flyweight, Heavyweight, Strawweight, Atomweight, Unknown, Lightweight. Checkboxes in `index.html` cover all except **Lightweight**.
+**Weight classes in data:** includes **Lightweight**; `index.html` checkboxes omit Lightweight (optional add).
 
-## Resolved (was issues in earlier review)
+## Resolved (earlier review)
 
-1. **`sortedFighters` declaration** — Now `let sortedFighters = []` at top level (no longer an undeclared global from sort functions alone).
-2. **Age descending** — Uses `b.age - a.age`; ascending uses `a.age - b.age`.
-3. **Wins ascending** — Uses `a.wins - b.wins`; descending uses `b.wins - a.wins`.
+1. **Filter output not driving UI** — Fixed: `refreshDisplay` / `applyFilters` return path.
+2. **`record_filters` vs `record_filter`** — Fixed: radios update `record_filter`; no undeclared `record_filters` in current `addFilter` / `removeFilter`.
+3. **Empty record `switch` arms** — Fixed: `winning` / `undefeated` predicates implemented.
+4. **Sort comparators / `sortedFighters` init** — Addressed earlier; still valid.
 
 ## Open issues
 
-1. **Initial `sortedFighters` assignment** — Line `sortedFighters = sortCardsByNameAsc();` assigns the return value of `sortCardsByNameAsc` (implicit `undefined`) after the helper already set `sortedFighters` to the sorted array, so `sortedFighters` becomes **`undefined`** until the user changes the sort dropdown (which calls `sortCards` and fixes state). Fix: bare `sortCardsByNameAsc();` or `return sortedFighters` from the helper and assign that.
-2. **`record_filters` vs `record_filter`** — Code pushes to `record_filters` in `addFilter` / `removeFilter` and reads `record_filters.length` in `applyFilters`, but only `let record_filter = "all"` is declared. Using record radios will throw **ReferenceError** until arrays are aligned.
-3. **`applyFilters` record branch** — Still contains `pass` (not valid JS here) in the filter predicate; throws when `record_filters.length > 0` once (2) is fixed unless placeholder is replaced. Need predicates for `winning` / `undefeated` and **no filter** when value is `all`.
-4. **Weight class coverage** — Logic matches lowercase HTML values to `weight_class.toLowerCase()`; add a **Lightweight** checkbox if that fighter should be filterable by class.
-5. **Starter remnants** — `removeLastCard()` still references undefined `titles`.
-6. **README vs project** — README may still say “UFC Fighter Catalog”; app/data are One Championship–themed.
+1. **`removeLastCard` / `titles`** — Still broken if invoked.
+2. **README** — UFC wording; MVP checkboxes (especially Record, weight “BUGGED”) may lag code.
+3. **Optional:** Lightweight checkbox for one dataset row.
 
 ## External / rubric
 

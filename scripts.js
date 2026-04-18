@@ -43,7 +43,10 @@
 //   losses_ko: ,
 //   losses_submission: ,
 // }
-let fighters_data = window.one_champion_fighters;
+const FIGHTERS_DATA = window.one_champion_fighters;
+
+// Copies so we have source of truth for the data
+let fighters_data = FIGHTERS_DATA;
 
 // Initially sortedFighters variable
 // populates with sorted fighters by name in ascending order
@@ -51,7 +54,7 @@ let sortedFighters = [];
 sortedFighters = sortCardsByNameAsc();
 
 // This calls the addCards() function when the page is first loaded (From Starter Code)
-document.addEventListener("DOMContentLoaded", () => showCards(sortedFighters));
+document.addEventListener("DOMContentLoaded", () => refreshDisplay());
 
 // Multiple weight class filters can be applied at once
 let weight_class_filters = [];
@@ -65,9 +68,6 @@ function showCards(data = fighters_data) {
     const cardContainer = document.getElementById("card-container");
     cardContainer.innerHTML = "";
     const templateCard = document.querySelector(".card");
-
-    // Apply filters to the data
-    applyFilters();
 
     for (let i = 0; i < data.length; i++) {
         let fighter = data[i];
@@ -188,27 +188,26 @@ function sortCards(sortBy) {
             sortCardsByAgeDesc();
             break;
     }
-    showCards(sortedFighters);
+    refreshDisplay();
 }
 
 // =========== FILTERING FUNCTIONS ===========
 
 function updateFilters(element) {
-    if (element.checked) {
+    if (element.name === "record-filter") {
+        if (element.checked) record_filter = element.value;
+    } else if (element.checked) {
         addFilter(element.name, element.value);
     } else {
         removeFilter(element.name, element.value);
     }
-    applyFilters();
+    refreshDisplay();
 }
 
 function addFilter(filter, value) {
     if (filter === "weight-class") {
         weight_class_filters.push(value);
-    } else if (filter === "record-filter") {
-        record_filters.push(value);
     }
-
     // console.log("addFilter", filter, value);
     // console.log(weight_class_filters, record_filters);
 }
@@ -216,19 +215,16 @@ function addFilter(filter, value) {
 function removeFilter(filter, value) {
     if (filter === "weight-class") {
         weight_class_filters = weight_class_filters.filter((f) => f !== value);
-    } else if (filter === "record-filter") {
-        record_filters = record_filters.filter((f) => f !== value);
+        // console.log("removeFilter", filter, value);
+        // console.log(weight_class_filters, record_filter);
     }
-
-    // console.log("removeFilter", filter, value);
-    // console.log(weight_class_filters, record_filters);
 }
 
 function applyFilters() {
     // Uses sortedFighters rather than fighters_data to avoid sorting the data again
-    let filteredFighters = sortedFighters;
+    let list = sortedFighters;
     if (weight_class_filters.length > 0) {
-        filteredFighters = filteredFighters.filter((fighter) =>
+        list = list.filter((fighter) =>
             weight_class_filters.includes(fighter.weight_class.toLowerCase()),
         );
     }
@@ -236,11 +232,17 @@ function applyFilters() {
         case "all":
             break;
         case "winning":
+            list = list.filter((f) => f.wins > f.losses);
             break;
         case "undefeated":
+            list = list.filter((f) => f.losses === 0);
             break;
     }
-    console.log("filteredFighters", filteredFighters);
+    return list;
+}
+
+function refreshDisplay() {
+    showCards(applyFilters());
 }
 
 // =========== HELPER FUNCTIONS ===========
