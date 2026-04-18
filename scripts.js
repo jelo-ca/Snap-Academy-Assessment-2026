@@ -45,8 +45,18 @@
 // }
 let fighters_data = window.one_champion_fighters;
 
+// Initially sortedFighters variable
+// populates with sorted fighters by name in ascending order
+let sortedFighters = [];
+sortedFighters = sortCardsByNameAsc();
+
+// This calls the addCards() function when the page is first loaded (From Starter Code)
+document.addEventListener("DOMContentLoaded", () => showCards(sortedFighters));
+
+// Multiple weight class filters can be applied at once
 let weight_class_filters = [];
-let record_filters = [];
+// Record filter is a single value that can be "all", "winning", or "undefeated"
+let record_filter = "all";
 
 // =========== STARTING FUNCTIONS ===========
 
@@ -110,9 +120,6 @@ function editCardContent(card, fighter_object) {
     // console.log("new card:", fighter_object.fighter_name, "- html: ", card);
 }
 
-// This calls the addCards() function when the page is first loaded
-document.addEventListener("DOMContentLoaded", () => sortCardsByNameAsc());
-
 function quoteAlert() {
     console.log("Button Clicked!");
     alert(
@@ -131,34 +138,28 @@ function sortCardsByNameAsc() {
     sortedFighters = fighters_data.sort((a, b) =>
         a.fighter_name.localeCompare(b.fighter_name),
     );
-    showCards(sortedFighters);
 }
 
 function sortCardsByNameDesc() {
     sortedFighters = fighters_data.sort((a, b) =>
         b.fighter_name.localeCompare(a.fighter_name),
     );
-    showCards(sortedFighters);
 }
 
 function sortCardsByWinsAsc() {
     sortedFighters = fighters_data.sort((a, b) => a.wins - b.wins);
-    showCards(sortedFighters);
 }
 
 function sortCardsByWinsDesc() {
     sortedFighters = fighters_data.sort((a, b) => b.wins - a.wins);
-    showCards(sortedFighters);
 }
 
 function sortCardsByAgeAsc() {
     sortedFighters = fighters_data.sort((a, b) => a.age - b.age);
-    showCards(sortedFighters);
 }
 
 function sortCardsByAgeDesc() {
     sortedFighters = fighters_data.sort((a, b) => b.age - a.age);
-    showCards(sortedFighters);
 }
 
 // Switch statement due to the number of possible sorting options within
@@ -184,6 +185,7 @@ function sortCards(sortBy) {
             sortCardsByAgeDesc();
             break;
     }
+    showCards(sortedFighters);
 }
 
 // =========== FILTERING FUNCTIONS ===========

@@ -1,5 +1,21 @@
 # Progress log
 
+## 2026-04-17 (Phase 1 review + `scripts.js` snapshot)
+
+- **Review-only pass** (no AI-authored JS): walked Phase 1 against `scripts.js` / `index.html` / sample data.
+- **Sort comparators:** age asc/desc and wins asc/desc are **correct** in current code (`a - b` vs `b - a` where appropriate).
+- **`sortedFighters`:** now declared with `let`; initial load calls `sortCardsByNameAsc()` before `DOMContentLoaded`. **Watch:** `sortedFighters = sortCardsByNameAsc()` assigns the function’s **return value** (implicit `undefined`) after the helper already mutates `sortedFighters` — consider calling `sortCardsByNameAsc();` without assignment, or returning the sorted array from the helper.
+- **Rendering path:** `showCards` is invoked from `sortCards()` after the switch; sort helpers no longer call `showCards` directly.
+- **Record filtering:** `applyFilters` still has the `pass` placeholder in the record branch; **`record_filters` is referenced** in `addFilter` / `removeFilter` / `applyFilters` but only **`record_filter`** is declared — restore a `record_filters` array (or wire everything to `record_filter`) before exercising record radios.
+- **Weight class:** lowercase checkbox values + `toLowerCase()` on fighter data align; dataset includes **Lightweight** with no matching checkbox in `index.html` yet.
+- **Still open:** `removeLastCard` / `titles` starter code; record predicate implementation; optional `task_plan.md` / `findings.md` checkbox sync for completed sort items.
+
+## 2026-04-17 (planning-with-files — restore)
+
+- Re-read `plan/task_plan.md`, `plan/findings.md`, `plan/progress.md`.
+- `session-catchup.py`: default path `~\.claude\skills\planning-with-files\scripts\` not present on this machine; ran successfully from `.claude/plugins/cache/planning-with-files/planning-with-files/2.23.0/skills/planning-with-files/scripts/session-catchup.py` (exit 0, no stdout).
+- `git status`: branch **main**, **ahead of `origin/main` by 3**, working tree **clean**.
+
 ## 2026-04-17 (planning-with-files sync)
 
 - Re-read `plan/task_plan.md`, `plan/findings.md`, `plan/progress.md`.
