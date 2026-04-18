@@ -1,5 +1,11 @@
 # Progress log
 
+## 2026-04-18 (planning-with-files — restore)
+
+- Re-read `plan/task_plan.md`, `plan/findings.md`, `plan/progress.md`.
+- `session-catchup.py`: default path `~\.claude\skills\planning-with-files\scripts\` not found; ran successfully from `~\.claude\plugins\cache\planning-with-files\planning-with-files\2.23.0\skills\planning-with-files\scripts\session-catchup.py` (exit 0, no stdout).
+- `git status`: branch **main**, **ahead of `origin/main` by 1**, working tree **clean** at check time.
+
 ## 2026-04-17 (README + plans sync — weight sort in UI)
 
 - **`index.html`:** `<select>` includes **Weight (Low-High)** (`weight-asc`) and **Weight (High-Low)** (`weight-desc`).

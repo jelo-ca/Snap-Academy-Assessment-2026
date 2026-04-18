@@ -32,6 +32,341 @@ span {
     color: white;
 }
 
+/* ── tournament roster (4 slots) ── */
+.roster-section {
+    background-color: rgba(0, 0, 0, 0.35);
+    border-bottom: 1px solid #2a2a2a;
+    padding: 14px 20px 18px;
+}
+
+.roster-section-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px 16px;
+    margin-bottom: 12px;
+}
+
+.roster-heading {
+    margin: 0;
+    font-size: 1.15rem;
+    font-family: "Barlow Condensed", Impact, sans-serif;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #ffffff;
+}
+
+.roster-caption {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #b8b8b8;
+}
+
+.roster-caption .roster-count-current,
+.roster-caption .roster-count-max {
+    font-family: "Barlow Condensed", Impact, sans-serif;
+    font-weight: 700;
+    color: #ffd100;
+}
+
+.roster-caption .roster-count-sep {
+    color: #666;
+    margin: 0 2px;
+}
+
+.roster-caption .roster-count-label {
+    margin-left: 6px;
+    color: #b8b8b8;
+    text-transform: lowercase;
+}
+
+.roster-slots {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+@media (max-width: 640px) {
+    .roster-slots {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+.roster-slot {
+    min-height: 72px;
+    border: 1px dashed #3d3d3d;
+    border-radius: 8px;
+    background: rgba(26, 26, 26, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+.roster-slot--empty {
+    color: #6a6a6a;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.roster-slot--empty .roster-slot-placeholder {
+    color: #6a6a6a;
+}
+
+.roster-slot--filled {
+    border-style: solid;
+    border-color: #ffd100;
+    flex-direction: column;
+    gap: 6px;
+    justify-content: center;
+    align-items: stretch;
+}
+
+.roster-slot-photo {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    align-self: center;
+    border: 2px solid #2d2d2d;
+}
+
+.roster-slot-name {
+    font-family: "Barlow Condensed", Impact, sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    line-height: 1.15;
+    color: #ffffff;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.roster-slot-remove {
+    margin-top: 2px;
+    padding: 4px 10px;
+    font-size: 0.65rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border-radius: 999px;
+    border: 1px solid #5a5a5a;
+    background: transparent;
+    color: #c8c8c8;
+    cursor: pointer;
+    font-family: "Barlow Condensed", Impact, sans-serif;
+    font-weight: 700;
+    align-self: center;
+}
+
+.roster-slot-remove:hover {
+    border-color: #ffd100;
+    color: #ffd100;
+}
+
+/* ── mini tournament bracket graph ── */
+.tournament-section {
+    background-color: rgba(0, 0, 0, 0.28);
+    border-bottom: 1px solid #2a2a2a;
+    padding: 16px 20px 22px;
+}
+
+.tournament-section-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px 20px;
+    margin-bottom: 18px;
+}
+
+.tournament-heading {
+    margin: 0 0 6px;
+    font-size: 1.15rem;
+    font-family: "Barlow Condensed", Impact, sans-serif;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #ffffff;
+}
+
+.tournament-hint {
+    margin: 0;
+    max-width: 52ch;
+    font-size: 0.82rem;
+    line-height: 1.45;
+    color: #a8a8a8;
+}
+
+.btn-run-tournament {
+    flex-shrink: 0;
+    padding: 10px 22px;
+    border: 1px solid #ffd100;
+    border-radius: 999px;
+    background: rgba(255, 209, 0, 0.12);
+    color: #ffd100;
+    font-family: "Barlow Condensed", Impact, sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s, opacity 0.2s;
+}
+
+.btn-run-tournament:hover:not(:disabled) {
+    background: rgba(255, 209, 0, 0.22);
+}
+
+.btn-run-tournament:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.bracket-graph {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    max-width: 920px;
+    margin: 0 auto;
+}
+
+.bracket-tier--semis {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px 24px;
+}
+
+@media (max-width: 700px) {
+    .bracket-tier--semis {
+        grid-template-columns: 1fr;
+    }
+}
+
+.bracket-match {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    padding: 12px 14px;
+    border: 1px solid #333;
+    border-radius: 10px;
+    background: rgba(22, 22, 22, 0.9);
+}
+
+.bracket-match--final {
+    max-width: 420px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.bracket-round-label {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #888;
+}
+
+.bracket-nodes {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.bracket-nodes--final {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.bracket-node {
+    min-height: 38px;
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: 1px solid #3a3a3a;
+    background: #141414;
+    font-family: "Barlow Condensed", Impact, sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #e8e8e8;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bracket-node--seed {
+    border-style: dashed;
+}
+
+.bracket-node--winner,
+.bracket-node--finalist {
+    border-color: #5a5a5a;
+}
+
+.bracket-node--champion {
+    border-color: #ffd100;
+    background: rgba(255, 209, 0, 0.08);
+    color: #ffd100;
+    font-size: 1rem;
+    min-height: 44px;
+}
+
+.bracket-edge--down {
+    align-self: center;
+    width: 2px;
+    height: 14px;
+    background: linear-gradient(to bottom, #555, #333);
+    border-radius: 1px;
+}
+
+.bracket-meta {
+    margin: 0;
+    min-height: 1.2em;
+    font-size: 0.72rem;
+    color: #9a9a9a;
+    text-align: center;
+    line-height: 1.35;
+}
+
+.bracket-connector {
+    display: flex;
+    justify-content: center;
+    padding: 6px 0 10px;
+}
+
+.bracket-connector-line {
+    display: block;
+    width: min(60%, 280px);
+    height: 2px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        #444 15%,
+        #444 85%,
+        transparent
+    );
+}
+
+.bracket-tier--final {
+    display: flex;
+    justify-content: center;
+    padding-top: 4px;
+}
+
 /* ── fighter carousel: edge fades + custom scrollbar ── */
 .carousel-shell {
     position: relative;
@@ -130,6 +465,7 @@ span {
 }
 
 .card {
+    position: relative;
     width: 300px;
     flex: 0 0 300px;
     height: 380px;
@@ -146,8 +482,22 @@ span {
 }
 
 /* ── flip mechanism ── */
+/* display:none can break <label for> activation in some browsers; keep input in the tree */
 .card-flip-input {
-    display: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+    appearance: none;
+    pointer-events: none;
 }
 
 .card-inner {
@@ -160,6 +510,22 @@ span {
 
 .card:has(.card-flip-input:checked) .card-inner {
     transform: rotateY(180deg);
+}
+
+/* Front stays in the stacking order after rotateY; it can still capture clicks even when
+   backface-hidden. Disable hit-testing on the front while flipped so the back face link
+   and “Back” control receive clicks. Flip still uses the overlay when not checked.
+   Descendants (overlay, Recruit) must be included: children can re-enable hits with
+   pointer-events: auto, which would block the back face entirely. !important beats
+   .card-front-actions { pointer-events: auto }. */
+.card:has(.card-flip-input:checked) .card-front,
+.card:has(.card-flip-input:checked) .card-front * {
+    pointer-events: none !important;
+}
+
+.card:has(.card-flip-input:checked) .card-back {
+    z-index: 4;
+    pointer-events: auto;
 }
 
 .card-front,
@@ -182,6 +548,45 @@ span {
     inset: 0;
     z-index: 2;
     cursor: pointer;
+}
+
+.card-front-actions {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 3;
+    pointer-events: auto;
+}
+
+.btn-recruit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 14px;
+    border: 1px solid #ffd100;
+    border-radius: 999px;
+    background: rgba(15, 15, 15, 0.75);
+    color: #ffd100;
+    font-family: "Barlow Condensed", Impact, sans-serif;
+    font-weight: 700;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-recruit:hover:not(:disabled) {
+    background: #ffd100;
+    color: #111111;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(255, 209, 0, 0.4);
+}
+
+.btn-recruit:disabled,
+.btn-recruit.is-inactive {
+    opacity: 0.45;
+    cursor: not-allowed;
 }
 
 .card-front img {
@@ -231,16 +636,27 @@ span {
 
 /* ── back face ── */
 .card-back {
-    transform: rotateY(180deg);
+    /* Slight Z lift helps 3D hit-testing on some engines so the back wins over the front. */
+    transform: rotateY(180deg) translateZ(4px);
     background-color: #1a1a1a;
+    display: flex;
+    flex-direction: column;
 }
 
 .card-back .card-content {
     padding: 14px 16px 12px;
     height: 100%;
+    min-height: 0;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
+    flex: 1 1 auto;
+}
+
+.card-back .card-content ul {
+    flex: 1 1 auto;
+    min-height: 0;
     overflow: hidden;
 }
 
@@ -291,17 +707,28 @@ span {
 
 .card-back-footer {
     margin-top: auto;
+    flex-shrink: 0;
     padding-top: 8px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    gap: 8px;
+    justify-content: space-between;
+}
+
+.back-hint {
+    font-family: "Barlow Condensed", Impact, sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #ffd100;
+    opacity: 0.6;
+    user-select: none;
 }
 
 .card-content .fighter-link,
 .card-content .fighter-link:link,
 .card-content .fighter-link:visited,
-.card-content .fighter-link:hover,
 .card-content .fighter-link:active,
 .card-content .fighter-link:focus {
     display: inline-flex;
@@ -319,22 +746,23 @@ span {
     font-size: 0.9rem;
     letter-spacing: 0.04em;
     text-transform: uppercase;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-content .fighter-link:hover {
+    background: #ffd100;
+    color: #111111;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(255, 209, 0, 0.4);
 }
 
 .flip-back-btn {
-    font-family: "Barlow Condensed", Impact, sans-serif;
-    font-size: 0.68rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: #ffd100;
-    opacity: 0.8;
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
+    width: 100%;
     cursor: pointer;
-    transition: opacity 0.2s;
-}
-
-.flip-back-btn:hover {
-    opacity: 1;
 }
 
 .footer {

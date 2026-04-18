@@ -131,14 +131,196 @@
         </form>
       </details>
     </header>
+
     <div class="carousel-shell">
       <div id="card-container" class="horizontal-scroll-container"></div>
     </div>
+
+    <section
+      class="roster-section"
+      aria-labelledby="roster-heading"
+    >
+      <div class="roster-section-head">
+        <h2 id="roster-heading" class="roster-heading">Tournament roster</h2>
+        <p class="roster-caption">
+          <span id="roster-count" class="roster-count-current">0</span>
+          <span class="roster-count-sep">/</span>
+          <span class="roster-count-max">4</span>
+          <span class="roster-count-label">fighters</span>
+        </p>
+      </div>
+      <ol
+        class="roster-slots"
+        id="roster-slots"
+        aria-label="Four roster slots. Order sets bracket seeds (1 vs 2, 3 vs 4)."
+      >
+        <li
+          class="roster-slot roster-slot--empty"
+          data-slot-index="0"
+        >
+          <span class="roster-slot-placeholder">Empty</span>
+        </li>
+        <li
+          class="roster-slot roster-slot--empty"
+          data-slot-index="1"
+        >
+          <span class="roster-slot-placeholder">Empty</span>
+        </li>
+        <li
+          class="roster-slot roster-slot--empty"
+          data-slot-index="2"
+        >
+          <span class="roster-slot-placeholder">Empty</span>
+        </li>
+        <li
+          class="roster-slot roster-slot--empty"
+          data-slot-index="3"
+        >
+          <span class="roster-slot-placeholder">Empty</span>
+        </li>
+      </ol>
+    </section>
+
+    <section
+      class="tournament-section"
+      aria-labelledby="tournament-heading"
+    >
+      <div class="tournament-section-head">
+        <div>
+          <h2 id="tournament-heading" class="tournament-heading">
+            Mini tournament bracket
+          </h2>
+          <p class="tournament-hint">
+            Two semifinals by roster order, then a final. Outcomes use a simple
+            stat-based probability model (see match notes).
+          </p>
+        </div>
+        <button
+          type="button"
+          id="btn-run-tournament"
+          class="btn-run-tournament"
+          disabled
+        >
+          Run bracket
+        </button>
+      </div>
+
+      <div
+        class="bracket-graph"
+        id="bracket-graph"
+        role="group"
+        aria-label="Semifinals and final bracket graph"
+      >
+        <div class="bracket-tier bracket-tier--semis">
+          <div class="bracket-match" data-round="semi">
+            <span class="bracket-round-label">Semifinal 1</span>
+            <div class="bracket-nodes">
+              <div
+                class="bracket-node bracket-node--seed"
+                id="bracket-sf1-a"
+              >
+                —
+              </div>
+              <div
+                class="bracket-node bracket-node--seed"
+                id="bracket-sf1-b"
+              >
+                —
+              </div>
+            </div>
+            <div
+              class="bracket-edge bracket-edge--down"
+              aria-hidden="true"
+            ></div>
+            <div
+              class="bracket-node bracket-node--winner"
+              id="bracket-sf1-winner"
+            >
+              —
+            </div>
+            <p class="bracket-meta" id="bracket-sf1-meta"></p>
+          </div>
+          <div class="bracket-match" data-round="semi">
+            <span class="bracket-round-label">Semifinal 2</span>
+            <div class="bracket-nodes">
+              <div
+                class="bracket-node bracket-node--seed"
+                id="bracket-sf2-a"
+              >
+                —
+              </div>
+              <div
+                class="bracket-node bracket-node--seed"
+                id="bracket-sf2-b"
+              >
+                —
+              </div>
+            </div>
+            <div
+              class="bracket-edge bracket-edge--down"
+              aria-hidden="true"
+            ></div>
+            <div
+              class="bracket-node bracket-node--winner"
+              id="bracket-sf2-winner"
+            >
+              —
+            </div>
+            <p class="bracket-meta" id="bracket-sf2-meta"></p>
+          </div>
+        </div>
+
+        <div class="bracket-connector" aria-hidden="true">
+          <span class="bracket-connector-line"></span>
+        </div>
+
+        <div class="bracket-tier bracket-tier--final">
+          <div class="bracket-match bracket-match--final" data-round="final">
+            <span class="bracket-round-label">Final</span>
+            <div class="bracket-nodes bracket-nodes--final">
+              <div
+                class="bracket-node bracket-node--finalist"
+                id="bracket-final-a"
+              >
+                —
+              </div>
+              <div
+                class="bracket-node bracket-node--finalist"
+                id="bracket-final-b"
+              >
+                —
+              </div>
+            </div>
+            <div
+              class="bracket-edge bracket-edge--down"
+              aria-hidden="true"
+            ></div>
+            <div
+              class="bracket-node bracket-node--champion"
+              id="bracket-champion"
+            >
+              —
+            </div>
+            <p class="bracket-meta" id="bracket-final-meta"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <div class="card" style="display: none">
       <input type="checkbox" class="card-flip-input" id="card-flip-template" />
       <div class="card-inner">
         <div class="card-front">
           <label class="card-flip-overlay" for="card-flip-template"></label>
+          <div class="card-front-actions">
+            <button
+              type="button"
+              class="btn-recruit"
+              aria-label="Add this fighter to your recruitment roster"
+            >
+              Recruit
+            </button>
+          </div>
           <img src="" alt="Fighter Photo" />
           <div class="card-front-content">
             <h2>Fighter Name</h2>
@@ -147,23 +329,25 @@
           </div>
         </div>
         <div class="card-back">
-          <div class="card-content">
-            <h2 class="back-fighter-name">Fighter Name</h2>
-            <ul>
-              <li class="age">Age</li>
-              <li class="country">Country</li>
-              <li class="height">Height</li>
-              <li class="weight">Weight</li>
-              <li class="association">Association</li>
-              <li class="weight-class">Weight Class</li>
-              <li class="wins">Wins</li>
-              <li class="losses">Losses</li>
-            </ul>
-            <div class="card-back-footer">
-              <a class="fighter-link" href="" target="_blank">Fighter Page</a>
-              <label class="flip-back-btn" for="card-flip-template">◀ Back</label>
+          <label class="flip-back-btn" for="card-flip-template">
+            <div class="card-content">
+              <h2 class="back-fighter-name">Fighter Name</h2>
+              <ul>
+                <li class="age">Age</li>
+                <li class="country">Country</li>
+                <li class="height">Height</li>
+                <li class="weight">Weight</li>
+                <li class="association">Association</li>
+                <li class="weight-class">Weight Class</li>
+                <li class="wins">Wins</li>
+                <li class="losses">Losses</li>
+              </ul>
+              <div class="card-back-footer">
+                <span class="back-hint">◀ back</span>
+                <a class="fighter-link" href="" target="_blank">Fighter Page</a>
+              </div>
             </div>
-          </div>
+          </label>
         </div>
       </div>
     </div>

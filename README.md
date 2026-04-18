@@ -2,7 +2,7 @@
 
 ## Summary
 
-Catalog for One Championship fighters. Data sits in a global JS array (no fetch). Sort/filter cards, switch metric vs imperial on height & weight, open fighter pages in a new tab.
+Catalog for One Championship fighters. Data sits in a global JS array (no fetch). Sort/filter cards, switch metric vs imperial on height & weight, open fighter pages in a new tab. The page includes **HTML/CSS** for a four-fighter roster strip and a mini bracket layout; **you** wire the roster and probabilistic tournament in `scripts.js` (per course / genAI policy).
 
 ## Initial Features (From Sample)
 
@@ -24,14 +24,15 @@ showCards()
 [x] Fighter Filtering
     [x] Weight class
     [x] Record (all / winning record / undefeated)
-[] Favorite fighters
-[] Add/Update/Delete roster management
+[] Four-fighter tournament roster + stat-based bracket simulation *(UI scaffold in HTML/CSS; JS = your implementation)*
+[] Favorite fighters (optional separate from roster)
+[] Add/Update/Delete full roster management beyond tournament picks
 [] Alternative list display
 
 ### Stretch
 
 [] Carousel style card selection
-[] Compare 2 fighters with theoretical fight outcome
+[] Compare 4 fighters in a small elimination bracket (probabilistic outcomes) *(planned — same as above)*
 [] Make pretty
 
 ## Resources Used
@@ -49,4 +50,5 @@ showCards()
 - Wired `refreshDisplay()` so `showCards` always gets `applyFilters()` output -> weight class + record filters actually change the list.
 - Hold `FIGHTERS_DATA` const + `fighters_data` ref so sorted order and filters share the same array behavior.
 - Metric toggle in the controls (`toggleMetricUnits()`, `formatHeight`, `formatWeight`).
-- Not done yet: favorites, roster management, alternate list view. `removeLastCard()` still hits `titles` from the starter — leave it or fix later.
+- Planned: implement tournament roster + bracket simulation in author-written JS (e.g. array + `Set` for roster, tree-shaped bracket, stat-based `Math.random()` bouts). HTML/CSS hooks: `#roster-slots`, `#btn-run-tournament`, `#bracket-sf1-a` … `#bracket-champion`.
+- Not done yet: separate “favorites” list, full CRUD roster, alternate list view. `removeLastCard()` still hits `titles` from the starter — leave it or fix later.
