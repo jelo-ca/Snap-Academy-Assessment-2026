@@ -57,7 +57,10 @@ let sortedFighters = [];
 sortedFighters = sortCardsByNameAsc();
 
 // This calls the addCards() function when the page is first loaded (From Starter Code)
-document.addEventListener("DOMContentLoaded", () => refreshDisplay());
+document.addEventListener("DOMContentLoaded", () => {
+    refreshDisplay();
+    initCarouselWheelScroll();
+});
 
 // Multiple weight class filters can be applied at once
 let weight_class_filters = [];
