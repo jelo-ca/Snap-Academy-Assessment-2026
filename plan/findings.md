@@ -1,5 +1,9 @@
 # Findings — codebase analysis
 
+## Tooling / policy
+
+- **Cursor:** `.cursor/rules/snap-academy-genai-limits.mdc` — AI may edit **HTML/CSS only**; JS in repo is author-written per submission rules.
+
 ## Architecture
 
 - **Stack:** Plain HTML/CSS/JS, no bundler. Open `index.html` in a browser.
@@ -21,7 +25,7 @@ Fields used in UI include: `fighter_name`, `nickname`, `photo_url`, `url`, `age`
 2. **`sortCardsByAgeDesc`** uses the same comparator as ascending (`a.age - b.age`); should be `b.age - a.age`.
 3. **`sortCardsByWinsAsc`** uses `b.wins - a.wins` (descending order); likely should be `a.wins - b.wins` for least→most.
 4. **`applyFilters` record branch** — Contains a TODO and `pass` placeholder in the filter predicate; this will throw when `record_filters.length > 0` and filters run. Needs real conditions (e.g. `wins > losses`, `losses === 0`).
-5. **Weight class strings** — Data uses title case (e.g. `"Flyweight"`). HTML values are lowercase; current filter uses `fighter.weight_class.toLowerCase()` and compares to lowercased filter values — **consistent if** checkbox values stay lowercase-only.
+5. **Weight class strings** — Data uses title case (e.g. `"Flyweight"`). HTML checkbox values are lowercase; `applyFilters` uses `fighter.weight_class.toLowerCase()` and `weight_class_filters.includes(...)` — filters must stay **same case convention** (all lower in array + lower on fighter side). If you change HTML values to title case, update JS comparison accordingly.
 6. **Starter remnants** — `removeLastCard()` references `titles` (not defined in reviewed file); likely leftover from sample and may error if invoked.
 7. **README vs project** — README title still says “UFC Fighter Catalog” while the app and data are One Championship–themed.
 

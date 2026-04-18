@@ -4,6 +4,11 @@
 
 Ship a polished static catalog site for One Championship fighters: display imported data, sort and filter it, and meet SEA Stage 2 requirements (`INSTRUCTIONS.md`).
 
+## Constraint (project rule)
+
+- **Generative AI in repo:** HTML + CSS only (see `.cursor/rules/snap-academy-genai-limits.mdc`).
+- **JavaScript:** You implement `scripts.js` / data logic yourself; planning items below that touch JS are **your** work, not AI-applied patches.
+
 ## Current codebase snapshot
 
 | Area | Location | Role |
@@ -14,16 +19,17 @@ Ship a polished static catalog site for One Championship fighters: display impor
 | Data | `data/one_champion_fighters.js` | Global `one_champion_fighters` array (no fetch) |
 | Requirements | `INSTRUCTIONS.md` | Official rubric |
 | Product notes | `README.md` | Feature checklist (some labels still say “UFC”) |
+| AI scope | `.cursor/rules/snap-academy-genai-limits.mdc` | HTML/CSS assistance only |
 
 ## Phases
 
 ### Phase 1 — Stabilize core behavior — `in_progress`
 
-- [ ] Ensure `sortedFighters` is explicitly initialized (avoid implicit globals).
-- [ ] Fix age sort: ascending vs descending should use opposite comparators.
-- [ ] Fix wins ascending: currently matches descending logic in code.
-- [ ] Complete `applyFilters()` record branch (see `findings.md`); remove placeholder that breaks runtime.
-- [ ] Align HTML checkbox `value`s with `fighter.weight_class` or keep consistent normalization (current code uses `.toLowerCase()` on data side).
+- [ ] Ensure `sortedFighters` is explicitly initialized (avoid implicit globals). _(human JS)_
+- [ ] Fix age sort: ascending vs descending should use opposite comparators. _(human JS)_
+- [ ] Fix wins ascending: currently matches descending logic in code. _(human JS)_
+- [ ] Complete `applyFilters()` record branch (see `findings.md`); remove placeholder that breaks runtime. _(human JS)_
+- [ ] Weight class: either align checkbox `value` in `index.html` with data strings, or keep `toLowerCase()` on both sides — **HTML/CSS side** can adjust values; **comparison logic** in JS stays yours.
 
 ### Phase 2 — Filtering UX and correctness — `pending`
 
@@ -42,6 +48,7 @@ Ship a polished static catalog site for One Championship fighters: display impor
 | Decision | Rationale |
 |----------|-----------|
 | Planning files live under `plan/` | Matches requested folder layout; same content as planning-with-files pattern. |
+| JS fixes = author | Snap / user rule: genAI does not write project JavaScript. |
 
 ## Errors encountered
 

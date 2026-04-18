@@ -1,5 +1,13 @@
 # Progress log
 
+## 2026-04-17 (planning-with-files sync)
+
+- Re-read `plan/task_plan.md`, `plan/findings.md`, `plan/progress.md`.
+- Ran `session-catchup.py` (no extra report text in stdout).
+- `git status`: branch **ahead of `origin/main` by 1**; `git diff` vs HEAD clean at check time.
+- Updated `task_plan.md`: constraint section (HTML/CSS genAI only, human JS); decisions table; Phase 1 bullets tagged human vs HTML.
+- Updated `findings.md`: Cursor rule path; clarified weight-class case matching.
+
 ## 2026-04-17 (later)
 
 - Added `.cursor/rules/snap-academy-genai-limits.mdc`: genAI may only change HTML/CSS; JavaScript must remain human-written (no AI-generated JS in repo).
