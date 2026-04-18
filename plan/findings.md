@@ -9,25 +9,34 @@
 - **Stack:** Plain HTML/CSS/JS, no bundler. Open `index.html` in a browser.
 - **Data loading:** `data/one_champion_fighters.js` defines a global array; `scripts.js` reads `window.one_champion_fighters` into `fighters_data`.
 - **Rendering:** A hidden `.card` template is cloned per fighter; `setCardField()` injects label/value pairs for stats.
+- **Sort:** Individual `sortCardsBy*` helpers mutate `sortedFighters`; `sortCards(sortBy)` runs the switch and then **`showCards(sortedFighters)`** once (sort helpers do not call `showCards`).
+- **Initial load:** `sortCardsByNameAsc()` runs at parse time (after hoisted function declarations); `DOMContentLoaded` runs `showCards(sortedFighters)`.
 
 ## Implemented features
 
-- **Sort:** `<select>` drives `sortCards()` → per-metric functions; sorted array passed to `showCards`.
-- **Filter UI:** Checkboxes (`name="weight-class"`) and radios (`name="record-filter"`) call `updateFilters(this)` which updates arrays and calls `applyFilters()`.
+- **Sort:** `<select>` → `sortCards()` → per-metric functions → `showCards(sortedFighters)`.
+- **Filter UI:** Checkboxes (`weight-class`) and radios (`record-filter`) → `updateFilters` → `addFilter` / `removeFilter` → `applyFilters()`.
 
 ## Data shape (per fighter)
 
-Fields used in UI include: `fighter_name`, `nickname`, `photo_url`, `url`, `age`, `country`, `height`, `weight`, `association`, `weight_class`, `wins`, `losses`. There is **no** `record` property on objects — record filtering must be **derived** from wins/losses.
+Fields used in UI include: `fighter_name`, `nickname`, `photo_url`, `url`, `age`, `country`, `height`, `weight`, `association`, `weight_class`, `wins`, `losses`. There is **no** `record` property — record filtering must be **derived** from wins/losses.
 
-## Issues identified
+**Weight classes present in data (sample):** Flyweight, Heavyweight, Strawweight, Atomweight, Unknown, Lightweight. Checkboxes in `index.html` cover all except **Lightweight**.
 
-1. **`sortedFighters` is not declared** — Assigned in sort functions; works as sloppy-mode global in browsers but should use `let sortedFighters = [...]` after load or copy-on-sort.
-2. **`sortCardsByAgeDesc`** uses the same comparator as ascending (`a.age - b.age`); should be `b.age - a.age`.
-3. **`sortCardsByWinsAsc`** uses `b.wins - a.wins` (descending order); likely should be `a.wins - b.wins` for least→most.
-4. **`applyFilters` record branch** — Contains a TODO and `pass` placeholder in the filter predicate; this will throw when `record_filters.length > 0` and filters run. Needs real conditions (e.g. `wins > losses`, `losses === 0`).
-5. **Weight class strings** — Data uses title case (e.g. `"Flyweight"`). HTML checkbox values are lowercase; `applyFilters` uses `fighter.weight_class.toLowerCase()` and `weight_class_filters.includes(...)` — filters must stay **same case convention** (all lower in array + lower on fighter side). If you change HTML values to title case, update JS comparison accordingly.
-6. **Starter remnants** — `removeLastCard()` references `titles` (not defined in reviewed file); likely leftover from sample and may error if invoked.
-7. **README vs project** — README title still says “UFC Fighter Catalog” while the app and data are One Championship–themed.
+## Resolved (was issues in earlier review)
+
+1. **`sortedFighters` declaration** — Now `let sortedFighters = []` at top level (no longer an undeclared global from sort functions alone).
+2. **Age descending** — Uses `b.age - a.age`; ascending uses `a.age - b.age`.
+3. **Wins ascending** — Uses `a.wins - b.wins`; descending uses `b.wins - a.wins`.
+
+## Open issues
+
+1. **Initial `sortedFighters` assignment** — Line `sortedFighters = sortCardsByNameAsc();` assigns the return value of `sortCardsByNameAsc` (implicit `undefined`) after the helper already set `sortedFighters` to the sorted array, so `sortedFighters` becomes **`undefined`** until the user changes the sort dropdown (which calls `sortCards` and fixes state). Fix: bare `sortCardsByNameAsc();` or `return sortedFighters` from the helper and assign that.
+2. **`record_filters` vs `record_filter`** — Code pushes to `record_filters` in `addFilter` / `removeFilter` and reads `record_filters.length` in `applyFilters`, but only `let record_filter = "all"` is declared. Using record radios will throw **ReferenceError** until arrays are aligned.
+3. **`applyFilters` record branch** — Still contains `pass` (not valid JS here) in the filter predicate; throws when `record_filters.length > 0` once (2) is fixed unless placeholder is replaced. Need predicates for `winning` / `undefeated` and **no filter** when value is `all`.
+4. **Weight class coverage** — Logic matches lowercase HTML values to `weight_class.toLowerCase()`; add a **Lightweight** checkbox if that fighter should be filterable by class.
+5. **Starter remnants** — `removeLastCard()` still references undefined `titles`.
+6. **README vs project** — README may still say “UFC Fighter Catalog”; app/data are One Championship–themed.
 
 ## External / rubric
 

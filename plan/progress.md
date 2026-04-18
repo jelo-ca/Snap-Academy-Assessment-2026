@@ -1,5 +1,12 @@
 # Progress log
 
+## 2026-04-17 (plan documents sync)
+
+- Synced **`plan/task_plan.md`**, **`plan/findings.md`**, and **`plan/progress.md`** to current `scripts.js` / `index.html` / data.
+- **Task plan:** Phase 1 checkboxes updated — sort comparators and weight-class casing marked complete; remaining items are initial-load `sortedFighters` assignment, `record_filters` wiring, record predicate, optional Lightweight checkbox; errors table filled from findings.
+- **Findings:** Split into **resolved** (declared `sortedFighters`, age/wins comparators) vs **open** (load bug, `record_filters`, `pass` placeholder, Lightweight checkbox, `removeLastCard`, README); architecture notes updated (`sortCards` owns `showCards`).
+- Prior Phase 1 review entry below retained for history.
+
 ## 2026-04-17 (Phase 1 review + `scripts.js` snapshot)
 
 - **Review-only pass** (no AI-authored JS): walked Phase 1 against `scripts.js` / `index.html` / sample data.

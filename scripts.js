@@ -66,6 +66,9 @@ function showCards(data = fighters_data) {
     cardContainer.innerHTML = "";
     const templateCard = document.querySelector(".card");
 
+    // Apply filters to the data
+    applyFilters();
+
     for (let i = 0; i < data.length; i++) {
         let fighter = data[i];
 
@@ -135,31 +138,31 @@ function removeLastCard() {
 
 // =========== SORTING FUNCTIONS ===========
 function sortCardsByNameAsc() {
-    sortedFighters = fighters_data.sort((a, b) =>
+    return fighters_data.sort((a, b) =>
         a.fighter_name.localeCompare(b.fighter_name),
     );
 }
 
 function sortCardsByNameDesc() {
-    sortedFighters = fighters_data.sort((a, b) =>
+    return fighters_data.sort((a, b) =>
         b.fighter_name.localeCompare(a.fighter_name),
     );
 }
 
 function sortCardsByWinsAsc() {
-    sortedFighters = fighters_data.sort((a, b) => a.wins - b.wins);
+    return fighters_data.sort((a, b) => a.wins - b.wins);
 }
 
 function sortCardsByWinsDesc() {
-    sortedFighters = fighters_data.sort((a, b) => b.wins - a.wins);
+    return fighters_data.sort((a, b) => b.wins - a.wins);
 }
 
 function sortCardsByAgeAsc() {
-    sortedFighters = fighters_data.sort((a, b) => a.age - b.age);
+    return fighters_data.sort((a, b) => a.age - b.age);
 }
 
 function sortCardsByAgeDesc() {
-    sortedFighters = fighters_data.sort((a, b) => b.age - a.age);
+    return fighters_data.sort((a, b) => b.age - a.age);
 }
 
 // Switch statement due to the number of possible sorting options within
@@ -229,15 +232,14 @@ function applyFilters() {
             weight_class_filters.includes(fighter.weight_class.toLowerCase()),
         );
     }
-    if (record_filters.length > 0) {
-        filteredFighters = filteredFighters.filter(
-            (fighter) =>
-            // TODO:Add switch case to handle the different record filters
-            pass,
-        );
+    switch (record_filter) {
+        case "all":
+            break;
+        case "winning":
+            break;
+        case "undefeated":
+            break;
     }
-    showCards(filteredFighters);
-
     console.log("filteredFighters", filteredFighters);
 }
 
