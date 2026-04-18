@@ -1,0 +1,43 @@
+%% Simulated tournament bracket — directed graph (result flow)
+%% Node labels match bracket DOM ids in index.html
+
+flowchart TB
+    subgraph seeds["Seeds from roster order"]
+        S0["slot 0 → bracket-sf1-a"]
+        S1["slot 1 → bracket-sf1-b"]
+        S2["slot 2 → bracket-sf2-a"]
+        S3["slot 3 → bracket-sf2-b"]
+    end
+
+    subgraph semi1["Semifinal 1"]
+        SF1A((bracket-sf1-a))
+        SF1B((bracket-sf1-b))
+        SF1W{{bracket-sf1-winner}}
+    end
+
+    subgraph semi2["Semifinal 2"]
+        SF2A((bracket-sf2-a))
+        SF2B((bracket-sf2-b))
+        SF2W{{bracket-sf2-winner}}
+    end
+
+    subgraph fin["Final"]
+        FA((bracket-final-a))
+        FB((bracket-final-b))
+        CH[[bracket-champion]]
+    end
+
+    S0 --> SF1A
+    S1 --> SF1B
+    S2 --> SF2A
+    S3 --> SF2B
+
+    SF1A --> SF1W
+    SF1B --> SF1W
+    SF2A --> SF2W
+    SF2B --> SF2W
+
+    SF1W --> FA
+    SF2W --> FB
+    FA --> CH
+    FB --> CH

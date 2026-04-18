@@ -10,136 +10,389 @@
 
   <body>
     <header class="main-header">
-      <h1 class="title">One Fighters</h1>
-      <details class="controls-dropdown">
-        <summary class="settings-btn">Sort &amp; Filter</summary>
-        <form class="controls-panel" aria-label="Sort and filter fighters">
-          <label for="sort-by">Sort by</label>
-          <select id="sort-by" name="sort-by" onchange="sortCards(this.value)">
-            <option value="name-asc">Name (A-Z)</option>
-            <option value="name-desc">Name (Z-A)</option>
-            <option value="age-asc">Age (Low-High)</option>
-            <option value="age-desc">Age (High-Low)</option>
-            <option value="wins-desc">Wins (Most-Least)</option>
-            <option value="wins-asc">Wins (Least-Most)</option>
-            <option value="weight-asc">Weight (Low-High)</option>
-            <option value="weight-desc">Weight (High-Low)</option>
-          </select>
-
-          <fieldset class="units-fieldset">
-            <legend>Units</legend>
-            <div class="metric-switch-row">
-              <span class="metric-side metric-side-imperial">ft · lbs</span>
-              <label class="metric-switch">
-                <input
-                  type="checkbox"
-                  id="metric-units-switch"
-                  class="metric-switch-input"
-                  checked
-                  role="switch"
-                  aria-label="Use metric units: meters and kilograms"
-                  onchange="toggleMetricUnits()"
-                />
-                <span class="metric-switch-track" aria-hidden="true">
-                  <span class="metric-switch-thumb"></span>
-                </span>
-              </label>
-              <span class="metric-side metric-side-metric">m · kg</span>
-            </div>
-          </fieldset>
-
-          <fieldset>
-            <legend>Weight Class</legend>
-            <label
-              ><input
-                type="checkbox"
-                name="weight-class"
-                value="atomweight"
-                onchange="updateFilters(this)"
-              />
-              Atomweight</label
-            >
-            <label
-              ><input
-                type="checkbox"
-                name="weight-class"
-                value="strawweight"
-                onchange="updateFilters(this)"
-              />
-              Strawweight</label
-            >
-            <label
-              ><input
-                type="checkbox"
-                name="weight-class"
-                value="flyweight"
-                onchange="updateFilters(this)"
-              />
-              Flyweight</label
-            >
-            <label
-              ><input
-                type="checkbox"
-                name="weight-class"
-                value="heavyweight"
-                onchange="updateFilters(this)"
-              />
-              Heavyweight</label
-            >
-            <label
-              ><input
-                type="checkbox"
-                name="weight-class"
-                value="unknown"
-                onchange="updateFilters(this)"
-              />
-              Unknown</label
-            >
-          </fieldset>
-
-          <fieldset>
-            <legend>Record</legend>
-            <label
-              ><input
-                type="radio"
-                name="record-filter"
-                value="all"
-                checked
-                onchange="updateFilters(this)"
-              />
-              Show all</label
-            >
-            <label
-              ><input
-                type="radio"
-                name="record-filter"
-                value="winning"
-                onchange="updateFilters(this)"
-              />
-              Winning record only</label
-            >
-            <label
-              ><input
-                type="radio"
-                name="record-filter"
-                value="undefeated"
-                onchange="updateFilters(this)"
-              />
-              Undefeated only</label
-            >
-          </fieldset>
-        </form>
-      </details>
+      <div class="header-brand">
+        <h1 class="title">One Fighters</h1>
+        <p class="catalog-intro">
+          Browse One Championship athletes: use Sort &amp; Filter above the card strip,
+          open fighter pages, then choose four for the mini bracket below.
+        </p>
+      </div>
     </header>
 
-    <div class="carousel-shell">
-      <div id="card-container" class="horizontal-scroll-container"></div>
-    </div>
+    <section class="card-ux" aria-labelledby="card-ux-title">
+      <div class="card-ux-inner">
+        <div class="card-ux-layout">
+          <input
+            type="checkbox"
+            id="card-ux-flip-demo"
+            class="card-ux-demo-flip-input"
+          />
 
-    <section
-      class="roster-section"
-      aria-labelledby="roster-heading"
-    >
+          <div class="card-ux-text-col">
+            <h2 id="card-ux-title" class="card-ux-title">
+              How each fighter card works
+            </h2>
+            <p class="card-ux-lead">
+              Same layout on every card—front for identity and actions, back for
+              stats and the official profile link. Click the sample card to flip
+              it.
+            </p>
+
+            <ol class="card-ux-legend" aria-label="Card component reference">
+              <li>Full-bleed hero image for quick recognition.</li>
+              <li>
+                <strong>Add</strong> reserves a slot in your four-fighter roster
+                (your script wires this).
+              </li>
+              <li>
+                Fighter name and nickname on a bottom gradient for contrast.
+              </li>
+              <li>
+                Hint reminds you the card flips—tap the face (not Add) to see
+                stats.
+              </li>
+              <li>
+                Back lists age, country, size, record—labels match the catalog
+                fields.
+              </li>
+              <li>
+                Pill opens the athlete’s page on One Championship in a new tab.
+              </li>
+            </ol>
+          </div>
+
+          <div class="card-ux-visual-col">
+            <div class="card-ux-face-labels" aria-live="polite">
+              <span class="card-ux-face-label card-ux-face-label--front"
+                >Front — click to flip</span
+              >
+              <span class="card-ux-face-label card-ux-face-label--back"
+                >Back — stats &amp; link</span
+              >
+            </div>
+
+            <div
+              class="card-ux-annotate"
+              role="region"
+              aria-label="Interactive sample: numbered callouts and a card you can flip."
+            >
+              <div class="card-ux-annotate-layer card-ux-annotate-layer--front">
+                <svg
+                  class="card-ux-leaders"
+                  viewBox="0 0 400 420"
+                  preserveAspectRatio="xMidYMid meet"
+                  aria-hidden="true"
+                >
+                  <!-- Card: x=72–328 (hero dot intentionally overlaps the photo) -->
+                  <line
+                    class="card-ux-line"
+                    x1="44"
+                    y1="94"
+                    x2="120"
+                    y2="94"
+                  />
+                  <circle class="card-ux-line-end" cx="120" cy="94" r="2.5" />
+                  <line
+                    class="card-ux-line"
+                    x1="352"
+                    y1="63"
+                    x2="331"
+                    y2="63"
+                  />
+                  <circle class="card-ux-line-end" cx="331" cy="63" r="2.5" />
+                  <line
+                    class="card-ux-line"
+                    x1="44"
+                    y1="330"
+                    x2="69"
+                    y2="330"
+                  />
+                  <circle class="card-ux-line-end" cx="69" cy="330" r="2.5" />
+                  <line
+                    class="card-ux-line"
+                    x1="44"
+                    y1="362"
+                    x2="69"
+                    y2="362"
+                  />
+                  <circle class="card-ux-line-end" cx="69" cy="362" r="2.5" />
+                </svg>
+                <p class="card-ux-tag card-ux-tag--photo">
+                  <span class="card-ux-tag-kicker">1</span>
+                  Hero photo
+                </p>
+                <p class="card-ux-tag card-ux-tag--add">
+                  <span class="card-ux-tag-kicker">2</span>
+                  Add to roster
+                </p>
+                <p class="card-ux-tag card-ux-tag--identity">
+                  <span class="card-ux-tag-kicker">3</span>
+                  Name &amp; nickname
+                </p>
+                <p class="card-ux-tag card-ux-tag--flip">
+                  <span class="card-ux-tag-kicker">4</span>
+                  Flip hint
+                </p>
+              </div>
+
+              <div class="card-ux-annotate-layer card-ux-annotate-layer--back">
+                <svg
+                  class="card-ux-leaders"
+                  viewBox="0 0 400 420"
+                  preserveAspectRatio="xMidYMid meet"
+                  aria-hidden="true"
+                >
+                  <line
+                    class="card-ux-line"
+                    x1="34"
+                    y1="206"
+                    x2="69"
+                    y2="206"
+                  />
+                  <circle class="card-ux-line-end" cx="69" cy="206" r="2.5" />
+                  <!-- Label right of card; dot at x=331 (past card edge 328), right of the pill -->
+                  <line
+                    class="card-ux-line"
+                    x1="352"
+                    y1="352"
+                    x2="331"
+                    y2="352"
+                  />
+                  <circle class="card-ux-line-end" cx="331" cy="352" r="2.5" />
+                </svg>
+                <p class="card-ux-tag card-ux-tag--stats">
+                  <span class="card-ux-tag-kicker">5</span>
+                  Stat rows
+                </p>
+                <p class="card-ux-tag card-ux-tag--link">
+                  <span class="card-ux-tag-kicker">6</span>
+                  Official fighter page
+                </p>
+              </div>
+
+              <div class="card-ux-sample-flip">
+                <div class="card-ux-sample-inner">
+                  <div class="card-ux-sample-face card-ux-sample-face--front">
+                    <label
+                      class="card-ux-demo-overlay"
+                      for="card-ux-flip-demo"
+                      aria-label="Flip card to back"
+                    ></label>
+                    <div class="card-ux-sample-front-inner">
+                      <img
+                        class="card-ux-sample-img"
+                        src="https://cdn.onefc.com/wp-content/uploads/2019/01/Demetrious_Johnson-hero-1200x1165-2-600x583.jpg"
+                        alt=""
+                        width="600"
+                        height="583"
+                        decoding="async"
+                      />
+                      <div class="card-ux-sample-actions">
+                        <span class="btn-add btn-add--ux" aria-hidden="true"
+                          >Add</span
+                        >
+                      </div>
+                      <div class="card-ux-sample-front-bar">
+                        <p class="card-ux-sample-name">Sample fighter</p>
+                        <p class="card-ux-sample-nick">
+                          <span>“Example” nickname</span>
+                        </p>
+                        <p class="card-ux-sample-hint">Tap for stats ▶</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-ux-sample-face card-ux-sample-face--back">
+                    <label
+                      class="card-ux-demo-back-flip"
+                      for="card-ux-flip-demo"
+                      aria-label="Flip card to front"
+                    >
+                      <div class="card-ux-sample-back-inner">
+                        <p class="card-ux-sample-back-name">Sample fighter</p>
+                        <ul class="card-ux-sample-stats">
+                          <li>
+                            <span class="card-ux-sample-stat-l">Age</span>
+                            <span class="card-ux-sample-stat-v">00</span>
+                          </li>
+                          <li>
+                            <span class="card-ux-sample-stat-l">Country</span>
+                            <span class="card-ux-sample-stat-v">—</span>
+                          </li>
+                          <li>
+                            <span class="card-ux-sample-stat-l">Height</span>
+                            <span class="card-ux-sample-stat-v">0.0 m</span>
+                          </li>
+                          <li>
+                            <span class="card-ux-sample-stat-l">Weight</span>
+                            <span class="card-ux-sample-stat-v">0.0 kg</span>
+                          </li>
+                          <li>
+                            <span class="card-ux-sample-stat-l">Wins</span>
+                            <span class="card-ux-sample-stat-v">0</span>
+                          </li>
+                          <li>
+                            <span class="card-ux-sample-stat-l">Losses</span>
+                            <span class="card-ux-sample-stat-v">0</span>
+                          </li>
+                        </ul>
+                        <div class="card-ux-sample-back-footer">
+                          <span class="card-ux-sample-back-hint">◀ back</span>
+                          <span class="card-ux-sample-link-pill"
+                            >Fighter Page</span
+                          >
+                        </div>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="catalog-section" aria-labelledby="catalog-heading">
+      <div class="catalog-toolbar">
+        <h2 id="catalog-heading" class="catalog-heading">Fighter catalog</h2>
+        <div class="controls-dropdown">
+          <input
+            type="checkbox"
+            id="catalog-filter-toggle"
+            class="catalog-filter-toggle"
+            aria-controls="catalog-controls-panel"
+          />
+          <label for="catalog-filter-toggle" class="settings-btn"
+            >Sort &amp; Filter</label
+          >
+          <form
+            id="catalog-controls-panel"
+            class="controls-panel"
+            aria-label="Sort and filter fighters"
+          >
+            <label for="sort-by">Sort by</label>
+            <select id="sort-by" name="sort-by" onchange="sortCards(this.value)">
+              <option value="name-asc">Name (A-Z)</option>
+              <option value="name-desc">Name (Z-A)</option>
+              <option value="age-asc">Age (Low-High)</option>
+              <option value="age-desc">Age (High-Low)</option>
+              <option value="wins-desc">Wins (Most-Least)</option>
+              <option value="wins-asc">Wins (Least-Most)</option>
+              <option value="weight-asc">Weight (Low-High)</option>
+              <option value="weight-desc">Weight (High-Low)</option>
+            </select>
+
+            <fieldset class="units-fieldset">
+              <legend>Units</legend>
+              <div class="metric-switch-row">
+                <span class="metric-side metric-side-imperial">ft · lbs</span>
+                <label class="metric-switch">
+                  <input
+                    type="checkbox"
+                    id="metric-units-switch"
+                    class="metric-switch-input"
+                    checked
+                    role="switch"
+                    aria-label="Use metric units: meters and kilograms"
+                    onchange="toggleMetricUnits()"
+                  />
+                  <span class="metric-switch-track" aria-hidden="true">
+                    <span class="metric-switch-thumb"></span>
+                  </span>
+                </label>
+                <span class="metric-side metric-side-metric">m · kg</span>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Weight Class</legend>
+              <label
+                ><input
+                  type="checkbox"
+                  name="weight-class"
+                  value="atomweight"
+                  onchange="updateFilters(this)"
+                />
+                Atomweight</label
+              >
+              <label
+                ><input
+                  type="checkbox"
+                  name="weight-class"
+                  value="strawweight"
+                  onchange="updateFilters(this)"
+                />
+                Strawweight</label
+              >
+              <label
+                ><input
+                  type="checkbox"
+                  name="weight-class"
+                  value="flyweight"
+                  onchange="updateFilters(this)"
+                />
+                Flyweight</label
+              >
+              <label
+                ><input
+                  type="checkbox"
+                  name="weight-class"
+                  value="heavyweight"
+                  onchange="updateFilters(this)"
+                />
+                Heavyweight</label
+              >
+              <label
+                ><input
+                  type="checkbox"
+                  name="weight-class"
+                  value="unknown"
+                  onchange="updateFilters(this)"
+                />
+                Unknown</label
+              >
+            </fieldset>
+
+            <fieldset>
+              <legend>Record</legend>
+              <label
+                ><input
+                  type="radio"
+                  name="record-filter"
+                  value="all"
+                  checked
+                  onchange="updateFilters(this)"
+                />
+                Show all</label
+              >
+              <label
+                ><input
+                  type="radio"
+                  name="record-filter"
+                  value="winning"
+                  onchange="updateFilters(this)"
+                />
+                Winning record only</label
+              >
+              <label
+                ><input
+                  type="radio"
+                  name="record-filter"
+                  value="undefeated"
+                  onchange="updateFilters(this)"
+                />
+                Undefeated only</label
+              >
+            </fieldset>
+          </form>
+        </div>
+      </div>
+      <div class="carousel-shell">
+        <div id="card-container" class="horizontal-scroll-container"></div>
+      </div>
+    </section>
+
+    <section class="roster-section" aria-labelledby="roster-heading">
       <div class="roster-section-head">
         <h2 id="roster-heading" class="roster-heading">Tournament roster</h2>
         <p class="roster-caption">
@@ -154,37 +407,22 @@
         id="roster-slots"
         aria-label="Four roster slots. Order sets bracket seeds (1 vs 2, 3 vs 4)."
       >
-        <li
-          class="roster-slot roster-slot--empty"
-          data-slot-index="0"
-        >
+        <li class="roster-slot roster-slot--empty" data-slot-index="0">
           <span class="roster-slot-placeholder">Empty</span>
         </li>
-        <li
-          class="roster-slot roster-slot--empty"
-          data-slot-index="1"
-        >
+        <li class="roster-slot roster-slot--empty" data-slot-index="1">
           <span class="roster-slot-placeholder">Empty</span>
         </li>
-        <li
-          class="roster-slot roster-slot--empty"
-          data-slot-index="2"
-        >
+        <li class="roster-slot roster-slot--empty" data-slot-index="2">
           <span class="roster-slot-placeholder">Empty</span>
         </li>
-        <li
-          class="roster-slot roster-slot--empty"
-          data-slot-index="3"
-        >
+        <li class="roster-slot roster-slot--empty" data-slot-index="3">
           <span class="roster-slot-placeholder">Empty</span>
         </li>
       </ol>
     </section>
 
-    <section
-      class="tournament-section"
-      aria-labelledby="tournament-heading"
-    >
+    <section class="tournament-section" aria-labelledby="tournament-heading">
       <div class="tournament-section-head">
         <div>
           <h2 id="tournament-heading" class="tournament-heading">
@@ -215,16 +453,10 @@
           <div class="bracket-match" data-round="semi">
             <span class="bracket-round-label">Semifinal 1</span>
             <div class="bracket-nodes">
-              <div
-                class="bracket-node bracket-node--seed"
-                id="bracket-sf1-a"
-              >
+              <div class="bracket-node bracket-node--seed" id="bracket-sf1-a">
                 —
               </div>
-              <div
-                class="bracket-node bracket-node--seed"
-                id="bracket-sf1-b"
-              >
+              <div class="bracket-node bracket-node--seed" id="bracket-sf1-b">
                 —
               </div>
             </div>
@@ -243,16 +475,10 @@
           <div class="bracket-match" data-round="semi">
             <span class="bracket-round-label">Semifinal 2</span>
             <div class="bracket-nodes">
-              <div
-                class="bracket-node bracket-node--seed"
-                id="bracket-sf2-a"
-              >
+              <div class="bracket-node bracket-node--seed" id="bracket-sf2-a">
                 —
               </div>
-              <div
-                class="bracket-node bracket-node--seed"
-                id="bracket-sf2-b"
-              >
+              <div class="bracket-node bracket-node--seed" id="bracket-sf2-b">
                 —
               </div>
             </div>
@@ -315,10 +541,10 @@
           <div class="card-front-actions">
             <button
               type="button"
-              class="btn-recruit"
-              aria-label="Add this fighter to your recruitment roster"
+              class="btn-add"
+              aria-label="Add this fighter to your tournament roster"
             >
-              Recruit
+              Add
             </button>
           </div>
           <img src="" alt="Fighter Photo" />

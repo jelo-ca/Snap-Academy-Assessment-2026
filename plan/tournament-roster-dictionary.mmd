@@ -1,0 +1,30 @@
+%% Roster dictionary (UML class diagram)
+%% Stable roster entry ids enable deleteById without scanning slots.
+
+classDiagram
+    direction LR
+
+    class TournamentRoster {
+        <<conceptual>>
+        +byId: Map~RosterEntryId, RosterEntry~
+        +addFighter(fighter, slotIndex) RosterEntryId
+        +removeById(rosterEntryId) boolean
+        +getBySlot(slotIndex) RosterEntry
+    }
+
+    class RosterEntry {
+        +id: RosterEntryId
+        +slotIndex: 0..3
+    }
+
+    class FighterRef {
+        <<snapshot or ref>>
+        +fighter_name: string
+        +photo_url: string
+        +wins: number
+        +losses: number
+        +weight: number
+    }
+
+    TournamentRoster "1" *-- "0..4" RosterEntry : byId
+    RosterEntry "1" --> "1" FighterRef : picks

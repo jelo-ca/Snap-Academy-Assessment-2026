@@ -25,7 +25,7 @@ showCards()
     [x] Weight class
     [x] Record (all / winning record / undefeated)
 [] Four-fighter tournament roster + stat-based bracket simulation *(UI scaffold in HTML/CSS; JS = your implementation)*
-[] Favorite fighters (optional separate from roster)
+~~[] Favorite fighters (optional separate from roster)~~
 [] Add/Update/Delete full roster management beyond tournament picks
 [] Alternative list display
 

@@ -14,29 +14,737 @@ span {
 }
 
 .main-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
     background-color: rgba(0, 0, 0, 0.3);
-    padding: 12px 20px;
+    padding: 8px 18px 10px;
+}
+
+.header-brand {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.catalog-intro {
+    margin: 4px 0 0;
+    max-width: 42rem;
+    font-size: 0.8rem;
+    line-height: 1.45;
+    font-weight: 400;
+    color: #b0b0b0;
 }
 
 .title {
     text-align: left;
     margin: 0;
-    font-size: 3.5em;
+    font-size: clamp(1.75rem, 5vw, 2.35rem);
+    line-height: 0.95;
     font-family: "Barlow Condensed", Impact, sans-serif;
     font-weight: 800;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
     color: white;
+}
+
+/* ── card anatomy / UX sample (CSS-only flip + callouts) ── */
+.card-ux {
+    background: linear-gradient(180deg, #121212 0%, #0f0f0f 100%);
+    border-bottom: 1px solid #252525;
+    padding: 14px 18px 18px;
+}
+
+.card-ux-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.card-ux-title {
+    margin: 0 0 6px;
+    font-size: 0.95rem;
+    font-family: "Barlow Condensed", Impact, sans-serif;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #fff;
+}
+
+.card-ux-lead {
+    margin: 0 0 16px;
+    max-width: 48rem;
+    font-size: 0.8rem;
+    line-height: 1.45;
+    color: #a8a8a8;
+}
+
+/* All copy (left) + visual (right) */
+.card-ux-layout {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(260px, 1fr) minmax(0, min(100%, 420px));
+    gap: 22px 36px;
+    align-items: start;
+}
+
+@media (max-width: 900px) {
+    .card-ux-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (min-width: 901px) {
+    .card-ux-layout {
+        align-items: center;
+    }
+
+    .card-ux-visual-col {
+        align-self: start;
+    }
+
+    .card-ux-text-col {
+        position: sticky;
+        top: 12px;
+    }
+}
+
+.card-ux-visual-col {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.card-ux-text-col {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.card-ux-text-col .card-ux-title {
+    margin: 0;
+}
+
+.card-ux-text-col .card-ux-lead {
+    margin: 0;
+    max-width: none;
+}
+
+.card-ux-visual-col .card-ux-face-labels {
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+/* Same visually-hidden pattern as catalog `.card-flip-input` */
+.card-ux-demo-flip-input {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+    appearance: none;
+    pointer-events: none;
+}
+
+.card-ux-face-labels {
+    position: relative;
+    width: 100%;
+    min-height: 1.35rem;
+}
+
+.card-ux-face-label {
+    display: block;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #888;
+    transition:
+        opacity 0.42s ease,
+        transform 0.42s ease;
+}
+
+.card-ux-face-label--back {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+}
+
+.card-ux-layout:has(#card-ux-flip-demo:checked) .card-ux-face-label--front {
+    opacity: 0;
+    transform: translateY(-6px);
+    pointer-events: none;
+}
+
+.card-ux-layout:has(#card-ux-flip-demo:not(:checked)) .card-ux-face-label--back {
+    opacity: 0;
+    transform: translateY(6px);
+    pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .card-ux-face-label {
+        transition: none;
+    }
+}
+
+/* SVG leader lines + tags outside the card (viewBox 400×420) */
+.card-ux-annotate {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    height: 420px;
+    margin: 0;
+    overflow: visible;
+}
+
+.card-ux-annotate-layer {
+    position: absolute;
+    inset: 0;
+    /* Above `.card-ux-sample-flip` so SVG leader lines render on top of the card */
+    z-index: 3;
+    pointer-events: none;
+}
+
+/* Fade callouts with the card flip (.card-ux-sample-inner uses 0.65s cubic-bezier) */
+.card-ux-annotate-layer--front {
+    opacity: 1;
+    visibility: visible;
+    transition:
+        opacity 0.65s cubic-bezier(0.4, 0.2, 0.2, 1),
+        visibility 0s;
+}
+
+.card-ux-annotate-layer--back {
+    opacity: 0;
+    visibility: hidden;
+    transition:
+        opacity 0.65s cubic-bezier(0.4, 0.2, 0.2, 1),
+        visibility 0s linear 0.65s;
+}
+
+.card-ux-layout:has(#card-ux-flip-demo:checked) .card-ux-annotate-layer--front {
+    opacity: 0;
+    visibility: hidden;
+    transition:
+        opacity 0.65s cubic-bezier(0.4, 0.2, 0.2, 1),
+        visibility 0s linear 0.65s;
+}
+
+.card-ux-layout:has(#card-ux-flip-demo:checked) .card-ux-annotate-layer--back {
+    opacity: 1;
+    visibility: visible;
+    transition:
+        opacity 0.65s cubic-bezier(0.4, 0.2, 0.2, 1),
+        visibility 0s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .card-ux-annotate-layer--front,
+    .card-ux-annotate-layer--back,
+    .card-ux-layout:has(#card-ux-flip-demo:checked) .card-ux-annotate-layer--front,
+    .card-ux-layout:has(#card-ux-flip-demo:checked) .card-ux-annotate-layer--back {
+        transition: none;
+    }
+}
+
+.card-ux-leaders {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.card-ux-line {
+    stroke: #6a6a6a;
+    stroke-width: 1.15;
+    fill: none;
+    vector-effect: non-scaling-stroke;
+    stroke-linecap: round;
+}
+
+.card-ux-line-end {
+    fill: #ffd100;
+}
+
+.card-ux-tag {
+    position: absolute;
+    z-index: 3;
+    margin: 0;
+    max-width: 10.5rem;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 209, 0, 0.4);
+    background: rgba(12, 12, 12, 0.92);
+    font-size: 0.64rem;
+    line-height: 1.3;
+    font-weight: 600;
+    color: #e4e4e4;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.35);
+    pointer-events: none;
+}
+
+.card-ux-tag-kicker {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.05rem;
+    height: 1.05rem;
+    margin-right: 6px;
+    border-radius: 50%;
+    background: #ffd100;
+    color: #111;
+    font-size: 0.58rem;
+    font-weight: 800;
+    vertical-align: middle;
+}
+
+.card-ux-tag--photo {
+    /* Align label with the hero dot (y=94 in the SVG) */
+    left: calc(100% * 44 / 400);
+    top: calc(100% * 94 / 420);
+    transform: translate(-100%, -50%);
+    text-align: right;
+}
+
+.card-ux-tag--add {
+    left: calc(100% * 352 / 400);
+    top: calc(100% * 63 / 420);
+    transform: translate(6px, -50%);
+    max-width: none;
+    white-space: nowrap;
+}
+
+.card-ux-tag--identity {
+    left: calc(100% * 8 / 400);
+    top: calc(100% * 330 / 420);
+    transform: translate(-100%, -50%);
+}
+
+.card-ux-tag--flip {
+    /* Left side — matches “Tap for stats” in the front bar (not the Add button on the right) */
+    left: calc(100% * 8 / 400);
+    top: calc(100% * 362 / 420);
+    transform: translate(-100%, -50%);
+    max-width: none;
+    white-space: nowrap;
+}
+
+.card-ux-tag--stats {
+    left: calc(100% * 8 / 400);
+    top: calc(100% * 206 / 420);
+    transform: translate(-100%, -50%);
+}
+
+.card-ux-tag--link {
+    /* Right of the sample card (same side as Add); aligns with footer / SVG leader */
+    left: calc(100% * 352 / 400);
+    top: calc(100% * 352 / 420);
+    transform: translate(6px, -50%);
+    text-align: left;
+    max-width: none;
+    white-space: nowrap;
+}
+
+/* ── card callout tag entrance animations ── */
+@keyframes card-tag-rise-l {
+    from {
+        opacity: 0;
+        transform: translate(-100%, calc(-50% + 14px));
+    }
+    to {
+        opacity: 1;
+        transform: translate(-100%, -50%);
+    }
+}
+
+@keyframes card-tag-rise-r {
+    from {
+        opacity: 0;
+        transform: translate(6px, calc(-50% + 14px));
+    }
+    to {
+        opacity: 1;
+        transform: translate(6px, -50%);
+    }
+}
+
+.card-ux-tag--photo,
+.card-ux-tag--identity,
+.card-ux-tag--flip {
+    opacity: 0;
+    animation: card-tag-rise-l 0.7s ease forwards;
+}
+
+.card-ux-tag--add {
+    opacity: 0;
+    animation: card-tag-rise-r 0.7s ease forwards;
+}
+
+.card-ux-tag--photo    { animation-delay: 0.1s; }
+.card-ux-tag--add      { animation-delay: 0.24s; }
+.card-ux-tag--identity { animation-delay: 0.38s; }
+.card-ux-tag--flip     { animation-delay: 0.52s; }
+
+.card-ux-tag--stats,
+.card-ux-tag--link {
+    opacity: 0;
+}
+
+.card-ux-layout:has(#card-ux-flip-demo:checked) .card-ux-tag--stats {
+    animation: card-tag-rise-l 0.7s 0.15s ease forwards;
+}
+
+.card-ux-layout:has(#card-ux-flip-demo:checked) .card-ux-tag--link {
+    animation: card-tag-rise-r 0.7s 0.3s ease forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .card-ux-tag--photo,
+    .card-ux-tag--add,
+    .card-ux-tag--identity,
+    .card-ux-tag--flip {
+        opacity: 1;
+        animation: none;
+    }
+
+    .card-ux-tag--stats,
+    .card-ux-tag--link {
+        opacity: 1;
+    }
+
+    .card-ux-layout:has(#card-ux-flip-demo:checked) .card-ux-tag--stats,
+    .card-ux-layout:has(#card-ux-flip-demo:checked) .card-ux-tag--link {
+        animation: none;
+    }
+}
+
+@media (max-width: 420px) {
+
+    /* Keep 420px tall so viewBox (400×420) + tag % positions stay aligned with the SVG */
+    .card-ux-annotate {
+        height: 420px;
+    }
+
+    .card-ux-tag--identity,
+    .card-ux-tag--stats {
+        max-width: 8.5rem;
+        font-size: 0.6rem;
+    }
+}
+
+/* Match catalog `.card` hover lift + `.card-inner` flip (same values as fighter cards) */
+.card-ux-annotate .card-ux-sample-flip {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    margin: 0;
+    transition:
+        transform 0.22s ease,
+        box-shadow 0.22s ease;
+}
+
+.card-ux-annotate .card-ux-sample-flip:hover {
+    transform: translate(-50%, calc(-50% - 3px));
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .card-ux-annotate .card-ux-sample-flip {
+        transition: none;
+    }
+
+    .card-ux-annotate .card-ux-sample-flip:hover {
+        transform: translate(-50%, -50%);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+    }
+}
+
+/* Same outer size as catalog `.card` (256 × 332) */
+.card-ux-sample-flip {
+    position: relative;
+    width: 256px;
+    height: 332px;
+    box-sizing: border-box;
+    perspective: 1000px;
+    border: none;
+    border-radius: 0;
+    overflow: visible;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+    cursor: pointer;
+}
+
+.card-ux-sample-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.65s cubic-bezier(0.4, 0.2, 0.2, 1);
+}
+
+.card-ux-layout:has(#card-ux-flip-demo:checked) .card-ux-sample-inner {
+    transform: rotateY(180deg);
+}
+
+.card-ux-sample-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    overflow: hidden;
+}
+
+.card-ux-sample-face--front {
+    background-color: #1a1a1a;
+}
+
+.card-ux-sample-face--back {
+    transform: rotateY(180deg) translateZ(4px);
+    background-color: #1a1a1a;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-ux-demo-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    cursor: pointer;
+}
+
+.card-ux-demo-back-flip {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.card-ux-layout:has(#card-ux-flip-demo:checked) .card-ux-sample-face--front,
+.card-ux-layout:has(#card-ux-flip-demo:checked) .card-ux-sample-face--front * {
+    pointer-events: none !important;
+}
+
+.card-ux-layout:has(#card-ux-flip-demo:checked) .card-ux-sample-face--back {
+    z-index: 4;
+    pointer-events: auto;
+}
+
+.card-ux-sample-front-inner {
+    position: absolute;
+    inset: 0;
+    border-radius: 0;
+    overflow: hidden;
+    background: #1a1a1a;
+}
+
+.card-ux-sample-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+}
+
+.card-ux-sample-actions {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 3;
+}
+
+.btn-add--ux {
+    pointer-events: none;
+    cursor: default;
+    box-shadow: none;
+}
+
+.card-ux-sample-front-bar {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 8px 10px 10px;
+    background: linear-gradient(to top,
+            rgba(0, 0, 0, 0.92) 0%,
+            rgba(0, 0, 0, 0.5) 58%,
+            transparent 100%);
+    z-index: 1;
+}
+
+.card-ux-sample-name {
+    margin: 0 0 2px;
+    font-size: 1.05rem;
+    font-family: "Barlow Condensed", Impact, sans-serif;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: #fff;
+    line-height: 1.12;
+}
+
+.card-ux-sample-nick {
+    margin: 0 0 4px;
+    font-size: 0.74rem;
+    line-height: 1.1;
+    color: #e8e8e8;
+}
+
+.card-ux-sample-hint {
+    margin: 0;
+    font-family: "Barlow Condensed", Impact, sans-serif;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #ffd100;
+    opacity: 0.85;
+}
+
+.card-ux-sample-back-inner {
+    padding: 10px 12px 10px;
+    height: 100%;
+    min-height: 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    flex: 1 1 auto;
+}
+
+.card-ux-sample-back-name {
+    margin: 0 0 2px;
+    font-size: 0.98rem;
+    font-family: "Barlow Condensed", Impact, sans-serif;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: #fff;
+    line-height: 1.1;
+}
+
+.card-ux-sample-stats {
+    margin: 6px 0 0 0;
+    padding: 0;
+    list-style: none;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.card-ux-sample-stats li {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 10px;
+    padding: 5px 0;
+    border-top: 1px solid #2d2d2d;
+    font-size: 0.88rem;
+    line-height: 1.2;
+}
+
+.card-ux-sample-stats li:first-child {
+    border-top: none;
+    padding-top: 0;
+}
+
+.card-ux-sample-stat-l {
+    color: #9f9f9f;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.card-ux-sample-stat-v {
+    font-family: "Barlow Condensed", Impact, sans-serif;
+    font-weight: 700;
+    color: #fff;
+    font-size: 0.95rem;
+    letter-spacing: 0.02em;
+}
+
+.card-ux-sample-back-footer {
+    margin-top: auto;
+    padding-top: 8px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.card-ux-sample-back-hint {
+    font-family: "Barlow Condensed", Impact, sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #ffd100;
+    opacity: 0.55;
+}
+
+.card-ux-sample-link-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 14px;
+    border: 1px solid #ffd100;
+    border-radius: 4px;
+    color: #ffd100;
+    font-family: "Barlow Condensed", Impact, sans-serif;
+    font-weight: 700;
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    pointer-events: none;
+}
+
+.card-ux-legend {
+    margin: 0;
+    padding-left: 1.2rem;
+    font-size: 0.78rem;
+    line-height: 1.55;
+    color: #b4b4b4;
+}
+
+.card-ux-legend li {
+    margin-bottom: 6px;
+}
+
+.card-ux-legend li:last-child {
+    margin-bottom: 0;
+}
+
+.card-ux-legend strong {
+    color: #e8e8e8;
+    font-weight: 600;
 }
 
 /* ── tournament roster (4 slots) ── */
 .roster-section {
     background-color: rgba(0, 0, 0, 0.35);
     border-bottom: 1px solid #2a2a2a;
-    padding: 14px 20px 18px;
+    padding: 10px 18px 12px;
 }
 
 .roster-section-head {
@@ -44,13 +752,13 @@ span {
     flex-wrap: wrap;
     align-items: baseline;
     justify-content: space-between;
-    gap: 8px 16px;
-    margin-bottom: 12px;
+    gap: 6px 12px;
+    margin-bottom: 8px;
 }
 
 .roster-heading {
     margin: 0;
-    font-size: 1.15rem;
+    font-size: 0.95rem;
     font-family: "Barlow Condensed", Impact, sans-serif;
     font-weight: 800;
     letter-spacing: 0.06em;
@@ -60,7 +768,7 @@ span {
 
 .roster-caption {
     margin: 0;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     color: #b8b8b8;
 }
 
@@ -85,7 +793,7 @@ span {
 .roster-slots {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 10px;
+    gap: 8px;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -98,15 +806,15 @@ span {
 }
 
 .roster-slot {
-    min-height: 72px;
+    min-height: 58px;
     border: 1px dashed #3d3d3d;
-    border-radius: 8px;
+    border-radius: 6px;
     background: rgba(26, 26, 26, 0.85);
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 8px;
+    padding: 6px;
     box-sizing: border-box;
 }
 
@@ -132,12 +840,12 @@ span {
 }
 
 .roster-slot-photo {
-    width: 36px;
-    height: 36px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     object-fit: cover;
     align-self: center;
-    border: 2px solid #2d2d2d;
+    border: 1px solid #2d2d2d;
 }
 
 .roster-slot-name {
@@ -177,7 +885,7 @@ span {
 .tournament-section {
     background-color: rgba(0, 0, 0, 0.28);
     border-bottom: 1px solid #2a2a2a;
-    padding: 16px 20px 22px;
+    padding: 10px 18px 14px;
 }
 
 .tournament-section-head {
@@ -185,13 +893,13 @@ span {
     flex-wrap: wrap;
     align-items: flex-start;
     justify-content: space-between;
-    gap: 12px 20px;
-    margin-bottom: 18px;
+    gap: 8px 16px;
+    margin-bottom: 12px;
 }
 
 .tournament-heading {
-    margin: 0 0 6px;
-    font-size: 1.15rem;
+    margin: 0 0 4px;
+    font-size: 0.95rem;
     font-family: "Barlow Condensed", Impact, sans-serif;
     font-weight: 800;
     letter-spacing: 0.06em;
@@ -202,21 +910,21 @@ span {
 .tournament-hint {
     margin: 0;
     max-width: 52ch;
-    font-size: 0.82rem;
-    line-height: 1.45;
+    font-size: 0.75rem;
+    line-height: 1.4;
     color: #a8a8a8;
 }
 
 .btn-run-tournament {
     flex-shrink: 0;
-    padding: 10px 22px;
+    padding: 6px 14px;
     border: 1px solid #ffd100;
-    border-radius: 999px;
-    background: rgba(255, 209, 0, 0.12);
+    border-radius: 6px;
+    background: rgba(255, 209, 0, 0.1);
     color: #ffd100;
     font-family: "Barlow Condensed", Impact, sans-serif;
     font-weight: 700;
-    font-size: 0.85rem;
+    font-size: 0.72rem;
     letter-spacing: 0.06em;
     text-transform: uppercase;
     cursor: pointer;
@@ -244,7 +952,7 @@ span {
 .bracket-tier--semis {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 16px 24px;
+    gap: 10px 14px;
 }
 
 @media (max-width: 700px) {
@@ -257,10 +965,10 @@ span {
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    gap: 8px;
-    padding: 12px 14px;
+    gap: 6px;
+    padding: 8px 10px;
     border: 1px solid #333;
-    border-radius: 10px;
+    border-radius: 6px;
     background: rgba(22, 22, 22, 0.9);
 }
 
@@ -281,24 +989,24 @@ span {
 .bracket-nodes {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 4px;
 }
 
 .bracket-nodes--final {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 10px;
+    gap: 8px;
 }
 
 .bracket-node {
-    min-height: 38px;
-    padding: 8px 10px;
-    border-radius: 6px;
+    min-height: 30px;
+    padding: 5px 8px;
+    border-radius: 4px;
     border: 1px solid #3a3a3a;
     background: #141414;
     font-family: "Barlow Condensed", Impact, sans-serif;
-    font-size: 0.88rem;
+    font-size: 0.78rem;
     font-weight: 700;
     line-height: 1.2;
     color: #e8e8e8;
@@ -321,8 +1029,8 @@ span {
     border-color: #ffd100;
     background: rgba(255, 209, 0, 0.08);
     color: #ffd100;
-    font-size: 1rem;
-    min-height: 44px;
+    font-size: 0.88rem;
+    min-height: 34px;
 }
 
 .bracket-edge--down {
@@ -335,8 +1043,8 @@ span {
 
 .bracket-meta {
     margin: 0;
-    min-height: 1.2em;
-    font-size: 0.72rem;
+    min-height: 1.1em;
+    font-size: 0.65rem;
     color: #9a9a9a;
     text-align: center;
     line-height: 1.35;
@@ -352,19 +1060,48 @@ span {
     display: block;
     width: min(60%, 280px);
     height: 2px;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        #444 15%,
-        #444 85%,
-        transparent
-    );
+    background: linear-gradient(90deg,
+            transparent,
+            #444 15%,
+            #444 85%,
+            transparent);
 }
 
 .bracket-tier--final {
     display: flex;
     justify-content: center;
     padding-top: 4px;
+}
+
+/* ── fighter catalog: toolbar (sort/filter) + horizontal card strip ── */
+.catalog-section {
+    background-color: #0f0f0f;
+    border-bottom: 1px solid #252525;
+}
+
+.catalog-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px 16px;
+    padding: 10px 18px 6px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.catalog-heading {
+    margin: 0;
+    font-size: 0.95rem;
+    font-family: "Barlow Condensed", Impact, sans-serif;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #ffffff;
+}
+
+.catalog-toolbar .controls-dropdown {
+    flex-shrink: 0;
 }
 
 /* ── fighter carousel: edge fades + custom scrollbar ── */
@@ -378,8 +1115,8 @@ span {
     content: "";
     position: absolute;
     top: 0;
-    bottom: 14px;
-    width: min(80px, 14vw);
+    bottom: 10px;
+    width: min(64px, 12vw);
     z-index: 3;
     pointer-events: none;
 }
@@ -406,9 +1143,8 @@ span {
     flex-wrap: nowrap;
     overflow-x: auto;
     overflow-y: hidden;
-    gap: 10px;
-    padding: 20px;
-    padding-bottom: 12px;
+    gap: 8px;
+    padding: 12px 16px 10px;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
 }
@@ -466,19 +1202,19 @@ span {
 
 .card {
     position: relative;
-    width: 300px;
-    flex: 0 0 300px;
-    height: 380px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 256px;
+    flex: 0 0 256px;
+    height: 332px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
     background-color: transparent;
     perspective: 1000px;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
     cursor: pointer;
 }
 
 .card:hover {
-    transform: translateY(-6px) scale(1.02);
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
 }
 
 /* ── flip mechanism ── */
@@ -515,7 +1251,7 @@ span {
 /* Front stays in the stacking order after rotateY; it can still capture clicks even when
    backface-hidden. Disable hit-testing on the front while flipped so the back face link
    and “Back” control receive clicks. Flip still uses the overlay when not checked.
-   Descendants (overlay, Recruit) must be included: children can re-enable hits with
+   Descendants (overlay, Add) must be included: children can re-enable hits with
    pointer-events: auto, which would block the back face entirely. !important beats
    .card-front-actions { pointer-events: auto }. */
 .card:has(.card-flip-input:checked) .card-front,
@@ -552,39 +1288,46 @@ span {
 
 .card-front-actions {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 8px;
+    right: 8px;
     z-index: 3;
     pointer-events: auto;
 }
 
-.btn-recruit {
+.btn-add {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 6px 14px;
+    box-sizing: border-box;
+    min-width: 4.25rem;
+    height: auto;
+    min-height: 0;
+    margin: 0;
+    padding: 4px 18px;
     border: 1px solid #ffd100;
-    border-radius: 999px;
-    background: rgba(15, 15, 15, 0.75);
+    border-radius: 4px;
+    background: rgba(12, 12, 12, 0.82);
     color: #ffd100;
     font-family: "Barlow Condensed", Impact, sans-serif;
     font-weight: 700;
-    font-size: 0.72rem;
-    letter-spacing: 0.08em;
+    font-size: 0.68rem;
+    line-height: 1.2;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
     cursor: pointer;
-    transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    appearance: none;
+    -webkit-appearance: none;
+    transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.btn-recruit:hover:not(:disabled) {
+.btn-add:hover:not(:disabled) {
     background: #ffd100;
     color: #111111;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 14px rgba(255, 209, 0, 0.4);
+    box-shadow: 0 2px 8px rgba(255, 209, 0, 0.35);
 }
 
-.btn-recruit:disabled,
-.btn-recruit.is-inactive {
+.btn-add:disabled,
+.btn-add.is-inactive {
     opacity: 0.45;
     cursor: not-allowed;
 }
@@ -602,31 +1345,31 @@ span {
     bottom: 0;
     left: 0;
     right: 0;
-    padding: 10px 14px 14px;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.55) 60%, transparent 100%);
+    padding: 8px 10px 10px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.5) 58%, transparent 100%);
     z-index: 1;
 }
 
 .card-front-content h2 {
     margin: 0 0 2px;
-    font-size: 1.3rem;
+    font-size: 1.05rem;
     font-family: "Barlow Condensed", Impact, sans-serif;
     font-weight: 800;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.03em;
     text-transform: uppercase;
     color: #ffffff;
-    line-height: 1.15;
+    line-height: 1.12;
 }
 
 .card-front-content .nickname {
-    margin: 0 0 6px;
+    margin: 0 0 4px;
     line-height: 1.1;
-    font-size: 0.82rem;
+    font-size: 0.74rem;
 }
 
 .flip-hint {
     font-family: "Barlow Condensed", Impact, sans-serif;
-    font-size: 0.68rem;
+    font-size: 0.62rem;
     font-weight: 700;
     letter-spacing: 0.1em;
     text-transform: uppercase;
@@ -644,7 +1387,7 @@ span {
 }
 
 .card-back .card-content {
-    padding: 14px 16px 12px;
+    padding: 10px 12px 10px;
     height: 100%;
     min-height: 0;
     box-sizing: border-box;
@@ -662,7 +1405,7 @@ span {
 
 .card-back .card-content h2 {
     margin: 0 0 2px;
-    font-size: 1.1rem;
+    font-size: 0.98rem;
     font-family: "Barlow Condensed", Impact, sans-serif;
     font-weight: 800;
     letter-spacing: 0.02em;
@@ -674,8 +1417,8 @@ span {
 .card-content li {
     color: #ffffff;
     margin-bottom: 0;
-    line-height: 1.25;
-    padding: 7px 0;
+    line-height: 1.2;
+    padding: 5px 0;
     border-top: 1px solid #2d2d2d;
     display: flex;
     justify-content: space-between;
@@ -700,7 +1443,7 @@ span {
 .card-content .stat-value {
     color: #ffffff;
     font-family: "Barlow Condensed", Impact, sans-serif;
-    font-size: 1.08rem;
+    font-size: 0.95rem;
     font-weight: 700;
     letter-spacing: 0.02em;
 }
@@ -735,25 +1478,24 @@ span {
     align-items: center;
     justify-content: center;
     align-self: center;
-    padding: 7px 20px;
+    padding: 5px 12px;
     border: 1px solid #ffd100;
-    border-radius: 999px;
+    border-radius: 4px;
     background: transparent;
     color: #ffd100;
     text-decoration: none;
     font-family: "Barlow Condensed", Impact, sans-serif;
     font-weight: 700;
-    font-size: 0.9rem;
+    font-size: 0.78rem;
     letter-spacing: 0.04em;
     text-transform: uppercase;
-    transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .card-content .fighter-link:hover {
     background: #ffd100;
     color: #111111;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 14px rgba(255, 209, 0, 0.4);
+    box-shadow: 0 2px 8px rgba(255, 209, 0, 0.35);
 }
 
 .flip-back-btn {
@@ -769,10 +1511,11 @@ span {
     display: flex;
     justify-content: center;
     background-color: rgba(0, 0, 0, 0.3);
-    padding: 10px;
+    padding: 8px;
 }
 
-button {
+/* Footer sample buttons only — avoid forcing height on card / tournament controls */
+.footer button {
     text-align: center;
     font-family: "Barlow Condensed", Impact, sans-serif;
     font-weight: 700;
@@ -780,29 +1523,40 @@ button {
     text-transform: uppercase;
     background-color: #666;
     border: none;
-    padding-left: 10px;
-    padding-right: 10px;
-    height: 40px;
-    border-radius: 10px;
+    padding-left: 12px;
+    padding-right: 12px;
+    height: 34px;
+    border-radius: 6px;
     color: white;
-    font-size: 22px;
+    font-size: 0.85rem;
     cursor: pointer;
-    margin: 5px;
+    margin: 4px;
 }
 
 .settings-btn {
     margin: 0;
-    font-size: 18px;
-    height: 38px;
-    padding-left: 14px;
-    padding-right: 14px;
+    font-size: 0.8rem;
+    height: 32px;
+    padding-left: 12px;
+    padding-right: 12px;
     list-style: none;
     display: inline-flex;
     align-items: center;
+    cursor: pointer;
+    border: 1px solid #5a5a5a;
+    border-radius: 6px;
+    background: #333;
+    color: #f2f2f2;
+    font-family: "Barlow Condensed", Impact, sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    box-sizing: border-box;
 }
 
-.settings-btn::-webkit-details-marker {
-    display: none;
+.settings-btn:hover {
+    border-color: #777;
+    background: #3d3d3d;
 }
 
 .settings-btn::after {
@@ -816,25 +1570,72 @@ button {
     position: relative;
 }
 
-.controls-dropdown[open] .settings-btn::after {
+.catalog-filter-toggle {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+    appearance: none;
+    pointer-events: none;
+}
+
+.controls-dropdown:has(.catalog-filter-toggle:checked) .settings-btn::after {
     content: "▲";
 }
 
 .controls-panel {
     position: absolute;
-    top: calc(100% + 8px);
+    top: calc(100% + 6px);
     right: 0;
-    width: min(330px, 85vw);
+    width: min(300px, 85vw);
     max-height: 66vh;
     overflow-y: auto;
     display: grid;
-    gap: 12px;
-    padding: 14px;
+    gap: 10px;
+    padding: 12px;
     border: 1px solid #2d2d2d;
-    border-radius: 10px;
+    border-radius: 6px;
     background-color: #1a1a1a;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
     z-index: 4;
+    transform-origin: top right;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-10px) scale(0.97);
+    transition:
+        opacity 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+        visibility 0s linear 0.32s;
+}
+
+.controls-dropdown:has(.catalog-filter-toggle:checked) .controls-panel {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
+    transition:
+        opacity 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+        visibility 0s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .controls-panel {
+        transition: none;
+    }
+
+    .controls-dropdown:has(.catalog-filter-toggle:checked) .controls-panel {
+        transition: none;
+    }
 }
 
 .controls-panel>label {
@@ -974,13 +1775,12 @@ button {
 }
 
 @media (max-width: 780px) {
-    .main-header {
-        flex-wrap: wrap;
-        gap: 10px;
-        align-items: center;
+    .catalog-toolbar {
+        flex-direction: column;
+        align-items: stretch;
     }
 
-    .controls-dropdown {
+    .catalog-toolbar .controls-dropdown {
         width: 100%;
     }
 
@@ -988,5 +1788,6 @@ button {
         left: 0;
         right: auto;
         width: min(360px, 100%);
+        transform-origin: top left;
     }
 }
