@@ -11,7 +11,7 @@
 **Planned Features — MVP**
 
 - [x] Card display for fighters
-- [x] Fighter sorting — Name, Wins, Age *(Weight sort not implemented — README marks it open)*
+- [x] Fighter sorting — Name, Wins, Age, **Weight (kg)** *(low-high / high-low in `<select>`)*
 - [x] Fighter filtering — Weight class
 - [x] Fighter filtering — Record *(all / winning / undefeated in `applyFilters`)*
 - [ ] Favorite fighters
@@ -30,7 +30,7 @@
 
 - **Stack:** Plain HTML/CSS/JS, no bundler. Open `index.html` in a browser.
 - **Data:** `const FIGHTERS_DATA = window.one_champion_fighters`; `let fighters_data = FIGHTERS_DATA` (same reference; comment in code says “copies” but no structural clone — fine if you never reassign `fighters_data` to a new array).
-- **Sort:** `sortCardsBy*` return `fighters_data.sort(...)` (mutates in place). `sortedFighters` holds the same array reference as `fighters_data` after init sort, so order stays consistent for `applyFilters` base list.
+- **Sort:** `sortCardsBy*` (name, wins, age, **weight**) return `fighters_data.sort(...)` (mutates in place). `sortedFighters` holds the same array reference as `fighters_data` after init sort, so order stays consistent for `applyFilters` base list.
 - **Refresh path:** `sortCards` → `refreshDisplay()`; `updateFilters` → `refreshDisplay()`; `toggleMetricUnits` → `refreshDisplay()`. `DOMContentLoaded` → `refreshDisplay()`.
 - **`refreshDisplay`:** `showCards(applyFilters())`.
 - **`applyFilters`:** Starts from `sortedFighters`, narrows by `weight_class_filters` (lowercase match), then `record_filter` switch (`winning`, `undefeated`, `all`). **Returns** array passed to `showCards`.
@@ -38,7 +38,7 @@
 
 ## Implemented features
 
-- **Sort:** `<select>` → `sortCards` → in-place sort → `refreshDisplay`.
+- **Sort:** `<select>` → `sortCards` → in-place sort → `refreshDisplay` (includes weight low-high / high-low).
 - **Filter:** Weight checkboxes + record radios → `updateFilters` → `refreshDisplay` → `applyFilters` inside `showCards` argument chain.
 - **Units:** Checkbox switch → `toggleMetricUnits` → `refreshDisplay` with updated formatting.
 
@@ -55,12 +55,13 @@ Fields used in UI include: `fighter_name`, `nickname`, `photo_url`, `url`, `age`
 3. **Empty record `switch` arms** — Fixed: `winning` / `undefeated` predicates implemented.
 4. **Sort comparators / `sortedFighters` init** — Addressed; in-place sort keeps `sortedFighters` and `fighters_data` aligned.
 5. **README vs code** — README and plan docs synced (One branding, MVP checkboxes, progress).
+6. **Weight sort** — `scripts.js` comparators + `index.html` `<option>`s for `weight-asc` / `weight-desc`; end-to-end in UI.
 
 ## Open issues
 
 1. **`removeLastCard` / `titles`** — Starter still broken if invoked (references removed sample array).
 2. **Optional:** Lightweight checkbox for one dataset row.
-3. **MVP not yet built:** sort by weight stat, favorites, roster CRUD, alternate list view, stretch items.
+3. **MVP not yet built:** favorites, roster CRUD, alternate list view, stretch items.
 
 ## External / rubric
 

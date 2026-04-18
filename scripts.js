@@ -168,6 +168,14 @@ function sortCardsByAgeDesc() {
     return fighters_data.sort((a, b) => b.age - a.age);
 }
 
+function sortCardsByWeightAsc() {
+    return fighters_data.sort((a, b) => a.weight - b.weight);
+}
+
+function sortCardsByWeightDesc() {
+    return fighters_data.sort((a, b) => b.weight - a.weight);
+}
+
 // Switch statement due to the number of possible sorting options within
 // the select element
 function sortCards(sortBy) {
@@ -189,6 +197,12 @@ function sortCards(sortBy) {
             break;
         case "age-desc":
             sortCardsByAgeDesc();
+            break;
+        case "weight-asc":
+            sortCardsByWeightAsc();
+            break;
+        case "weight-desc":
+            sortCardsByWeightDesc();
             break;
     }
     refreshDisplay();

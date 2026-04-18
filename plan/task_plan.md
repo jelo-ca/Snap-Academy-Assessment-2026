@@ -16,7 +16,7 @@ README title, summary, and feature list are **One Championship**–aligned and k
 |------|----------------|-----------|
 | Card display for fighters | [x] | OK |
 | Fighter sorting — Name | [x] | OK |
-| Fighter sorting — Weight | [ ] | Not implemented; dropdown is name / age / wins only |
+| Fighter sorting — Weight | [x] | `sortCardsByWeightAsc` / `Desc`; `weight-asc` / `weight-desc` in `sortCards` and `<select>` |
 | Fighter sorting — Wins | [x] | OK |
 | Fighter sorting — Age | [x] | OK |
 | Fighter filtering — Weight class | [x] | `weight_class_filters` + `refreshDisplay` |
@@ -44,9 +44,9 @@ README title, summary, and feature list are **One Championship**–aligned and k
 
 | Area | Location | Role |
 |------|----------|------|
-| Page shell + controls | `index.html` | Title, card strip, `details` for sort/filter/units, hidden card template |
+| Page shell + controls | `index.html` | Title, card strip, `details` for sort/filter/units (incl. weight sort options), hidden card template |
 | Styling | `style.css` | Dark theme, card layout, controls panel |
-| Logic | `scripts.js` | `FIGHTERS_DATA`, `refreshDisplay` → `showCards(applyFilters())`, `sortCards`, `applyFilters`, `updateFilters`, `toggleMetricUnits`, formatters |
+| Logic | `scripts.js` | `FIGHTERS_DATA`, `refreshDisplay` → `showCards(applyFilters())`, `sortCards` (+ weight comparators), `applyFilters`, `updateFilters`, `toggleMetricUnits`, formatters |
 | Data | `data/one_champion_fighters.js` | Global `one_champion_fighters` array (no fetch) |
 | Requirements | `INSTRUCTIONS.md` | Official rubric |
 | Product notes | `README.md` | Feature checklist + progress |
@@ -57,7 +57,7 @@ README title, summary, and feature list are **One Championship**–aligned and k
 ### Phase 1 — Stabilize core behavior — `complete`
 
 - [x] **`sortedFighters` + sort helpers** — `let sortedFighters`; helpers `return fighters_data.sort(...)`; initial `sortedFighters = sortCardsByNameAsc()`. _(human JS)_
-- [x] Age / wins comparators. _(human JS)_
+- [x] Age / wins / **weight** comparators (`sortCardsByWeightAsc` / `Desc`). _(human JS)_
 - [x] **Display uses filtered list** — `refreshDisplay()` calls `showCards(applyFilters())`; `sortCards` / `updateFilters` call `refreshDisplay()`. _(human JS)_
 - [x] **`applyFilters`** — Weight class via `weight_class_filters` + `toLowerCase()`; record via `record_filter` + `switch` (`winning` → `wins > losses`, `undefeated` → `losses === 0`, `all` no-op). Returns list for `showCards`. _(human JS)_
 - [x] **`updateFilters`** — Record radios set `record_filter` when checked; weight checkboxes use `addFilter` / `removeFilter` for `weight-class` only. _(human JS)_
@@ -71,7 +71,8 @@ README title, summary, and feature list are **One Championship**–aligned and k
 
 ### Phase 3 — Polish and rubric — `in progress`
 
-- [x] README: One branding; MVP table and progress aligned with code (this pass).
+- [x] README: One branding; MVP table and progress aligned with code (ongoing).
+- [x] **`index.html`:** `<option>`s for `weight-asc` / `weight-desc` match `sortCards`.
 - [ ] Remove or fix dead code (`removeLastCard` / `titles` sample).
 - [ ] Optional: GitHub Pages deploy and smoke-test published URL.
 

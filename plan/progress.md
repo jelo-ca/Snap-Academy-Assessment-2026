@@ -1,5 +1,19 @@
 # Progress log
 
+## 2026-04-17 (README + plans sync — weight sort in UI)
+
+- **`index.html`:** `<select>` includes **Weight (Low-High)** (`weight-asc`) and **Weight (High-Low)** (`weight-desc`).
+- **`README.md`:** MVP weight line checked; Progress / outstanding gaps no longer list exposing weight sort.
+- **`plan/task_plan.md`:** MVP table weight **[x]**; Phase 3 `index.html` weight options **[x]**; snapshot notes weight in sort dropdown.
+- **`plan/findings.md`:** MVP weight **[x]**; implemented sort + resolved weight-sort note updated; open issues drop weight-dropdown gap.
+
+## 2026-04-17 (README + plans sync — weight sort in JS)
+
+- **`scripts.js`:** `sortCardsByWeightAsc` / `sortCardsByWeightDesc`; `sortCards` handles `weight-asc` / `weight-desc`.
+- **`index.html`:** `<select>` unchanged — no weight options (users cannot trigger weight sort from UI until options are added).
+- **`README.md`:** Weight MVP line notes JS vs HTML gap; Progress / outstanding gaps updated (expose weight in UI vs “sort by weight” missing entirely).
+- **`plan/task_plan.md` & `plan/findings.md`:** MVP table and architecture reflect weight comparators + open UI step; resolved item for partial weight-sort rollout.
+
 ## 2026-04-17 (README + plans sync)
 
 - **`README.md`:** One-themed summary; MVP checkboxes — Record done, Weight sort explicitly open; Progress bullets condensed (dataset, sort/filter wiring, units toggle, remaining gaps).

@@ -2,7 +2,7 @@
 
 ## Summary
 
-A static catalog for One Championship fighters. Data lives in a global JS array (no fetch). Sort and filter cards, toggle metric vs imperial units for height and weight, and open fighter pages in a new tab.
+Catalog for One Championship fighters. Data sits in a global JS array (no fetch). Sort/filter cards, switch metric vs imperial on height & weight, open fighter pages in a new tab.
 
 ## Initial Features (From Sample)
 
@@ -18,7 +18,7 @@ showCards()
 [x] Card display for fighters
 [x] Fighter Sorting
     [x] Name
-    [] Weight (not in UI yet; sort options are name, age, wins)
+    [x] Weight
     [x] Wins
     [x] Age
 [x] Fighter Filtering
@@ -41,12 +41,12 @@ showCards()
 
 ## Progress
 
-- Extracted CSV from Kaggle → translated into JSON (https://csvjson.com/csv2json) → global var to avoid fetch API.
-- Built a curated dataset of 15 fighters from the One Championship site (Kaggle had no photo URLs).
-- Updated HTML/CSS for One-themed layout; `editCardContent()` uses fighter objects and `setCardField()` for DRY stat rows.
+- Extracted csv from Kaggle -> JSON using https://csvjson.com/csv2json -> global var to avoid fetch API.
+- Realized Kaggle didnt give photo links — hard-coded a dataset of 15 fighters from the One Championship website.
+- Updated HTML/CSS for One-themed layout; `editCardContent()` uses fighter objects and `setCardField()` to stay DRY on stats.
 - UI styling references https://www.onefc.com/.
-- Sorting: `<select>` with a `switch` in `sortCards()`; ascending/descending for name, age, and wins.
-- Filtering: `refreshDisplay()` → `showCards(applyFilters())` so weight-class checkboxes and record radios narrow the list correctly.
-- `FIGHTERS_DATA` / `fighters_data` / `sortedFighters` share consistent array behavior for sort + filter.
-- Metric/imperial toggle for height and weight in the controls panel (`toggleMetricUnits()`, `formatHeight`, `formatWeight`).
-- Outstanding MVP gaps: sort by weight, favorites, roster CRUD, alternate list view; starter `removeLastCard()` still references removed sample data.
+- Sorting: `<select>` + `switch` in `sortCards()`; asc/desc for name, age, wins, weight (`sortCardsByWeightAsc` / `sortCardsByWeightDesc`, options in `index.html`).
+- Wired `refreshDisplay()` so `showCards` always gets `applyFilters()` output -> weight class + record filters actually change the list.
+- Hold `FIGHTERS_DATA` const + `fighters_data` ref so sorted order and filters share the same array behavior.
+- Metric toggle in the controls (`toggleMetricUnits()`, `formatHeight`, `formatWeight`).
+- Not done yet: favorites, roster management, alternate list view. `removeLastCard()` still hits `titles` from the starter — leave it or fix later.
