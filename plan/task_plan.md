@@ -6,21 +6,21 @@ Ship a polished static catalog site for One Championship fighters: display impor
 
 ### README goals (`README.md` — author checklist)
 
-The project README still titles itself **“UFC Fighter Catalog”** and describes Kaggle/UFC copy; the **live data and UI** are One Championship–themed. Table below mirrors README; **code may be ahead of README text** (update README in Phase 3).
+README title, summary, and feature list are **One Championship**–aligned and kept in sync with the app below.
 
-**Summary (README):** Catalog from Kaggle-derived workflow; display, compare, and explore fighters (wording still UFC-oriented in README).
+**Summary (README):** Static catalog; global fighter array; sort, filter, units toggle; fighter pages in a new tab.
 
 **MVP (README)**
 
-| Item | README status | Code note (plan sync) |
-|------|----------------|------------------------|
+| Item | README status | Code note |
+|------|----------------|-----------|
 | Card display for fighters | [x] | OK |
 | Fighter sorting — Name | [x] | OK |
-| Fighter sorting — Weight | [x] | README line; `<select>` = name / age / wins only |
+| Fighter sorting — Weight | [ ] | Not implemented; dropdown is name / age / wins only |
 | Fighter sorting — Wins | [x] | OK |
 | Fighter sorting — Age | [x] | OK |
-| Fighter filtering — Weight class | [x] | README still says **BUGGED**; `refreshDisplay` → `showCards(applyFilters())` |
-| Fighter filtering — Record | [ ] | **Implemented** in `applyFilters` (`winning`, `undefeated`, `all`) — tick README when you edit file |
+| Fighter filtering — Weight class | [x] | `weight_class_filters` + `refreshDisplay` |
+| Fighter filtering — Record | [x] | `record_filter`: all / winning / undefeated |
 | Favorite fighters | [ ] | Not started |
 | Add / Update / Delete roster management | [ ] | Not started |
 | Alternative list display | [ ] | Not started |
@@ -44,12 +44,12 @@ The project README still titles itself **“UFC Fighter Catalog”** and describ
 
 | Area | Location | Role |
 |------|----------|------|
-| Page shell + controls | `index.html` | Title, horizontal card strip, `details` dropdown for sort/filter, hidden card template |
+| Page shell + controls | `index.html` | Title, card strip, `details` for sort/filter/units, hidden card template |
 | Styling | `style.css` | Dark theme, card layout, controls panel |
-| Logic | `scripts.js` | `FIGHTERS_DATA`, `refreshDisplay` → `showCards(applyFilters())`, `sortCards`, `applyFilters`, `updateFilters` |
+| Logic | `scripts.js` | `FIGHTERS_DATA`, `refreshDisplay` → `showCards(applyFilters())`, `sortCards`, `applyFilters`, `updateFilters`, `toggleMetricUnits`, formatters |
 | Data | `data/one_champion_fighters.js` | Global `one_champion_fighters` array (no fetch) |
 | Requirements | `INSTRUCTIONS.md` | Official rubric |
-| Product notes | `README.md` | Feature checklist (UFC wording; may lag code) |
+| Product notes | `README.md` | Feature checklist + progress |
 | AI scope | `.cursor/rules/snap-academy-genai-limits.mdc` | HTML/CSS assistance only |
 
 ## Phases
@@ -60,18 +60,19 @@ The project README still titles itself **“UFC Fighter Catalog”** and describ
 - [x] Age / wins comparators. _(human JS)_
 - [x] **Display uses filtered list** — `refreshDisplay()` calls `showCards(applyFilters())`; `sortCards` / `updateFilters` call `refreshDisplay()`. _(human JS)_
 - [x] **`applyFilters`** — Weight class via `weight_class_filters` + `toLowerCase()`; record via `record_filter` + `switch` (`winning` → `wins > losses`, `undefeated` → `losses === 0`, `all` no-op). Returns list for `showCards`. _(human JS)_
-- [x] **`updateFilters`** — Record radios set `record_filter` when checked; weight checkboxes use `addFilter` / `removeFilter` only for `weight-class` (no stray `record_filters`). _(human JS)_
-- [ ] Optional **HTML:** **Lightweight** checkbox (`findings.md`). _(human HTML)_
+- [x] **`updateFilters`** — Record radios set `record_filter` when checked; weight checkboxes use `addFilter` / `removeFilter` for `weight-class` only. _(human JS)_
+- [x] **Units** — Metric/imperial toggle refreshes cards with `formatHeight` / `formatWeight`. _(human JS + HTML/CSS for switch)_
+- [ ] Optional **HTML:** **Lightweight** weight-class checkbox (`findings.md`). _(human HTML)_
 
-### Phase 2 — Filtering UX and correctness — `pending`
+### Phase 2 — Filtering UX and correctness — `in progress`
 
 - [ ] Manual QA: weight multi-select + record radios + sort order on full dataset.
 - [ ] Optional: reset or document behavior if `fighters_data` vs `sortedFighters` refs ever diverge (currently same array ref + in-place `.sort()`).
 
-### Phase 3 — Polish and rubric — `pending`
+### Phase 3 — Polish and rubric — `in progress`
 
-- [ ] README: One branding; tick **Record** (and fix weight-class “BUGGED” line if behavior confirmed).
-- [ ] Remove or fix dead code (`removeLastCard` / `titles`).
+- [x] README: One branding; MVP table and progress aligned with code (this pass).
+- [ ] Remove or fix dead code (`removeLastCard` / `titles` sample).
 - [ ] Optional: GitHub Pages deploy and smoke-test published URL.
 
 ## Decisions log

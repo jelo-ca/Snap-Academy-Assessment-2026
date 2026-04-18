@@ -6,14 +6,14 @@
 
 ## README goals (`README.md`)
 
-**Branding:** README title/summary still say **UFC** / Kaggle; implementation uses **One Championship** data and styling.
+**Branding:** README describes **One Championship**; matches `index.html` title and data source.
 
 **Planned Features — MVP**
 
 - [x] Card display for fighters
-- [x] Fighter sorting — Name, **Weight** (README line only), Wins, Age — *`<select>` has name, age, wins (no separate weight-stat sort)*
-- [x] Fighter filtering — Weight class *(README still says **BUGGED**; code uses `applyFilters` + `refreshDisplay`)*
-- [x] Fighter filtering — Record *(winning / undefeated / all — in `applyFilters`; README checkbox may still be `[ ]` until you edit README)*
+- [x] Fighter sorting — Name, Wins, Age *(Weight sort not implemented — README marks it open)*
+- [x] Fighter filtering — Weight class
+- [x] Fighter filtering — Record *(all / winning / undefeated in `applyFilters`)*
 - [ ] Favorite fighters
 - [ ] Add / Update / Delete roster management
 - [ ] Alternative list display
@@ -30,15 +30,17 @@
 
 - **Stack:** Plain HTML/CSS/JS, no bundler. Open `index.html` in a browser.
 - **Data:** `const FIGHTERS_DATA = window.one_champion_fighters`; `let fighters_data = FIGHTERS_DATA` (same reference; comment in code says “copies” but no structural clone — fine if you never reassign `fighters_data` to a new array).
-- **Sort:** `sortCardsBy*` return `fighters_data.sort(...)` (mutates in place). `sortedFighters` holds initial return value — same array reference as `fighters_data`, so order stays consistent for `applyFilters` base list.
-- **Refresh path:** `sortCards` → `refreshDisplay()`; `updateFilters` → `refreshDisplay()`. `DOMContentLoaded` → `refreshDisplay()`.
+- **Sort:** `sortCardsBy*` return `fighters_data.sort(...)` (mutates in place). `sortedFighters` holds the same array reference as `fighters_data` after init sort, so order stays consistent for `applyFilters` base list.
+- **Refresh path:** `sortCards` → `refreshDisplay()`; `updateFilters` → `refreshDisplay()`; `toggleMetricUnits` → `refreshDisplay()`. `DOMContentLoaded` → `refreshDisplay()`.
 - **`refreshDisplay`:** `showCards(applyFilters())`.
 - **`applyFilters`:** Starts from `sortedFighters`, narrows by `weight_class_filters` (lowercase match), then `record_filter` switch (`winning`, `undefeated`, `all`). **Returns** array passed to `showCards`.
+- **Units:** `isMetric` toggles; `editCardContent` uses `formatHeight` / `formatWeight` for display.
 
 ## Implemented features
 
 - **Sort:** `<select>` → `sortCards` → in-place sort → `refreshDisplay`.
 - **Filter:** Weight checkboxes + record radios → `updateFilters` → `refreshDisplay` → `applyFilters` inside `showCards` argument chain.
+- **Units:** Checkbox switch → `toggleMetricUnits` → `refreshDisplay` with updated formatting.
 
 ## Data shape (per fighter)
 
@@ -49,15 +51,16 @@ Fields used in UI include: `fighter_name`, `nickname`, `photo_url`, `url`, `age`
 ## Resolved (earlier review)
 
 1. **Filter output not driving UI** — Fixed: `refreshDisplay` / `applyFilters` return path.
-2. **`record_filters` vs `record_filter`** — Fixed: radios update `record_filter`; no undeclared `record_filters` in current `addFilter` / `removeFilter`.
+2. **`record_filters` vs `record_filter`** — Fixed: radios update `record_filter`; no stray `record_filters` in `addFilter` / `removeFilter`.
 3. **Empty record `switch` arms** — Fixed: `winning` / `undefeated` predicates implemented.
-4. **Sort comparators / `sortedFighters` init** — Addressed earlier; still valid.
+4. **Sort comparators / `sortedFighters` init** — Addressed; in-place sort keeps `sortedFighters` and `fighters_data` aligned.
+5. **README vs code** — README and plan docs synced (One branding, MVP checkboxes, progress).
 
 ## Open issues
 
-1. **`removeLastCard` / `titles`** — Still broken if invoked.
-2. **README** — UFC wording; MVP checkboxes (especially Record, weight “BUGGED”) may lag code.
-3. **Optional:** Lightweight checkbox for one dataset row.
+1. **`removeLastCard` / `titles`** — Starter still broken if invoked (references removed sample array).
+2. **Optional:** Lightweight checkbox for one dataset row.
+3. **MVP not yet built:** sort by weight stat, favorites, roster CRUD, alternate list view, stretch items.
 
 ## External / rubric
 

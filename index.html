@@ -24,6 +24,28 @@
             <option value="wins-asc">Wins (Least-Most)</option>
           </select>
 
+          <fieldset class="units-fieldset">
+            <legend>Units</legend>
+            <div class="metric-switch-row">
+              <span class="metric-side metric-side-imperial">ft · lbs</span>
+              <label class="metric-switch">
+                <input
+                  type="checkbox"
+                  id="metric-units-switch"
+                  class="metric-switch-input"
+                  checked
+                  role="switch"
+                  aria-label="Use metric units: meters and kilograms"
+                  onchange="toggleMetricUnits()"
+                />
+                <span class="metric-switch-track" aria-hidden="true">
+                  <span class="metric-switch-thumb"></span>
+                </span>
+              </label>
+              <span class="metric-side metric-side-metric">m · kg</span>
+            </div>
+          </fieldset>
+
           <fieldset>
             <legend>Weight Class</legend>
             <label

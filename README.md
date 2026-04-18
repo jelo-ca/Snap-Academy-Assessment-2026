@@ -1,8 +1,8 @@
-# UFC Fighter Catalog
+# One Fighters
 
 ## Summary
 
-A UFC fighter catalog that uses data extracted from kaggle to display, compare, and explore the talented fighters of UFC
+A static catalog for One Championship fighters. Data lives in a global JS array (no fetch). Sort and filter cards, toggle metric vs imperial units for height and weight, and open fighter pages in a new tab.
 
 ## Initial Features (From Sample)
 
@@ -18,12 +18,12 @@ showCards()
 [x] Card display for fighters
 [x] Fighter Sorting
     [x] Name
-    [x] Weight
+    [] Weight (not in UI yet; sort options are name, age, wins)
     [x] Wins
     [x] Age
 [x] Fighter Filtering
-    [x] Weightclass (BUGGED)
-    [] Record
+    [x] Weight class
+    [x] Record (all / winning record / undefeated)
 [] Favorite fighters
 [] Add/Update/Delete roster management
 [] Alternative list display
@@ -34,22 +34,19 @@ showCards()
 [] Compare 2 fighters with theoretical fight outcome
 [] Make pretty
 
-### Progress
+## Resources Used
 
-- Extracted csv from Kaggle -> translated into JSON using <https://csvjson.com/csv2json> -> made into global var to avoid fetch API
+- https://www.geeksforgeeks.org/
+- https://www.xjavascript.com/
 
-- Realized kaggle didnt provide photo links so hard coded own data set of 15 fighters from OneChampionship website
+## Progress
 
-- Updated HTML to reflect object attributes
-- Updated editCardContent() to use objects as parameters and value assignment
-
-- Updated UI using https://www.onefc.com/ as style reference.
-
-- Added helper function setCardField() to exercise DRY 
-
-- Updated Card styling and added a sort/filter button to html/css using AI
-
-- Implemeneted sorting by name
-- Added ascending and descending sorting for all cases and utilized a switch statement to handle the "select" element
-
-- utilized list to implement weightclass filtering.
+- Extracted CSV from Kaggle → translated into JSON (https://csvjson.com/csv2json) → global var to avoid fetch API.
+- Built a curated dataset of 15 fighters from the One Championship site (Kaggle had no photo URLs).
+- Updated HTML/CSS for One-themed layout; `editCardContent()` uses fighter objects and `setCardField()` for DRY stat rows.
+- UI styling references https://www.onefc.com/.
+- Sorting: `<select>` with a `switch` in `sortCards()`; ascending/descending for name, age, and wins.
+- Filtering: `refreshDisplay()` → `showCards(applyFilters())` so weight-class checkboxes and record radios narrow the list correctly.
+- `FIGHTERS_DATA` / `fighters_data` / `sortedFighters` share consistent array behavior for sort + filter.
+- Metric/imperial toggle for height and weight in the controls panel (`toggleMetricUnits()`, `formatHeight`, `formatWeight`).
+- Outstanding MVP gaps: sort by weight, favorites, roster CRUD, alternate list view; starter `removeLastCard()` still references removed sample data.

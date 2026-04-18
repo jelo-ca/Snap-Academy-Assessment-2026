@@ -1,5 +1,11 @@
 # Progress log
 
+## 2026-04-17 (README + plans sync)
+
+- **`README.md`:** One-themed summary; MVP checkboxes — Record done, Weight sort explicitly open; Progress bullets condensed (dataset, sort/filter wiring, units toggle, remaining gaps).
+- **`plan/task_plan.md`:** README goal tables match code; snapshot includes `toggleMetricUnits` / formatters; Phase 1 complete + optional Lightweight; Phase 3 README item checked; removed stale UFC/BUGGED notes.
+- **`plan/findings.md`:** Branding aligned; architecture documents units path; open issues trimmed to `removeLastCard`, optional Lightweight, MVP/stretch backlog.
+
 ## 2026-04-17 (plan sync — `refreshDisplay` / `applyFilters`)
 
 - **`scripts.js`:** `FIGHTERS_DATA`; `refreshDisplay()` → `showCards(applyFilters())`; `applyFilters` returns filtered list + record `switch` filled; `updateFilters` sets `record_filter` for radios; removed broken `record_filters` usage in add/remove.

@@ -32,8 +32,8 @@
 //   nickname: "",
 //   age: ,
 //   country: "",
-//   height: "",
-//   weight: "",
+//   height: number (meters),
+//   weight: number (kg),
 //   association: "",
 //   weight_class: "",
 //   wins: ,
@@ -47,6 +47,9 @@ const FIGHTERS_DATA = window.one_champion_fighters;
 
 // Copies so we have source of truth for the data
 let fighters_data = FIGHTERS_DATA;
+
+// Metric units are initially enabled
+let isMetric = true;
 
 // Initially sortedFighters variable
 // populates with sorted fighters by name in ascending order
@@ -108,8 +111,8 @@ function editCardContent(card, fighter_object) {
 
     setCardField(card, ".age", fighter_object.age);
     setCardField(card, ".country", fighter_object.country);
-    setCardField(card, ".height", fighter_object.height);
-    setCardField(card, ".weight", fighter_object.weight);
+    setCardField(card, ".height", formatHeight(fighter_object.height, isMetric));
+    setCardField(card, ".weight", formatWeight(fighter_object.weight, isMetric));
     setCardField(card, ".association", fighter_object.association);
     setCardField(card, ".weight-class", fighter_object.weight_class);
     setCardField(card, ".wins", fighter_object.wins);
@@ -255,4 +258,26 @@ function setCardField(card, selector, value) {
         .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
         .join(" ");
     el.innerHTML = `<span class="stat-label">${label}</span><span class="stat-value">${value}</span>`;
+}
+
+function toggleMetricUnits() {
+    isMetric = !isMetric;
+    refreshDisplay();
+}
+
+function formatHeight(m, isMetric) {
+    if (isMetric) {
+        return `${m.toFixed(1)} m`;
+    } else {
+        let ft = Math.floor(m * 3.23);
+        return `${Math.round(ft)}'${ft % 10} ft`;
+    }
+}
+
+function formatWeight(kg, isMetric) {
+    if (isMetric) {
+        return `${kg.toFixed(1)} kg`;
+    } else {
+        return `${(kg * 2.2).toFixed(1)} lbs`;
+    }
 }
