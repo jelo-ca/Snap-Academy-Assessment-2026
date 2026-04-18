@@ -39,7 +39,7 @@ span {
     overflow-x: auto;
     overflow-y: hidden;
     gap: 10px;
-    margin: 20px;
+    padding: 20px;
     padding-bottom: 10px;
     -webkit-overflow-scrolling: touch;
 }
@@ -47,41 +47,134 @@ span {
 .card {
     width: 300px;
     flex: 0 0 300px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    height: 380px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: transparent;
+    perspective: 1000px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    cursor: pointer;
+}
+
+.card:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5);
+}
+
+/* ── flip mechanism ── */
+.card-flip-input {
+    display: none;
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.65s cubic-bezier(0.4, 0.2, 0.2, 1);
+}
+
+.card:has(.card-flip-input:checked) .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
     overflow: hidden;
+}
+
+/* ── front face ── */
+.card-front {
     background-color: #1a1a1a;
 }
 
-.card-content {
-    padding: 16px;
-    color: #ffffff;
+.card-flip-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    cursor: pointer;
 }
 
-.card-content h2 {
-    margin: 0 0 0px 0;
-    font-size: 20px;
+.card-front img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+}
+
+.card-front-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px 14px 14px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.55) 60%, transparent 100%);
+    z-index: 1;
+}
+
+.card-front-content h2 {
+    margin: 0 0 2px;
+    font-size: 1.3rem;
     font-family: "Barlow Condensed", Impact, sans-serif;
-    font-weight: 700;
-    letter-spacing: 0.00em;
+    font-weight: 800;
+    letter-spacing: 0.02em;
     text-transform: uppercase;
     color: #ffffff;
     line-height: 1.15;
-    min-height: 20px;
 }
 
-.card-content .nickname {
-    margin: 0 0 4px 0;
+.card-front-content .nickname {
+    margin: 0 0 6px;
     line-height: 1.1;
-    font-size: 0.85rem;
+    font-size: 0.82rem;
+}
+
+.flip-hint {
+    font-family: "Barlow Condensed", Impact, sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #ffd100;
+    opacity: 0.8;
+}
+
+/* ── back face ── */
+.card-back {
+    transform: rotateY(180deg);
+    background-color: #1a1a1a;
+}
+
+.card-back .card-content {
+    padding: 14px 16px 12px;
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.card-back .card-content h2 {
+    margin: 0 0 2px;
+    font-size: 1.1rem;
+    font-family: "Barlow Condensed", Impact, sans-serif;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: #ffffff;
+    line-height: 1.1;
 }
 
 .card-content li {
     color: #ffffff;
     margin-bottom: 0;
     line-height: 1.25;
-    padding: 8px 0;
+    padding: 7px 0;
     border-top: 1px solid #2d2d2d;
     display: flex;
     justify-content: space-between;
@@ -89,16 +182,8 @@ span {
     gap: 10px;
 }
 
-.card img {
-    width: 100%;
-    height: 220px;
-    object-fit: cover;
-    object-position: center top;
-    display: block;
-}
-
 .card-content ul {
-    margin: 8px 0 0 0;
+    margin: 6px 0 0 0;
     padding-left: 0;
     list-style: none;
 }
@@ -119,6 +204,15 @@ span {
     letter-spacing: 0.02em;
 }
 
+.card-back-footer {
+    margin-top: auto;
+    padding-top: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
 .card-content .fighter-link,
 .card-content .fighter-link:link,
 .card-content .fighter-link:visited,
@@ -128,8 +222,8 @@ span {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    margin-top: 10px;
-    padding: 8px 12px;
+    align-self: center;
+    padding: 7px 20px;
     border: 1px solid #ffd100;
     border-radius: 999px;
     background: transparent;
@@ -140,6 +234,22 @@ span {
     font-size: 0.9rem;
     letter-spacing: 0.04em;
     text-transform: uppercase;
+}
+
+.flip-back-btn {
+    font-family: "Barlow Condensed", Impact, sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #ffd100;
+    opacity: 0.8;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.flip-back-btn:hover {
+    opacity: 1;
 }
 
 .footer {

@@ -88,16 +88,28 @@ function showCards(data = fighters_data) {
 
         // Image URL is handled in the editCardContent function
         const nextCard = templateCard.cloneNode(true); // Copy the template card
-        editCardContent(nextCard, fighter); // Edit title and image
+        editCardContent(nextCard, fighter, i); // Edit title and image
         cardContainer.appendChild(nextCard); // Add new card to the container
     }
 }
 
-function editCardContent(card, fighter_object) {
+function editCardContent(card, fighter_object, index = 0) {
     card.style.display = "block";
+
+    const flipId = `card-flip-${index}`;
+    const flipInput = card.querySelector(".card-flip-input");
+    if (flipInput) {
+        flipInput.id = flipId;
+        card
+            .querySelectorAll(".card-flip-overlay, .flip-back-btn")
+            .forEach((el) => el.setAttribute("for", flipId));
+    }
 
     const cardHeader = card.querySelector("h2");
     cardHeader.textContent = fighter_object.fighter_name;
+
+    const backName = card.querySelector(".back-fighter-name");
+    if (backName) backName.textContent = fighter_object.fighter_name;
 
     const cardImage = card.querySelector("img");
     cardImage.src = fighter_object.photo_url;

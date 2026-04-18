@@ -133,21 +133,36 @@
     </header>
     <div id="card-container"></div>
     <div class="card" style="display: none">
-      <div class="card-content">
-        <h2>Fighter Name</h2>
-        <p class="nickname"><span>Nickname</span></p>
-        <img src="" alt="Fighter Photo" />
-        <ul>
-          <li class="age">Age</li>
-          <li class="country">Country</li>
-          <li class="height">Height</li>
-          <li class="weight">Weight</li>
-          <li class="association">Association</li>
-          <li class="weight-class">Weight Class</li>
-          <li class="wins">Wins</li>
-          <li class="losses">Losses</li>
-        </ul>
-        <a class="fighter-link" href="" target="_blank">View Fighter</a>
+      <input type="checkbox" class="card-flip-input" id="">
+      <div class="card-inner">
+        <div class="card-front">
+          <label class="card-flip-overlay" for=""></label>
+          <img src="" alt="Fighter Photo" />
+          <div class="card-front-content">
+            <h2>Fighter Name</h2>
+            <p class="nickname"><span>Nickname</span></p>
+            <span class="flip-hint">Tap for stats ▶</span>
+          </div>
+        </div>
+        <div class="card-back">
+          <div class="card-content">
+            <h2 class="back-fighter-name">Fighter Name</h2>
+            <ul>
+              <li class="age">Age</li>
+              <li class="country">Country</li>
+              <li class="height">Height</li>
+              <li class="weight">Weight</li>
+              <li class="association">Association</li>
+              <li class="weight-class">Weight Class</li>
+              <li class="wins">Wins</li>
+              <li class="losses">Losses</li>
+            </ul>
+            <div class="card-back-footer">
+              <a class="fighter-link" href="" target="_blank">Fighter Page</a>
+              <label class="flip-back-btn" for="">◀ Back</label>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="footer">
