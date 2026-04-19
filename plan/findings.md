@@ -42,6 +42,10 @@
 
 - **2026-04-18:** Local smoke test — all sort modes, weight-class multi-select, record filters, combined filters + units toggle; **passed** (no issues noted).
 
+## Working tree (session note)
+
+- **Uncommitted (2026-04-18):** `index.html` + `style.css` — card Add-tag SVG/CSS alignment; action buttons bottom-anchored on card fronts; bracket footer buttons use dedicated `.footer-bracket-btn` styling (yellow primary). Commit when ready; re-run smoke test after large CSS changes if needed.
+
 ## Implemented features
 
 - **Sort:** `<select>` → `sortCards` → in-place sort → `refreshDisplay` (includes weight low-high / high-low).

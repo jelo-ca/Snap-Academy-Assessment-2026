@@ -16,15 +16,17 @@ span {
 .main-header {
     background-color: rgba(0, 0, 0, 0.3);
     padding: 8px 18px 10px;
+    text-align: center;
 }
 
 .header-brand {
-    flex: 1 1 auto;
+    max-width: 42rem;
+    margin: 0 auto;
     min-width: 0;
 }
 
 .catalog-intro {
-    margin: 4px 0 0;
+    margin: 8px auto 0;
     max-width: 42rem;
     font-size: 0.8rem;
     line-height: 1.45;
@@ -33,9 +35,9 @@ span {
 }
 
 .title {
-    text-align: left;
+    text-align: center;
     margin: 0;
-    font-size: clamp(1.75rem, 5vw, 2.35rem);
+    font-size: 3rem;
     line-height: 0.95;
     font-family: "Barlow Condensed", Impact, sans-serif;
     font-weight: 800;
@@ -319,7 +321,7 @@ span {
 
 .card-ux-tag--add {
     left: calc(100% * 352 / 400);
-    top: calc(100% * 63 / 420);
+    top: calc(100% * 360 / 420);
     transform: translate(6px, -50%);
     max-width: none;
     white-space: nowrap;
@@ -581,7 +583,7 @@ span {
 
 .card-ux-sample-actions {
     position: absolute;
-    top: 8px;
+    bottom: 8px;
     right: 8px;
     z-index: 3;
 }
@@ -897,11 +899,9 @@ span {
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-        180deg,
-        rgba(0, 0, 0, 0.25) 0%,
-        rgba(0, 0, 0, 0.55) 100%
-    );
+    background: linear-gradient(180deg,
+            rgba(0, 0, 0, 0.25) 0%,
+            rgba(0, 0, 0, 0.55) 100%);
     pointer-events: none;
     z-index: 1;
 }
@@ -910,11 +910,10 @@ span {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    /* Short/wide slot crops the middle of tall portraits (neck). Anchor high for face/eyes. */
-    object-position: center 12%;
-    /* 1.2 = prior 1.1 zoom + another ~10%; -15% shifts up vs. element box */
-    transform: scale(1.2) translateY(-15%);
-    transform-origin: center 12%;
+    /* Wide slot + cover crops tall portraits; anchor on upper-mid face (not forehead-only). */
+    object-position: center 22%;
+    transform: scale(1.2) translateY(-10%);
+    transform-origin: center 32%;
     display: block;
 }
 
@@ -1008,31 +1007,6 @@ span {
     font-size: 0.75rem;
     line-height: 1.4;
     color: #a8a8a8;
-}
-
-.btn-run-tournament {
-    flex-shrink: 0;
-    padding: 6px 14px;
-    border: 1px solid #ffd100;
-    border-radius: 6px;
-    background: rgba(255, 209, 0, 0.1);
-    color: #ffd100;
-    font-family: "Barlow Condensed", Impact, sans-serif;
-    font-weight: 700;
-    font-size: 0.72rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: background 0.2s, opacity 0.2s;
-}
-
-.btn-run-tournament:hover:not(:disabled) {
-    background: rgba(255, 209, 0, 0.22);
-}
-
-.btn-run-tournament:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
 }
 
 .bracket-graph {
@@ -1197,6 +1171,93 @@ span {
 
 .catalog-toolbar .controls-dropdown {
     flex-shrink: 0;
+}
+
+.catalog-toolbar-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.catalog-view-control {
+    position: relative;
+    flex-shrink: 0;
+}
+
+/* Same visually-hidden pattern as `.catalog-filter-toggle` */
+.catalog-view-toggle {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+    appearance: none;
+    pointer-events: none;
+}
+
+.catalog-view-btn {
+    margin: 0;
+    font-size: 0.8rem;
+    height: 32px;
+    padding-left: 12px;
+    padding-right: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: 1px solid #5a5a5a;
+    border-radius: 6px;
+    background: #333;
+    color: #f2f2f2;
+    font-family: "Barlow Condensed", Impact, sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    box-sizing: border-box;
+}
+
+.catalog-view-btn:hover {
+    border-color: #777;
+    background: #3d3d3d;
+}
+
+.catalog-view-toggle:focus-visible+.catalog-view-btn {
+    outline: 2px solid #ffd100;
+    outline-offset: 2px;
+}
+
+.catalog-view-label--to-strip {
+    display: none;
+}
+
+.catalog-view-toggle:checked+.catalog-view-btn .catalog-view-label--to-grid {
+    display: none;
+}
+
+.catalog-view-toggle:checked+.catalog-view-btn .catalog-view-label--to-strip {
+    display: inline;
+}
+
+.catalog-section:has(.catalog-view-toggle:checked) #card-container {
+    flex-wrap: wrap;
+    justify-content: center;
+    overflow-x: visible;
+    overflow-y: visible;
+    scroll-behavior: auto;
+}
+
+.catalog-section:has(.catalog-view-toggle:checked) .carousel-shell::before,
+.catalog-section:has(.catalog-view-toggle:checked) .carousel-shell::after {
+    display: none;
 }
 
 /* ── fighter carousel: edge fades + custom scrollbar ── */
@@ -1383,7 +1444,7 @@ span {
 
 .card-front-actions {
     position: absolute;
-    top: 8px;
+    bottom: 8px;
     right: 8px;
     z-index: 3;
     pointer-events: auto;
@@ -1607,36 +1668,74 @@ span {
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    gap: 6px;
     background-color: rgba(0, 0, 0, 0.3);
     padding: 8px;
+    box-sizing: border-box;
 }
 
-/* Footer sample buttons only — avoid forcing height on card / tournament controls */
-.footer button {
-    text-align: center;
+.footer-bracket-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    column-gap: 12px;
+    row-gap: 8px;
+}
+
+.footer-bracket-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Bracket toolbar — secondary neutral; primary uses yellow fill */
+.footer-bracket-btn {
+    flex-shrink: 0;
+    margin-left: 0;
+    padding: 6px 14px;
+    border: 1px solid #5a5a5a;
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.35);
+    color: #c8c8c8;
     font-family: "Barlow Condensed", Impact, sans-serif;
     font-weight: 700;
-    letter-spacing: 0.03em;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
-    background-color: #666;
-    border: none;
-    padding-left: 12px;
-    padding-right: 12px;
-    height: 34px;
-    border-radius: 6px;
-    color: white;
-    font-size: 0.85rem;
+    text-align: center;
     cursor: pointer;
-    margin: 4px;
+    appearance: none;
+    -webkit-appearance: none;
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        box-shadow 0.2s ease,
+        opacity 0.2s ease;
+}
+
+.footer-bracket-btn:hover:not(:disabled) {
+    border-color: #ffd100;
+    color: #ffd100;
+    background: rgba(255, 209, 0, 0.08);
+}
+
+.footer-bracket-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
 }
 
 .footer-bracket-btn--primary {
-    background: linear-gradient(180deg, #c41e3a 0%, #8b1428 100%);
+    background: #ffd100;
+    color: #111111;
+    border-color: #ffd100;
 }
 
 .footer-bracket-btn--primary:hover:not(:disabled) {
-    filter: brightness(1.08);
+    background: #ffd100;
+    color: #111111;
+    box-shadow: 0 2px 8px rgba(255, 209, 0, 0.35);
 }
 
 .footer-bracket-btn--primary:disabled {
@@ -1890,8 +1989,18 @@ span {
         align-items: stretch;
     }
 
-    .catalog-toolbar .controls-dropdown {
+    .catalog-toolbar-actions {
         width: 100%;
+        justify-content: stretch;
+    }
+
+    .catalog-toolbar .controls-dropdown {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .catalog-toolbar .catalog-view-control {
+        flex: 0 0 auto;
     }
 
     .controls-panel {

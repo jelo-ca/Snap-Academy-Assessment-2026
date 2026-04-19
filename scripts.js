@@ -72,6 +72,21 @@ let record_filter = "all";
 let roster = new Set();
 let ROSTER_MAX = 4;
 
+// Centers the card container
+function scrollCardContainerToMiddle() {
+    const el = document.getElementById("card-container");
+    const apply = () => {
+        const maxScroll = el.scrollWidth - el.clientWidth;
+        const left = maxScroll > 0 ? maxScroll / 2 : 0;
+        el.scrollTo({
+            left,
+            behavior: "auto",
+        });
+    };
+    apply();
+    requestAnimationFrame(apply);
+}
+
 // =========== STARTING FUNCTIONS ===========
 
 // This function adds cards the page to display the data in the array
@@ -101,6 +116,8 @@ function showCards(data = fighters_data) {
         editCardContent(nextCard, fighter, uid); // uid indexes the dataset
         cardContainer.appendChild(nextCard); // Add new card to the container
     }
+
+    scrollCardContainerToMiddle();
 }
 
 function editCardContent(card, fighter_object, uid = 0) {
@@ -388,15 +405,9 @@ function refreshRosterDisplay() {
         count.textContent = String(order.length);
     }
 
-    // Disables run btn while roster is not full
     const rosterFull = order.length === ROSTER_MAX;
 
-    const runBtn = document.getElementById("btn-run-tournament");
-    if (runBtn) {
-        runBtn.disabled = !rosterFull;
-    }
-
-    // All tournament buttons are disabled while roster is not full
+    // Tournament buttons are disabled while roster is not full
     [
         "btn-footer-full-bracket",
         "btn-footer-shuffle",

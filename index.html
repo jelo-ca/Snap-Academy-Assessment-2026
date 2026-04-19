@@ -90,11 +90,11 @@
                   <line
                     class="card-ux-line"
                     x1="352"
-                    y1="63"
+                    y1="360"
                     x2="331"
-                    y2="63"
+                    y2="360"
                   />
-                  <circle class="card-ux-line-end" cx="331" cy="63" r="2.5" />
+                  <circle class="card-ux-line-end" cx="331" cy="360" r="2.5" />
                   <line
                     class="card-ux-line"
                     x1="44"
@@ -250,6 +250,7 @@
     <section class="catalog-section" aria-labelledby="catalog-heading">
       <div class="catalog-toolbar">
         <h2 id="catalog-heading" class="catalog-heading">Fighter catalog</h2>
+        <div class="catalog-toolbar-actions">
         <div class="controls-dropdown">
           <input
             type="checkbox"
@@ -385,6 +386,47 @@
             </fieldset>
           </form>
         </div>
+        <div
+          class="catalog-view-control"
+          role="radiogroup"
+          aria-label="Catalog layout"
+        >
+          <input
+            type="radio"
+            name="catalog-view"
+            id="catalog-view-strip"
+            class="catalog-view-radio"
+            value="strip"
+            checked
+            aria-controls="card-container"
+          />
+          <label for="catalog-view-strip" class="catalog-view-segment-label"
+            >Strip</label
+          >
+          <input
+            type="radio"
+            name="catalog-view"
+            id="catalog-view-grid"
+            class="catalog-view-radio"
+            value="grid"
+            aria-controls="card-container"
+          />
+          <label for="catalog-view-grid" class="catalog-view-segment-label"
+            >Grid</label
+          >
+          <input
+            type="radio"
+            name="catalog-view"
+            id="catalog-view-list"
+            class="catalog-view-radio"
+            value="list"
+            aria-controls="card-container"
+          />
+          <label for="catalog-view-list" class="catalog-view-segment-label"
+            >List</label
+          >
+        </div>
+        </div>
       </div>
       <div class="carousel-shell">
         <div id="card-container" class="horizontal-scroll-container"></div>
@@ -402,11 +444,7 @@
             <span class="roster-count-label">fighters</span>
           </p>
         </div>
-        <button
-          type="button"
-          class="btn-clear-roster"
-          onclick="clearRoster()"
-        >
+        <button type="button" class="btn-clear-roster" onclick="clearRoster()">
           Clear roster
         </button>
       </div>
@@ -473,14 +511,6 @@
             buttons in <code>scripts.js</code> (IDs below) when you are ready.
           </p>
         </div>
-        <button
-          type="button"
-          id="btn-run-tournament"
-          class="btn-run-tournament"
-          disabled
-        >
-          Play next match
-        </button>
       </div>
 
       <div
@@ -619,30 +649,34 @@
       </div>
     </div>
     <div class="footer" role="toolbar" aria-label="Bracket controls">
-      <button
-        type="button"
-        id="btn-footer-full-bracket"
-        class="footer-bracket-btn footer-bracket-btn--primary"
-        disabled
-      >
-        Simulate full bracket
-      </button>
-      <button
-        type="button"
-        id="btn-footer-shuffle"
-        class="footer-bracket-btn"
-        disabled
-      >
-        Shuffle seed order
-      </button>
-      <button
-        type="button"
-        id="btn-footer-next-match"
-        class="footer-bracket-btn"
-        disabled
-      >
-        Play next match
-      </button>
+      <div class="footer-bracket-row">
+        <div class="footer-bracket-actions">
+          <button
+            type="button"
+            id="btn-footer-shuffle"
+            class="footer-bracket-btn"
+            disabled
+          >
+            Shuffle fighters
+          </button>
+          <button
+            type="button"
+            id="btn-footer-next-match"
+            class="footer-bracket-btn"
+            disabled
+          >
+            Play next match
+          </button>
+        </div>
+        <button
+          type="button"
+          id="btn-footer-full-bracket"
+          class="footer-bracket-btn footer-bracket-btn--primary"
+          disabled
+        >
+          Simulate full bracket
+        </button>
+      </div>
     </div>
   </body>
 </html>

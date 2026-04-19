@@ -1,5 +1,12 @@
 # Progress log
 
+## 2026-04-18 (`/planning-with-files` — restore + working tree)
+
+- Re-read `plan/task_plan.md`, `plan/findings.md`, `plan/progress.md`.
+- **`session-catchup.py`:** Default `~\.claude\skills\planning-with-files\scripts\` path **missing** (Python errno 2). Re-ran from plugin cache: `...planning-with-files\2.23.0\skills\planning-with-files\scripts\session-catchup.py` — **exit 0**, no stdout.
+- **`git status`:** `main` aligned with `origin/main`; **uncommitted:** `index.html`, `style.css` (not `README.md` / `scripts.js` at check time).
+- **`git diff` (summary):** Card “Add” UX line/tag vertical alignment (SVG + `.card-ux-tag--add`); sample + front card action clusters moved **bottom** right; `.footer-bracket-btn` restyled (neutral secondary, **yellow** primary `#ffd100`, hover/disabled states) replacing generic `.footer button` block for bracket toolbar.
+
 ## 2026-04-18 (docs sync — roster vs bracket)
 
 - **`README.md`:** MVP tournament split into nested **roster [x]** vs **bracket/simulation [ ]**; Progress bullet updated (roster implemented; Run bracket + DOM still to do); `removeLastCard` note kept.
