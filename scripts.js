@@ -72,21 +72,6 @@ let record_filter = "all";
 let roster = new Set();
 let ROSTER_MAX = 4;
 
-// Centers the card container
-function scrollCardContainerToMiddle() {
-    const el = document.getElementById("card-container");
-    const apply = () => {
-        const maxScroll = el.scrollWidth - el.clientWidth;
-        const left = maxScroll > 0 ? maxScroll / 2 : 0;
-        el.scrollTo({
-            left,
-            behavior: "auto",
-        });
-    };
-    apply();
-    requestAnimationFrame(apply);
-}
-
 first_load = true;
 
 // =========== STARTING FUNCTIONS ===========
@@ -117,10 +102,6 @@ function showCards(data = fighters_data) {
         nextCard.dataset.fighterUid = String(uid);
         editCardContent(nextCard, fighter, uid); // uid indexes the dataset
         cardContainer.appendChild(nextCard); // Add new card to the container
-    }
-    if (first_load) {
-        scrollCardContainerToMiddle();
-        first_load = false;
     }
 }
 
@@ -458,7 +439,7 @@ class BracketNode {
         this.round = round;
         this.fighter_a = null;
         this.fighter_b = null;
-        this.next_node = null;
+        this.children = [];
     }
 
     setFighterA(fighter) {
@@ -469,8 +450,8 @@ class BracketNode {
         this.fighter_b = fighter;
     }
 
-    setNextNode(node) {
-        this.next_node = node;
+    addChild(node) {
+        this.children.push(node);
     }
 }
 
