@@ -46,7 +46,9 @@
 // }
 const FIGHTERS_DATA = window.one_champion_fighters;
 
-// Same array reference as loaded data; each fighter has uid from data/one_champion_fighters.js
+// =========== Initial Variables ===========
+
+// Copies so we have source of truth for the data
 let fighters_data = FIGHTERS_DATA;
 
 // Metric units are initially enabled
@@ -66,6 +68,9 @@ document.addEventListener("DOMContentLoaded", () => {
 let weight_class_filters = [];
 // Record filter is a single value that can be "all", "winning", or "undefeated"
 let record_filter = "all";
+
+let roster = new Set();
+let ROSTER_MAX = 4;
 
 // =========== STARTING FUNCTIONS ===========
 
@@ -103,6 +108,24 @@ function editCardContent(card, fighter_object, uid = 0) {
 
     const flipId = `card-flip-${uid}`;
     const flipInput = card.querySelector(".card-flip-input");
+
+    // Roster Add Button
+    // Switches each time a card is added to the roster
+    const addBtn = card.querySelector(".btn-add");
+    if (addBtn) {
+        const inRoster = roster.has(uid);
+        const rosterFull = roster.size >= ROSTER_MAX;
+        addBtn.disabled = inRoster || (!inRoster && rosterFull);
+        if (inRoster) {
+            addBtn.textContent = "Added";
+        } else if (rosterFull) {
+            addBtn.textContent = "Full";
+        } else {
+            addBtn.textContent = "Add";
+        }
+    }
+
+    // Copied from online resources
     if (flipInput) {
         flipInput.id = flipId;
         card
@@ -275,6 +298,7 @@ function applyFilters() {
     return list;
 }
 
+// Filters are applied each time since the user can apply multiple filters at once
 function refreshDisplay() {
     showCards(applyFilters());
 }
@@ -311,4 +335,88 @@ function formatWeight(kg, isMetric) {
     } else {
         return `${(kg * 2.2).toFixed(1)} lbs`;
     }
+}
+
+// =========== ROSTER FUNCTIONS ===========
+
+//Uses uid to find the fighter in the fighters_data array
+function getFighterByUid(uid) {
+    return fighters_data.find((f) => f.uid === uid);
+}
+
+function addToRoster(fighterUid) {
+    if (roster.size >= ROSTER_MAX || roster.has(fighterUid)) {
+        return;
+    }
+    roster.add(fighterUid);
+    refreshRosterDisplay();
+    refreshDisplay();
+
+    // console.log("addToRoster", fighterUid);
+    // console.log("roster", roster);
+}
+
+function removeFromRoster(fighterUid) {
+    roster.delete(fighterUid);
+    refreshRosterDisplay();
+    refreshDisplay();
+
+    // console.log("removeFromRoster", fighterUid);
+    // console.log("roster", roster);
+}
+
+function clearRoster() {
+    roster.clear();
+    refreshRosterDisplay();
+    refreshDisplay();
+
+    // console.log("roster cleared");
+    // console.log("roster", roster);
+}
+
+/** Syncs `#roster-slots` (four fixed slots) with `roster` Set insertion order. */
+function refreshRosterDisplay() {
+    const rosterSlots = document.getElementById("roster-slots");
+
+    const slots = rosterSlots.querySelectorAll(".roster-slot");
+
+    // Set to Array
+    const order = [...roster];
+
+    const count = document.getElementById("roster-count");
+    if (count) {
+        count.textContent = String(order.length);
+    }
+
+    // Disables run btn while roster is not full
+    const runBtn = document.getElementById("btn-run-tournament");
+    if (runBtn) {
+        runBtn.disabled = order.length !== ROSTER_MAX;
+    }
+
+    slots.forEach((slot, i) => {
+        slot.dataset.slotIndex = String(i);
+        const uid = order[i];
+
+        const fighter = getFighterByUid(uid);
+        if (!fighter) {
+            slot.className = "roster-slot roster-slot--empty";
+            slot.removeAttribute("data-fighter-uid");
+            slot.innerHTML =
+                '<button type="button" class="roster-slot-remove"  onclick="removeFromRoster(Number(this.closest(\'.roster-slot\').dataset.fighterUid))">x</button>';
+            return;
+        }
+
+        slot.className = "roster-slot roster-slot--filled";
+        slot.dataset.fighterUid = String(uid);
+        slot.innerHTML =
+            '<button type="button" class="roster-slot-remove"  onclick="removeFromRoster(Number(this.closest(\'.roster-slot\').dataset.fighterUid))">x</button>' +
+            '<div class="roster-slot-photo-wrap"><img class="roster-slot-photo" alt="" /></div>' +
+            '<span class="roster-slot-name"></span>';
+        const img = slot.querySelector(".roster-slot-photo");
+        const name = slot.querySelector(".roster-slot-name");
+        img.src = fighter.photo_url;
+        img.alt = fighter.fighter_name;
+        name.textContent = fighter.fighter_name;
+    });
 }

@@ -13,8 +13,9 @@
       <div class="header-brand">
         <h1 class="title">One Fighters</h1>
         <p class="catalog-intro">
-          Browse One Championship athletes: use Sort &amp; Filter above the card strip,
-          open fighter pages, then choose four for the mini bracket below.
+          Browse One Championship athletes: use Sort &amp; Filter above the card
+          strip, open fighter pages, then choose four for the mini bracket
+          below.
         </p>
       </div>
     </header>
@@ -84,13 +85,7 @@
                   aria-hidden="true"
                 >
                   <!-- Card: x=72–328 (hero dot intentionally overlaps the photo) -->
-                  <line
-                    class="card-ux-line"
-                    x1="44"
-                    y1="94"
-                    x2="120"
-                    y2="94"
-                  />
+                  <line class="card-ux-line" x1="44" y1="94" x2="120" y2="94" />
                   <circle class="card-ux-line-end" cx="120" cy="94" r="2.5" />
                   <line
                     class="card-ux-line"
@@ -271,7 +266,11 @@
             aria-label="Sort and filter fighters"
           >
             <label for="sort-by">Sort by</label>
-            <select id="sort-by" name="sort-by" onchange="sortCards(this.value)">
+            <select
+              id="sort-by"
+              name="sort-by"
+              onchange="sortCards(this.value)"
+            >
               <option value="name-asc">Name (A-Z)</option>
               <option value="name-desc">Name (Z-A)</option>
               <option value="age-asc">Age (Low-High)</option>
@@ -394,13 +393,22 @@
 
     <section class="roster-section" aria-labelledby="roster-heading">
       <div class="roster-section-head">
-        <h2 id="roster-heading" class="roster-heading">Tournament roster</h2>
-        <p class="roster-caption">
-          <span id="roster-count" class="roster-count-current">0</span>
-          <span class="roster-count-sep">/</span>
-          <span class="roster-count-max">4</span>
-          <span class="roster-count-label">fighters</span>
-        </p>
+        <div class="roster-section-title-block">
+          <h2 id="roster-heading" class="roster-heading">Tournament roster</h2>
+          <p class="roster-caption">
+            <span id="roster-count" class="roster-count-current">0</span>
+            <span class="roster-count-sep">/</span>
+            <span class="roster-count-max">4</span>
+            <span class="roster-count-label">fighters</span>
+          </p>
+        </div>
+        <button
+          type="button"
+          class="btn-clear-roster"
+          onclick="clearRoster()"
+        >
+          Clear roster
+        </button>
       </div>
       <ol
         class="roster-slots"
@@ -408,15 +416,47 @@
         aria-label="Four roster slots. Order sets bracket seeds (1 vs 2, 3 vs 4)."
       >
         <li class="roster-slot roster-slot--empty" data-slot-index="0">
+          <button
+            type="button"
+            class="roster-slot-remove"
+            aria-label="Remove fighter from roster"
+            onclick="removeFromRoster(Number(this.closest('.roster-slot').dataset.fighterUid))"
+          >
+            ×
+          </button>
           <span class="roster-slot-placeholder">Empty</span>
         </li>
         <li class="roster-slot roster-slot--empty" data-slot-index="1">
+          <button
+            type="button"
+            class="roster-slot-remove"
+            aria-label="Remove fighter from roster"
+            onclick="removeFromRoster(Number(this.closest('.roster-slot').dataset.fighterUid))"
+          >
+            ×
+          </button>
           <span class="roster-slot-placeholder">Empty</span>
         </li>
         <li class="roster-slot roster-slot--empty" data-slot-index="2">
+          <button
+            type="button"
+            class="roster-slot-remove"
+            aria-label="Remove fighter from roster"
+            onclick="removeFromRoster(Number(this.closest('.roster-slot').dataset.fighterUid))"
+          >
+            ×
+          </button>
           <span class="roster-slot-placeholder">Empty</span>
         </li>
         <li class="roster-slot roster-slot--empty" data-slot-index="3">
+          <button
+            type="button"
+            class="roster-slot-remove"
+            aria-label="Remove fighter from roster"
+            onclick="removeFromRoster(Number(this.closest('.roster-slot').dataset.fighterUid))"
+          >
+            ×
+          </button>
           <span class="roster-slot-placeholder">Empty</span>
         </li>
       </ol>
@@ -543,6 +583,7 @@
               type="button"
               class="btn-add"
               aria-label="Add this fighter to your tournament roster"
+              onclick="addToRoster(Number(this.closest('.card').dataset.fighterUid))"
             >
               Add
             </button>

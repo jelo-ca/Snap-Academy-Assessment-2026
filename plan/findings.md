@@ -14,7 +14,7 @@
 - [x] Fighter sorting — Name, Wins, Age, **Weight (kg)** *(low-high / high-low in `<select>`)*
 - [x] Fighter filtering — Weight class
 - [x] Fighter filtering — Record *(all / winning / undefeated in `applyFilters`)*
-- [ ] **Four-fighter tournament roster + stat-based bracket simulation** *(HTML/CSS scaffold; JS = author — see `plan/task_plan.md` Phase 4)*
+- [ ] **Four-fighter tournament roster + stat-based bracket simulation** *(roster + strip **done** in `scripts.js`; bracket run + probabilistic DOM updates **pending** — `plan/task_plan.md` Phase 4)*
 - ~~Favorite fighters *(optional separate from roster)*~~ *(README strike-through — deferred)*
 - [ ] Add / Update / Delete **full** roster management **beyond tournament picks**
 - [ ] Alternative list display
@@ -22,7 +22,7 @@
 **Planned Features — Stretch**
 
 - [ ] Carousel-style card selection
-- [ ] Compare **4** fighters — small elimination bracket *(probabilistic; README: same planned item as MVP tournament)*
+- [ ] Compare **4** fighters — small elimination bracket *(probabilistic; same scope as MVP tournament line — roster done, bracket sim pending)*
 - [ ] Make pretty
 
 **Initial Features (from sample, per README):** `removeLastCard()`, `quoteAlert()`, `editCardContent()`, `showCards()`.
@@ -30,13 +30,13 @@
 ## Architecture
 
 - **Stack:** Plain HTML/CSS/JS, no bundler. Open `index.html` in a browser.
-- **Data:** `const FIGHTERS_DATA = window.one_champion_fighters`; `let fighters_data = FIGHTERS_DATA` (same reference; comment in code says “copies” but no structural clone — fine if you never reassign `fighters_data` to a new array).
+- **Data:** `FIGHTERS_DATA` from global; `fighters_data` built with **`uid`** per row (`map`) for stable roster keys. Roster: **`Set` of `uid`** (max 4), `getFighterByUid`, `refreshRosterDisplay` drives `#roster-slots`.
 - **Sort:** `sortCardsBy*` (name, wins, age, **weight**) return `fighters_data.sort(...)` (mutates in place). `sortedFighters` holds the same array reference as `fighters_data` after init sort, so order stays consistent for `applyFilters` base list.
 - **Refresh path:** `sortCards` → `refreshDisplay()`; `updateFilters` → `refreshDisplay()`; `toggleMetricUnits` → `refreshDisplay()`. `DOMContentLoaded` → `refreshDisplay()`.
 - **`refreshDisplay`:** `showCards(applyFilters())`.
 - **`applyFilters`:** Starts from `sortedFighters`, narrows by `weight_class_filters` (lowercase match), then `record_filter` switch (`winning`, `undefeated`, `all`). **Returns** array passed to `showCards`.
 - **Units:** `isMetric` toggles; `editCardContent` uses `formatHeight` / `formatWeight` for display.
-- **Mini tournament (planned):** `index.html` exposes **Tournament roster** (`#roster-slots`, 4 slots), **Run bracket** (`#btn-run-tournament`), and a **semis + final** graph (`#bracket-graph`, `#bracket-sf1-a` … `#bracket-champion`). Styling in `style.css` under `.roster-section` / `.tournament-section`. **Logic** (roster state, probabilistic bouts, DOM updates) is **not** in scope for genAI in repo — implement in `scripts.js` per README Progress.
+- **Mini tournament:** **Roster** implemented in author JS (`Set`, add/remove, strip UI, **Run** button enables at 4). **Bracket graph** HTML/CSS exists; **probabilistic bouts + filling bracket nodes** on **Run bracket** click still **to implement** in `scripts.js`.
 
 ## QA
 
@@ -47,6 +47,7 @@
 - **Sort:** `<select>` → `sortCards` → in-place sort → `refreshDisplay` (includes weight low-high / high-low).
 - **Filter:** Weight checkboxes + record radios → `updateFilters` → `refreshDisplay` → `applyFilters` inside `showCards` argument chain.
 - **Units:** Checkbox switch → `toggleMetricUnits` → `refreshDisplay` with updated formatting.
+- **Roster:** `.btn-add` → `addToRoster` (from `index.html` `onclick`); `editCardContent` sets Add / Added / Full; `removeFromRoster` from strip.
 
 ## Data shape (per fighter)
 
@@ -62,12 +63,13 @@ Fields used in UI include: `fighter_name`, `nickname`, `photo_url`, `url`, `age`
 4. **Sort comparators / `sortedFighters` init** — Addressed; in-place sort keeps `sortedFighters` and `fighters_data` aligned.
 5. **README vs code** — README and plan docs synced (One branding, MVP checkboxes, progress).
 6. **Weight sort** — `scripts.js` comparators + `index.html` `<option>`s for `weight-asc` / `weight-desc`; end-to-end in UI.
+7. **Tournament roster strip** — `Set`-backed roster, `refreshRosterDisplay`, `#btn-run-tournament` gating.
 
 ## Open issues
 
 1. **`removeLastCard` / `titles`** — Starter still broken if invoked (references removed sample array).
 2. **Optional:** Lightweight checkbox for one dataset row.
-3. **Mini tournament (README MVP):** wire roster + bracket simulation in author JS (Phase 4 in `task_plan.md`).
+3. **Mini tournament (README MVP):** **`Run bracket`** handler + stat-based winners + DOM updates for `#bracket-sf1-a` … `#bracket-champion` (Phase 4 remainder in `task_plan.md`).
 4. **MVP not yet built:** full CRUD beyond tournament picks, alternate list view, stretch items (carousel, “make pretty”).
 
 ## External / rubric

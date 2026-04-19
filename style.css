@@ -362,6 +362,7 @@ span {
         opacity: 0;
         transform: translate(-100%, calc(-50% + 14px));
     }
+
     to {
         opacity: 1;
         transform: translate(-100%, -50%);
@@ -373,6 +374,7 @@ span {
         opacity: 0;
         transform: translate(6px, calc(-50% + 14px));
     }
+
     to {
         opacity: 1;
         transform: translate(6px, -50%);
@@ -391,10 +393,21 @@ span {
     animation: card-tag-rise-r 0.7s ease forwards;
 }
 
-.card-ux-tag--photo    { animation-delay: 0.1s; }
-.card-ux-tag--add      { animation-delay: 0.24s; }
-.card-ux-tag--identity { animation-delay: 0.38s; }
-.card-ux-tag--flip     { animation-delay: 0.52s; }
+.card-ux-tag--photo {
+    animation-delay: 0.1s;
+}
+
+.card-ux-tag--add {
+    animation-delay: 0.24s;
+}
+
+.card-ux-tag--identity {
+    animation-delay: 0.38s;
+}
+
+.card-ux-tag--flip {
+    animation-delay: 0.52s;
+}
 
 .card-ux-tag--stats,
 .card-ux-tag--link {
@@ -410,6 +423,7 @@ span {
 }
 
 @media (prefers-reduced-motion: reduce) {
+
     .card-ux-tag--photo,
     .card-ux-tag--add,
     .card-ux-tag--identity,
@@ -750,10 +764,15 @@ span {
 .roster-section-head {
     display: flex;
     flex-wrap: wrap;
-    align-items: baseline;
+    align-items: flex-start;
     justify-content: space-between;
     gap: 6px 12px;
     margin-bottom: 8px;
+}
+
+.roster-section-title-block {
+    flex: 1;
+    min-width: 0;
 }
 
 .roster-heading {
@@ -790,6 +809,28 @@ span {
     text-transform: lowercase;
 }
 
+.btn-clear-roster {
+    flex-shrink: 0;
+    padding: 6px 12px;
+    border: 1px solid #5a5a5a;
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.35);
+    color: #c8c8c8;
+    font-family: "Barlow Condensed", Impact, sans-serif;
+    font-weight: 700;
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+
+.btn-clear-roster:hover {
+    border-color: #ffd100;
+    color: #ffd100;
+    background: rgba(255, 209, 0, 0.08);
+}
+
 .roster-slots {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -806,6 +847,7 @@ span {
 }
 
 .roster-slot {
+    position: relative;
     min-height: 58px;
     border: 1px dashed #3d3d3d;
     border-radius: 6px;
@@ -830,54 +872,107 @@ span {
     color: #6a6a6a;
 }
 
+.roster-slot--empty .roster-slot-remove {
+    display: none;
+}
+
 .roster-slot--filled {
     border-style: solid;
     border-color: #ffd100;
-    flex-direction: column;
-    gap: 6px;
-    justify-content: center;
-    align-items: stretch;
+    padding: 0;
+    overflow: hidden;
+    /* Image fills the slot; name is layered on top (see below) */
 }
 
-.roster-slot-photo {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
+/* Full-bleed photo under the slot border radius */
+.roster-slot--filled .roster-slot-photo-wrap {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    border-radius: inherit;
+    background: #141414;
+}
+
+.roster-slot--filled .roster-slot-photo-wrap::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.25) 0%,
+        rgba(0, 0, 0, 0.55) 100%
+    );
+    pointer-events: none;
+    z-index: 1;
+}
+
+.roster-slot--filled .roster-slot-photo {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    align-self: center;
-    border: 1px solid #2d2d2d;
+    /* Short/wide slot crops the middle of tall portraits (neck). Anchor high for face/eyes. */
+    object-position: center 12%;
+    /* 1.2 = prior 1.1 zoom + another ~10%; -15% shifts up vs. element box */
+    transform: scale(1.2) translateY(-15%);
+    transform-origin: center 12%;
+    display: block;
 }
 
-.roster-slot-name {
+/* Centered over the image, in front */
+.roster-slot--filled .roster-slot-name {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    padding: 0 10px;
+    box-sizing: border-box;
     font-family: "Barlow Condensed", Impact, sans-serif;
-    font-size: 0.78rem;
-    font-weight: 700;
-    line-height: 1.15;
+    font-size: 1.15rem;
+    font-weight: 800;
+    line-height: 1.12;
+    letter-spacing: 0.02em;
     color: #ffffff;
+    text-align: center;
     display: -webkit-box;
     -webkit-line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    text-shadow:
+        0 0 2px rgba(0, 0, 0, 1),
+        0 2px 10px rgba(0, 0, 0, 0.85);
+    pointer-events: none;
 }
 
 .roster-slot-remove {
-    margin-top: 2px;
-    padding: 4px 10px;
-    font-size: 0.65rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    border-radius: 999px;
-    border: 1px solid #5a5a5a;
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    z-index: 3;
+    box-sizing: border-box;
+    width: 22px;
+    height: 22px;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    font-size: 1.1rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 0;
     background: transparent;
     color: #c8c8c8;
     cursor: pointer;
-    font-family: "Barlow Condensed", Impact, sans-serif;
-    font-weight: 700;
-    align-self: center;
+    font-family: system-ui, sans-serif;
+    outline: none;
+    box-shadow: none;
 }
 
 .roster-slot-remove:hover {
-    border-color: #ffd100;
     color: #ffd100;
 }
 

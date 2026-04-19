@@ -1,5 +1,11 @@
 # Progress log
 
+## 2026-04-18 (docs sync — roster vs bracket)
+
+- **`README.md`:** MVP tournament split into nested **roster [x]** vs **bracket/simulation [ ]**; Progress bullet updated (roster implemented; Run bracket + DOM still to do); `removeLastCard` note kept.
+- **`plan/task_plan.md`:** MVP/Stretch rows **partial**; Logic snapshot; Phase 4 **`in progress`** with roster + gating **[x]**, run + simulation **[ ]**.
+- **`plan/findings.md`:** Data/roster architecture; mini tournament split; resolved #7 roster strip; open issue #3 narrowed to bracket handler + DOM.
+
 ## 2026-04-18 (plan sync — README mini tournament)
 
 - **`plan/task_plan.md`:** Goal + README tables updated for **four-fighter roster + stat-based bracket** (MVP), deferred favorites per README strike-through, CRUD wording “beyond tournament picks,” Stretch “compare 4” = same feature; codebase snapshot + **Phase 4 — Mini tournament** with roster / run / simulation / README checkoff bullets; decisions row for tournament scope.

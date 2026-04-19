@@ -24,7 +24,9 @@ showCards()
 [x] Fighter Filtering
     [x] Weight class
     [x] Record (all / winning record / undefeated)
-[] Four-fighter tournament roster + stat-based bracket simulation *(UI scaffold in HTML/CSS; JS = your implementation)*
+[ ] Four-fighter tournament roster + stat-based bracket simulation *(full feature — see nested)*
+    [x] Roster: up to four picks (`Set` + insertion order = seeds); `#roster-count`; `#roster-slots` UI; Add / Added / Full on cards; remove from strip; `#btn-run-tournament` enabled when roster has 4
+    [ ] Run bracket: click handler, semifinals (1v2, 3v4) → final, stat-weighted `Math.random()` (or your model), write names into `#bracket-sf1-a` … `#bracket-champion` and optional `*-meta`
 ~~[] Favorite fighters (optional separate from roster)~~
 [] Add/Update/Delete full roster management beyond tournament picks
 [] Alternative list display
@@ -39,6 +41,7 @@ showCards()
 
 - https://www.geeksforgeeks.org/
 - https://www.xjavascript.com/
+- https://developer.mozilla.org/
 
 ## Progress
 
@@ -50,5 +53,5 @@ showCards()
 - Wired `refreshDisplay()` so `showCards` always gets `applyFilters()` output -> weight class + record filters actually change the list.
 - Hold `FIGHTERS_DATA` const + `fighters_data` ref so sorted order and filters share the same array behavior.
 - Metric toggle in the controls (`toggleMetricUnits()`, `formatHeight`, `formatWeight`).
-- Planned: implement tournament roster + bracket simulation in author-written JS (e.g. array + `Set` for roster, tree-shaped bracket, stat-based `Math.random()` bouts). HTML/CSS hooks: `#roster-slots`, `#btn-run-tournament`, `#bracket-sf1-a` … `#bracket-champion`.
-- Not done yet: separate “favorites” list, full CRUD roster, alternate list view. `removeLastCard()` still hits `titles` from the starter — leave it or fix later.
+- **Tournament (author JS):** roster flow implemented — `Set` for up to four `uid`s, `addToRoster` / `removeFromRoster`, `refreshRosterDisplay()` syncs `#roster-slots` and `#roster-count`, enables `#btn-run-tournament` at four fighters. **Still to do:** wire **Run bracket** to a stat-based simulator and update the bracket graph DOM (`#bracket-sf1-a` … `#bracket-champion`, `*-meta`).
+- Not done yet: bracket simulation + DOM updates; separate “favorites” list; full CRUD roster beyond tournament picks; alternate list view. **`removeLastCard()`** still references removed starter `titles` — remove footer hook or fix when polishing.
