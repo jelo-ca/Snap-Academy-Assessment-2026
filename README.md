@@ -29,7 +29,7 @@ showCards()
     [ ] Run bracket: click handler, semifinals (1v2, 3v4) → final, stat-weighted `Math.random()` (or your model), write names into `#bracket-sf1-a` … `#bracket-champion` and optional `*-meta`
 ~~[] Favorite fighters (optional separate from roster)~~
 ~~[] Add/Update/Delete full roster management beyond tournament picks~~
-[] Alternative list display
+[x] Alternative list display
 
 ### Stretch
 
@@ -41,6 +41,7 @@ showCards()
 - https://www.geeksforgeeks.org/
 - https://www.xjavascript.com/
 - https://developer.mozilla.org/
+- https://www.javaspring.net/blog/javascript-building-a-hierarchical-tree/
 
 ## Progress
 

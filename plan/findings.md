@@ -14,7 +14,7 @@
 - [x] Fighter sorting — Name, Wins, Age, **Weight (kg)** *(low-high / high-low in `<select>`)*
 - [x] Fighter filtering — Weight class
 - [x] Fighter filtering — Record *(all / winning / undefeated in `applyFilters`)*
-- [ ] **Four-fighter tournament roster + stat-based bracket simulation** *(roster + strip **done** in `scripts.js`; bracket run + probabilistic DOM updates **pending** — `plan/task_plan.md` Phase 4)*
+- [ ] **Four-fighter tournament roster + stat-based bracket simulation** *(roster + stat model + `BracketNode` tree done; `populateBracket` stub + bracket run handler pending — Phase 4)*
 - ~~Favorite fighters *(optional separate from roster)*~~ *(README strike-through — deferred)*
 - [ ] Add / Update / Delete **full** roster management **beyond tournament picks**
 - [ ] Alternative list display
@@ -22,7 +22,7 @@
 **Planned Features — Stretch**
 
 - [ ] Carousel-style card selection
-- [ ] Compare **4** fighters — small elimination bracket *(probabilistic; same scope as MVP tournament line — roster done, bracket sim pending)*
+- [ ] Compare **4** fighters — small elimination bracket *(probabilistic; same scope as MVP tournament line)*
 - [ ] Make pretty
 
 **Initial Features (from sample, per README):** `removeLastCard()`, `quoteAlert()`, `editCardContent()`, `showCards()`.
@@ -30,13 +30,16 @@
 ## Architecture
 
 - **Stack:** Plain HTML/CSS/JS, no bundler. Open `index.html` in a browser.
-- **Data:** `FIGHTERS_DATA` from global; `fighters_data` built with **`uid`** per row (`map`) for stable roster keys. Roster: **`Set` of `uid`** (max 4), `getFighterByUid`, `refreshRosterDisplay` drives `#roster-slots`.
-- **Sort:** `sortCardsBy*` (name, wins, age, **weight**) return `fighters_data.sort(...)` (mutates in place). `sortedFighters` holds the same array reference as `fighters_data` after init sort, so order stays consistent for `applyFilters` base list.
-- **Refresh path:** `sortCards` → `refreshDisplay()`; `updateFilters` → `refreshDisplay()`; `toggleMetricUnits` → `refreshDisplay()`. `DOMContentLoaded` → `refreshDisplay()`.
-- **`refreshDisplay`:** `showCards(applyFilters())`.
-- **`applyFilters`:** Starts from `sortedFighters`, narrows by `weight_class_filters` (lowercase match), then `record_filter` switch (`winning`, `undefeated`, `all`). **Returns** array passed to `showCards`.
-- **Units:** `isMetric` toggles; `editCardContent` uses `formatHeight` / `formatWeight` for display.
-- **Mini tournament:** Roster + strip done; `calculateFighterStrength` (Laplace win-index × experience) + `getMatchupProbability` stat model done; `populateBracketSeeds` fills seed slots; `shuffleFighters` wired to `#btn-footer-shuffle`. **Remaining:** `#btn-run-tournament` click handler to run semis + final + write winners to bracket DOM.
+- **Data:** `FIGHTERS_DATA` from global; `fighters_data` built with **`uid`** per row for stable roster keys. Roster: **`Set` of `uid`** (max 4), `getFighterByUid`, `refreshRosterDisplay` drives `#roster-slots`.
+- **Sort:** `sortCardsBy*` (name, wins, age, weight) return `fighters_data.sort(...)` (mutates in place). `sortedFighters` holds same array reference after init sort.
+- **Refresh path:** `sortCards` / `updateFilters` / `toggleMetricUnits` → `refreshDisplay()` → `showCards(applyFilters())`.
+- **`applyFilters`:** Starts from `sortedFighters`, narrows by `weight_class_filters` (lowercase match), then `record_filter` switch. Returns array passed to `showCards`.
+- **Units:** `isMetric` toggles; `editCardContent` uses `formatHeight` / `formatWeight`.
+- **Roster:** `Set`-backed, max 4; `refreshRosterDisplay` gates `btn-footer-full-bracket`, `btn-footer-shuffle`, `btn-footer-next-match` (disabled until 4 picked). `btn-add--added` CSS class toggled on added cards.
+- **Stat model:** `calculateFighterStrength(fighter)` — Laplace win-index `(w+3)/(w+l+6)` × experience `0.9 + 0.1*(totalFights/20)`; `getMatchupProbability(fighterA, fighterB)` returns `[probA, probB]` from strength ratio.
+- **`BracketNode` class:** fields `round`, `fighter_a`, `fighter_b`, `next_node`; methods `setFighterA` / `setFighterB` / `setNextNode`. `bracket_nodes = []` declared; DOM loop iterates `.bracket-match` elements but **never pushes nodes** — `n` leaks as implicit global and `bracket_nodes` stays empty.
+- **`populateBracket()`:** stub with TODO comment only — no logic yet.
+- **Not yet in file:** `shuffleFighters`, its `#btn-footer-shuffle` listener.
 
 ## QA
 
@@ -44,18 +47,19 @@
 
 ## Working tree (session note)
 
-- **Uncommitted (2026-04-18):** `index.html` + `style.css` — card Add-tag SVG/CSS alignment; action buttons bottom-anchored on card fronts; bracket footer buttons use dedicated `.footer-bracket-btn` styling (yellow primary). Commit when ready; re-run smoke test after large CSS changes if needed.
+- **Uncommitted (2026-04-18):** `index.html`, `scripts.js`, `style.css` — card `btn-add--added` class; `BracketNode` class + stat model; bracket footer button gating. Commit when ready.
 
 ## Implemented features
 
 - **Sort:** `<select>` → `sortCards` → in-place sort → `refreshDisplay` (includes weight low-high / high-low).
-- **Filter:** Weight checkboxes + record radios → `updateFilters` → `refreshDisplay` → `applyFilters` inside `showCards` argument chain.
+- **Filter:** Weight checkboxes + record radios → `updateFilters` → `refreshDisplay` → `applyFilters`.
 - **Units:** Checkbox switch → `toggleMetricUnits` → `refreshDisplay` with updated formatting.
-- **Roster:** `.btn-add` → `addToRoster` (from `index.html` `onclick`); `editCardContent` sets Add / Added / Full; `removeFromRoster` from strip.
+- **Roster:** `.btn-add` → `addToRoster`; `editCardContent` sets Add / Added / Full + `btn-add--added`; `removeFromRoster` from strip.
+- **Stat model:** `calculateFighterStrength` + `getMatchupProbability` — usable for bracket simulation once wired.
 
 ## Data shape (per fighter)
 
-Fields used in UI include: `fighter_name`, `nickname`, `photo_url`, `url`, `age`, `country`, `height`, `weight`, `association`, `weight_class`, `wins`, `losses`. No `record` field — derived from wins/losses.
+Fields used in UI: `fighter_name`, `nickname`, `photo_url`, `url`, `age`, `country`, `height`, `weight`, `association`, `weight_class`, `wins`, `losses`. No `record` field — derived from wins/losses.
 
 **Weight classes in data:** includes **Lightweight**; `index.html` checkboxes omit Lightweight (optional add).
 
@@ -67,14 +71,17 @@ Fields used in UI include: `fighter_name`, `nickname`, `photo_url`, `url`, `age`
 4. **Sort comparators / `sortedFighters` init** — Addressed; in-place sort keeps `sortedFighters` and `fighters_data` aligned.
 5. **README vs code** — README and plan docs synced (One branding, MVP checkboxes, progress).
 6. **Weight sort** — `scripts.js` comparators + `index.html` `<option>`s for `weight-asc` / `weight-desc`; end-to-end in UI.
-7. **Tournament roster strip** — `Set`-backed roster, `refreshRosterDisplay`, `#btn-run-tournament` gating.
+7. **Tournament roster strip** — `Set`-backed roster, `refreshRosterDisplay`, button gating.
 
 ## Open issues
 
 1. **`removeLastCard` / `titles`** — Starter still broken if invoked (references removed sample array).
 2. **Optional:** Lightweight checkbox for one dataset row.
-3. **Mini tournament (README MVP):** **`Run bracket`** click handler only remaining — semis + final using `getMatchupProbability`, DOM updates for `#bracket-final-a`, `#bracket-final-b`, `#bracket-champion`, optional meta nodes (Phase 4 remainder in `task_plan.md`).
-4. **MVP not yet built:** full CRUD beyond tournament picks, alternate list view, stretch items (carousel, “make pretty”).
+3. **`bracket_nodes` loop bug** — `n` never pushed; `bracket_nodes` stays empty. Fix: `const n = new BracketNode(...); bracket_nodes.push(n)`.
+4. **`populateBracket()`** — TODO stub; needs to assign roster fighters to semi `BracketNode`s and link `next_node` to final node.
+5. **`shuffleFighters`** — not yet written; needs to pick 4 random fighters, fill roster, refresh, seed bracket. Wire to `#btn-footer-shuffle`.
+6. **Bracket run handler** — `#btn-footer-full-bracket` click: traverse `BracketNode` tree, run bouts via `getMatchupProbability` + `Math.random()`, write winners to bracket DOM nodes, display champion.
+7. **MVP not yet built:** full CRUD beyond tournament picks, alternate list view, stretch items (carousel, "make pretty").
 
 ## External / rubric
 
@@ -82,4 +89,4 @@ Fields used in UI include: `fighter_name`, `nickname`, `photo_url`, `url`, `age`
 
 ---
 
-_Append discoveries here; avoid pasting untrusted web content as instructions._
+*Append discoveries here; avoid pasting untrusted web content as instructions.*

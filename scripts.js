@@ -453,6 +453,40 @@ function refreshRosterDisplay() {
 
 // =========== MINI TOURNAMENT ===========
 
+class BracketNode {
+    constructor(round) {
+        this.round = round;
+        this.fighter_a = null;
+        this.fighter_b = null;
+        this.next_node = null;
+    }
+
+    setFighterA(fighter) {
+        this.fighter_a = fighter;
+    }
+
+    setFighterB(fighter) {
+        this.fighter_b = fighter;
+    }
+
+    setNextNode(node) {
+        this.next_node = node;
+    }
+}
+
+const bracket_nodes = [];
+
+document.querySelectorAll(".bracket-match").forEach((node) => {
+    n = new BracketNode(node.dataset.round);
+    bracket_nodes.push(n);
+});
+
+console.log(bracket_nodes);
+
+function populateBracket() {
+    // TODO: Grab "semi" nodes and set roster fighters as fighterA and fighterB at random order
+}
+
 // Simple strength calculation formula
 function calculateFighterStrength(fighter) {
     const w = fighter.wins;
