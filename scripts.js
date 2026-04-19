@@ -439,6 +439,7 @@ class BracketNode {
         this.round = round;
         this.fighter_a = null;
         this.fighter_b = null;
+        this.winner = null;
         this.children = [];
     }
 
@@ -448,6 +449,10 @@ class BracketNode {
 
     setFighterB(fighter) {
         this.fighter_b = fighter;
+    }
+
+    setWinner(fighter) {
+        this.winner = fighter;
     }
 
     addChild(node) {
@@ -506,3 +511,20 @@ function getMatchupProbability(fighterA, fighterB) {
 
     return [probA, probB];
 }
+
+// Simple simulation of a fight between two fighters
+// Random number between 0 and 1 is generated compared to the probability of the fighter
+function simulateFight(fighterA, fighterB) {
+    const matchupProbability = getMatchupProbability(fighterA, fighterB);
+    const random = Math.random();
+    if (random < matchupProbability[0]) {
+        return fighterA;
+    } else {
+        return fighterB;
+    }
+}
+
+console.log(
+    "winner: ",
+    simulateFight(fighters_data[0], fighters_data[1]).fighter_name,
+);
