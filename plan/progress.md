@@ -1,5 +1,13 @@
 # Progress log
 
+## 2026-04-18 (`/planning-with-files` — restore, Phase 4 progress)
+
+- Re-read all planning files; `session-catchup.py` exit 0.
+- `git diff --stat HEAD`: `index.html`, `scripts.js`, `style.css` all modified (uncommitted).
+- **New in `scripts.js` (author JS):** `btn-add--added` toggle; `calculateFighterStrength` (Laplace win-index × experience); `getMatchupProbability`; `populateBracketSeeds`; `shuffleFighters` + `#btn-footer-shuffle` listener. Bracket Tree comment placeholder at end.
+- **Remaining Phase 4:** `#btn-run-tournament` click handler → semis + final + DOM writes.
+- Updated `plan/task_plan.md` Phase 4 checkboxes + `plan/findings.md` architecture/open issues.
+
 ## 2026-04-18 (`/planning-with-files` — restore + working tree)
 
 - Re-read `plan/task_plan.md`, `plan/findings.md`, `plan/progress.md`.

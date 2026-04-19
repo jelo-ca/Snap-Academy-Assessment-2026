@@ -36,7 +36,7 @@
 - **`refreshDisplay`:** `showCards(applyFilters())`.
 - **`applyFilters`:** Starts from `sortedFighters`, narrows by `weight_class_filters` (lowercase match), then `record_filter` switch (`winning`, `undefeated`, `all`). **Returns** array passed to `showCards`.
 - **Units:** `isMetric` toggles; `editCardContent` uses `formatHeight` / `formatWeight` for display.
-- **Mini tournament:** **Roster** implemented in author JS (`Set`, add/remove, strip UI, **Run** button enables at 4). **Bracket graph** HTML/CSS exists; **probabilistic bouts + filling bracket nodes** on **Run bracket** click still **to implement** in `scripts.js`.
+- **Mini tournament:** Roster + strip done; `calculateFighterStrength` (Laplace win-index × experience) + `getMatchupProbability` stat model done; `populateBracketSeeds` fills seed slots; `shuffleFighters` wired to `#btn-footer-shuffle`. **Remaining:** `#btn-run-tournament` click handler to run semis + final + write winners to bracket DOM.
 
 ## QA
 
@@ -73,7 +73,7 @@ Fields used in UI include: `fighter_name`, `nickname`, `photo_url`, `url`, `age`
 
 1. **`removeLastCard` / `titles`** — Starter still broken if invoked (references removed sample array).
 2. **Optional:** Lightweight checkbox for one dataset row.
-3. **Mini tournament (README MVP):** **`Run bracket`** handler + stat-based winners + DOM updates for `#bracket-sf1-a` … `#bracket-champion` (Phase 4 remainder in `task_plan.md`).
+3. **Mini tournament (README MVP):** **`Run bracket`** click handler only remaining — semis + final using `getMatchupProbability`, DOM updates for `#bracket-final-a`, `#bracket-final-b`, `#bracket-champion`, optional meta nodes (Phase 4 remainder in `task_plan.md`).
 4. **MVP not yet built:** full CRUD beyond tournament picks, alternate list view, stretch items (carousel, “make pretty”).
 
 ## External / rubric

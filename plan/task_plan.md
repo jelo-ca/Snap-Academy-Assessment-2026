@@ -83,11 +83,13 @@ README title, summary, and feature list are **One Championship**–aligned and k
 
 **Author-written** `scripts.js` + existing HTML/CSS (see snapshot table).
 
-- [x] **Roster:** Up to 4 picks (`Set`, insertion order = seeds); `#roster-count`, `#roster-slots` filled/empty UI, **Add** / **Added** / **Full** on cards, remove on strip, `clearRoster` available.
+- [x] **Roster:** Up to 4 picks (`Set`, insertion order = seeds); `#roster-count`, `#roster-slots` filled/empty UI, **Add** / **Added** / **Full** on cards, remove on strip, `clearRoster` available. `btn-add--added` CSS class toggled on added state.
 - [x] **Run button gating:** `#btn-run-tournament` **disabled** until roster has 4 fighters (`refreshRosterDisplay`).
-- [ ] **Run bracket:** Click handler: semifinals (1v2, 3v4) → final; write fighters / winners into `#bracket-sf1-a` … `#bracket-champion`; optional `#bracket-sf1-meta`, `#bracket-sf2-meta`, `#bracket-final-meta`.
-- [ ] **Simulation:** Stat-based outcome model (e.g. `Math.random()` weighted by stats — your design).
-- [ ] **README / Stretch:** Check off top-level tournament lines when bracket + simulation are complete (nested items already track roster vs bracket).
+- [x] **Stat model:** `calculateFighterStrength` (Laplace-smoothed win-index × experience factor); `getMatchupProbability` returns `[probA, probB]` from strength ratio. `FIGHTER_STRENGTH_EXP_REF` constant used as experience scale.
+- [x] **`populateBracketSeeds`:** Reads roster insertion order → writes fighter names to `#bracket-sf1-a`, `#bracket-sf1-b`, `#bracket-sf2-a`, `#bracket-sf2-b`.
+- [x] **`shuffleFighters`:** Randomly picks 4 from `fighters_data`, clears + fills roster, calls `refreshRosterDisplay`, `refreshDisplay`, `populateBracketSeeds`. Wired to `#btn-footer-shuffle`.
+- [ ] **Run bracket:** `#btn-run-tournament` click handler — run semis (1v2, 3v4) using `getMatchupProbability` + `Math.random()`; write winners to `#bracket-final-a` / `#bracket-final-b`; run final; write to `#bracket-champion`; optional meta nodes.
+- [ ] **README / Stretch:** Check off top-level tournament lines when bracket run + simulation are complete.
 
 ## Decisions log
 

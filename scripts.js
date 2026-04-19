@@ -87,6 +87,8 @@ function scrollCardContainerToMiddle() {
     requestAnimationFrame(apply);
 }
 
+first_load = true;
+
 // =========== STARTING FUNCTIONS ===========
 
 // This function adds cards the page to display the data in the array
@@ -116,8 +118,10 @@ function showCards(data = fighters_data) {
         editCardContent(nextCard, fighter, uid); // uid indexes the dataset
         cardContainer.appendChild(nextCard); // Add new card to the container
     }
-
-    scrollCardContainerToMiddle();
+    if (first_load) {
+        scrollCardContainerToMiddle();
+        first_load = false;
+    }
 }
 
 function editCardContent(card, fighter_object, uid = 0) {
@@ -133,6 +137,7 @@ function editCardContent(card, fighter_object, uid = 0) {
         const inRoster = roster.has(uid);
         const rosterFull = roster.size >= ROSTER_MAX;
         addBtn.disabled = inRoster || (!inRoster && rosterFull);
+        addBtn.classList.toggle("btn-add--added", inRoster);
         if (inRoster) {
             addBtn.textContent = "Added";
         } else if (rosterFull) {
@@ -354,12 +359,12 @@ function formatWeight(kg, isMetric) {
     }
 }
 
-// =========== ROSTER FUNCTIONS ===========
-
 //Uses uid to find the fighter in the fighters_data array
 function getFighterByUid(uid) {
     return fighters_data.find((f) => f.uid === uid);
 }
+
+// =========== ROSTER FUNCTIONS ===========
 
 function addToRoster(fighterUid) {
     if (roster.size >= ROSTER_MAX || roster.has(fighterUid)) {
@@ -447,3 +452,42 @@ function refreshRosterDisplay() {
 }
 
 // =========== MINI TOURNAMENT ===========
+
+// Simple strength calculation formula
+function calculateFighterStrength(fighter) {
+    const w = fighter.wins;
+    const l = fighter.losses;
+    const totalFights = w + l;
+    const winIndex = (w + 3) / (w + l + 6);
+    const experienceFactor = 0.9 + 0.1 * (totalFights / 20);
+
+    console.log(
+        "calculateFighterStrength",
+        fighter.fighter_name,
+        winIndex,
+        experienceFactor,
+    );
+
+    return 100 * winIndex * experienceFactor;
+}
+
+// Calculates matchup probability based on strength
+function getMatchupProbability(fighterA, fighterB) {
+    const strengthA = calculateFighterStrength(fighterA);
+    const strengthB = calculateFighterStrength(fighterB);
+    const sum = strengthA + strengthB;
+    const probA = sum > 0 ? strengthA / sum : 0.5;
+    const probB = 1 - probA;
+
+    console.log(
+        "getMatchupProbability",
+        fighterA.fighter_name,
+        fighterB.fighter_name,
+        strengthA,
+        strengthB,
+        probA,
+        probB,
+    );
+
+    return [probA, probB];
+}

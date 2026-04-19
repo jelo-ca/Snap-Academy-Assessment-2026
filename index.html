@@ -251,181 +251,152 @@
       <div class="catalog-toolbar">
         <h2 id="catalog-heading" class="catalog-heading">Fighter catalog</h2>
         <div class="catalog-toolbar-actions">
-        <div class="controls-dropdown">
-          <input
-            type="checkbox"
-            id="catalog-filter-toggle"
-            class="catalog-filter-toggle"
-            aria-controls="catalog-controls-panel"
-          />
-          <label for="catalog-filter-toggle" class="settings-btn"
-            >Sort &amp; Filter</label
-          >
-          <form
-            id="catalog-controls-panel"
-            class="controls-panel"
-            aria-label="Sort and filter fighters"
-          >
-            <label for="sort-by">Sort by</label>
-            <select
-              id="sort-by"
-              name="sort-by"
-              onchange="sortCards(this.value)"
+          <div class="catalog-view-control">
+            <input
+              type="checkbox"
+              id="catalog-view-grid"
+              class="catalog-view-toggle"
+              aria-controls="card-container"
+            />
+            <label for="catalog-view-grid" class="catalog-view-btn"
+              >Change view</label
             >
-              <option value="name-asc">Name (A-Z)</option>
-              <option value="name-desc">Name (Z-A)</option>
-              <option value="age-asc">Age (Low-High)</option>
-              <option value="age-desc">Age (High-Low)</option>
-              <option value="wins-desc">Wins (Most-Least)</option>
-              <option value="wins-asc">Wins (Least-Most)</option>
-              <option value="weight-asc">Weight (Low-High)</option>
-              <option value="weight-desc">Weight (High-Low)</option>
-            </select>
+          </div>
+          <div class="controls-dropdown">
+            <input
+              type="checkbox"
+              id="catalog-filter-toggle"
+              class="catalog-filter-toggle"
+              aria-controls="catalog-controls-panel"
+            />
+            <label for="catalog-filter-toggle" class="settings-btn"
+              >Sort &amp; Filter</label
+            >
+            <form
+              id="catalog-controls-panel"
+              class="controls-panel"
+              aria-label="Sort and filter fighters"
+            >
+              <label for="sort-by">Sort by</label>
+              <select
+                id="sort-by"
+                name="sort-by"
+                onchange="sortCards(this.value)"
+              >
+                <option value="name-asc">Name (A-Z)</option>
+                <option value="name-desc">Name (Z-A)</option>
+                <option value="age-asc">Age (Low-High)</option>
+                <option value="age-desc">Age (High-Low)</option>
+                <option value="wins-desc">Wins (Most-Least)</option>
+                <option value="wins-asc">Wins (Least-Most)</option>
+                <option value="weight-asc">Weight (Low-High)</option>
+                <option value="weight-desc">Weight (High-Low)</option>
+              </select>
 
-            <fieldset class="units-fieldset">
-              <legend>Units</legend>
-              <div class="metric-switch-row">
-                <span class="metric-side metric-side-imperial">ft · lbs</span>
-                <label class="metric-switch">
-                  <input
+              <fieldset class="units-fieldset">
+                <legend>Units</legend>
+                <div class="metric-switch-row">
+                  <span class="metric-side metric-side-imperial">ft · lbs</span>
+                  <label class="metric-switch">
+                    <input
+                      type="checkbox"
+                      id="metric-units-switch"
+                      class="metric-switch-input"
+                      checked
+                      role="switch"
+                      aria-label="Use metric units: meters and kilograms"
+                      onchange="toggleMetricUnits()"
+                    />
+                    <span class="metric-switch-track" aria-hidden="true">
+                      <span class="metric-switch-thumb"></span>
+                    </span>
+                  </label>
+                  <span class="metric-side metric-side-metric">m · kg</span>
+                </div>
+              </fieldset>
+
+              <fieldset>
+                <legend>Weight Class</legend>
+                <label
+                  ><input
                     type="checkbox"
-                    id="metric-units-switch"
-                    class="metric-switch-input"
-                    checked
-                    role="switch"
-                    aria-label="Use metric units: meters and kilograms"
-                    onchange="toggleMetricUnits()"
+                    name="weight-class"
+                    value="atomweight"
+                    onchange="updateFilters(this)"
                   />
-                  <span class="metric-switch-track" aria-hidden="true">
-                    <span class="metric-switch-thumb"></span>
-                  </span>
-                </label>
-                <span class="metric-side metric-side-metric">m · kg</span>
-              </div>
-            </fieldset>
+                  Atomweight</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    name="weight-class"
+                    value="strawweight"
+                    onchange="updateFilters(this)"
+                  />
+                  Strawweight</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    name="weight-class"
+                    value="flyweight"
+                    onchange="updateFilters(this)"
+                  />
+                  Flyweight</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    name="weight-class"
+                    value="heavyweight"
+                    onchange="updateFilters(this)"
+                  />
+                  Heavyweight</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    name="weight-class"
+                    value="unknown"
+                    onchange="updateFilters(this)"
+                  />
+                  Unknown</label
+                >
+              </fieldset>
 
-            <fieldset>
-              <legend>Weight Class</legend>
-              <label
-                ><input
-                  type="checkbox"
-                  name="weight-class"
-                  value="atomweight"
-                  onchange="updateFilters(this)"
-                />
-                Atomweight</label
-              >
-              <label
-                ><input
-                  type="checkbox"
-                  name="weight-class"
-                  value="strawweight"
-                  onchange="updateFilters(this)"
-                />
-                Strawweight</label
-              >
-              <label
-                ><input
-                  type="checkbox"
-                  name="weight-class"
-                  value="flyweight"
-                  onchange="updateFilters(this)"
-                />
-                Flyweight</label
-              >
-              <label
-                ><input
-                  type="checkbox"
-                  name="weight-class"
-                  value="heavyweight"
-                  onchange="updateFilters(this)"
-                />
-                Heavyweight</label
-              >
-              <label
-                ><input
-                  type="checkbox"
-                  name="weight-class"
-                  value="unknown"
-                  onchange="updateFilters(this)"
-                />
-                Unknown</label
-              >
-            </fieldset>
-
-            <fieldset>
-              <legend>Record</legend>
-              <label
-                ><input
-                  type="radio"
-                  name="record-filter"
-                  value="all"
-                  checked
-                  onchange="updateFilters(this)"
-                />
-                Show all</label
-              >
-              <label
-                ><input
-                  type="radio"
-                  name="record-filter"
-                  value="winning"
-                  onchange="updateFilters(this)"
-                />
-                Winning record only</label
-              >
-              <label
-                ><input
-                  type="radio"
-                  name="record-filter"
-                  value="undefeated"
-                  onchange="updateFilters(this)"
-                />
-                Undefeated only</label
-              >
-            </fieldset>
-          </form>
-        </div>
-        <div
-          class="catalog-view-control"
-          role="radiogroup"
-          aria-label="Catalog layout"
-        >
-          <input
-            type="radio"
-            name="catalog-view"
-            id="catalog-view-strip"
-            class="catalog-view-radio"
-            value="strip"
-            checked
-            aria-controls="card-container"
-          />
-          <label for="catalog-view-strip" class="catalog-view-segment-label"
-            >Strip</label
-          >
-          <input
-            type="radio"
-            name="catalog-view"
-            id="catalog-view-grid"
-            class="catalog-view-radio"
-            value="grid"
-            aria-controls="card-container"
-          />
-          <label for="catalog-view-grid" class="catalog-view-segment-label"
-            >Grid</label
-          >
-          <input
-            type="radio"
-            name="catalog-view"
-            id="catalog-view-list"
-            class="catalog-view-radio"
-            value="list"
-            aria-controls="card-container"
-          />
-          <label for="catalog-view-list" class="catalog-view-segment-label"
-            >List</label
-          >
-        </div>
+              <fieldset>
+                <legend>Record</legend>
+                <label
+                  ><input
+                    type="radio"
+                    name="record-filter"
+                    value="all"
+                    checked
+                    onchange="updateFilters(this)"
+                  />
+                  Show all</label
+                >
+                <label
+                  ><input
+                    type="radio"
+                    name="record-filter"
+                    value="winning"
+                    onchange="updateFilters(this)"
+                  />
+                  Winning record only</label
+                >
+                <label
+                  ><input
+                    type="radio"
+                    name="record-filter"
+                    value="undefeated"
+                    onchange="updateFilters(this)"
+                  />
+                  Undefeated only</label
+                >
+              </fieldset>
+            </form>
+          </div>
         </div>
       </div>
       <div class="carousel-shell">
@@ -655,6 +626,7 @@
             type="button"
             id="btn-footer-shuffle"
             class="footer-bracket-btn"
+            onclick="populateBracket()"
             disabled
           >
             Shuffle fighters
@@ -663,6 +635,7 @@
             type="button"
             id="btn-footer-next-match"
             class="footer-bracket-btn"
+            onclick="getMatchupProbability(window.one_champion_fighters[0], window.one_champion_fighters[2])"
             disabled
           >
             Play next match

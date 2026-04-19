@@ -1169,16 +1169,16 @@ span {
     color: #ffffff;
 }
 
-.catalog-toolbar .controls-dropdown {
-    flex-shrink: 0;
-}
-
 .catalog-toolbar-actions {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: flex-end;
     gap: 8px;
+}
+
+.catalog-toolbar .controls-dropdown {
+    flex-shrink: 0;
 }
 
 .catalog-view-control {
@@ -1204,6 +1204,7 @@ span {
     pointer-events: none;
 }
 
+/* Match `.settings-btn` shape; label text stays pure white */
 .catalog-view-btn {
     margin: 0;
     font-size: 0.8rem;
@@ -1217,7 +1218,7 @@ span {
     border: 1px solid #5a5a5a;
     border-radius: 6px;
     background: #333;
-    color: #f2f2f2;
+    color: #ffffff;
     font-family: "Barlow Condensed", Impact, sans-serif;
     font-weight: 700;
     letter-spacing: 0.04em;
@@ -1228,23 +1229,12 @@ span {
 .catalog-view-btn:hover {
     border-color: #777;
     background: #3d3d3d;
+    color: #ffffff;
 }
 
-.catalog-view-toggle:focus-visible+.catalog-view-btn {
+.catalog-view-toggle:focus-visible + .catalog-view-btn {
     outline: 2px solid #ffd100;
     outline-offset: 2px;
-}
-
-.catalog-view-label--to-strip {
-    display: none;
-}
-
-.catalog-view-toggle:checked+.catalog-view-btn .catalog-view-label--to-grid {
-    display: none;
-}
-
-.catalog-view-toggle:checked+.catalog-view-btn .catalog-view-label--to-strip {
-    display: inline;
 }
 
 .catalog-section:has(.catalog-view-toggle:checked) #card-container {
@@ -1486,6 +1476,20 @@ span {
 .btn-add.is-inactive {
     opacity: 0.45;
     cursor: not-allowed;
+}
+
+.btn-add.btn-add--added:disabled {
+    opacity: 1;
+    cursor: default;
+    background: #ffd100;
+    color: #ffffff;
+    border-color: #ffd100;
+    box-shadow: none;
+}
+
+.btn-add.btn-add--added:disabled:hover {
+    background: #ffd100;
+    color: #ffffff;
 }
 
 .card-front img {
