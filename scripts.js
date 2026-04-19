@@ -389,10 +389,24 @@ function refreshRosterDisplay() {
     }
 
     // Disables run btn while roster is not full
+    const rosterFull = order.length === ROSTER_MAX;
+
     const runBtn = document.getElementById("btn-run-tournament");
     if (runBtn) {
-        runBtn.disabled = order.length !== ROSTER_MAX;
+        runBtn.disabled = !rosterFull;
     }
+
+    // All tournament buttons are disabled while roster is not full
+    [
+        "btn-footer-full-bracket",
+        "btn-footer-shuffle",
+        "btn-footer-next-match",
+    ].forEach((btn) => {
+        const b = document.getElementById(btn);
+        if (b) {
+            b.disabled = !rosterFull;
+        }
+    });
 
     slots.forEach((slot, i) => {
         slot.dataset.slotIndex = String(i);
@@ -420,3 +434,5 @@ function refreshRosterDisplay() {
         name.textContent = fighter.fighter_name;
     });
 }
+
+// =========== MINI TOURNAMENT ===========

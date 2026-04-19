@@ -469,8 +469,8 @@
             Mini tournament bracket
           </h2>
           <p class="tournament-hint">
-            Two semifinals by roster order, then a final. Outcomes use a simple
-            stat-based probability model (see match notes).
+            Two semifinals by roster order, then a final. Hook up the bracket
+            buttons in <code>scripts.js</code> (IDs below) when you are ready.
           </p>
         </div>
         <button
@@ -479,7 +479,7 @@
           class="btn-run-tournament"
           disabled
         >
-          Run bracket
+          Play next match
         </button>
       </div>
 
@@ -618,9 +618,31 @@
         </div>
       </div>
     </div>
-    <div class="footer">
-      <button onclick="quoteAlert()">Get A Quote!</button>
-      <button onclick="removeLastCard()">Remove A Card!</button>
+    <div class="footer" role="toolbar" aria-label="Bracket controls">
+      <button
+        type="button"
+        id="btn-footer-full-bracket"
+        class="footer-bracket-btn footer-bracket-btn--primary"
+        disabled
+      >
+        Simulate full bracket
+      </button>
+      <button
+        type="button"
+        id="btn-footer-shuffle"
+        class="footer-bracket-btn"
+        disabled
+      >
+        Shuffle seed order
+      </button>
+      <button
+        type="button"
+        id="btn-footer-next-match"
+        class="footer-bracket-btn"
+        disabled
+      >
+        Play next match
+      </button>
     </div>
   </body>
 </html>

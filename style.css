@@ -1604,7 +1604,10 @@ span {
 
 .footer {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
+    gap: 6px;
     background-color: rgba(0, 0, 0, 0.3);
     padding: 8px;
 }
@@ -1626,6 +1629,18 @@ span {
     font-size: 0.85rem;
     cursor: pointer;
     margin: 4px;
+}
+
+.footer-bracket-btn--primary {
+    background: linear-gradient(180deg, #c41e3a 0%, #8b1428 100%);
+}
+
+.footer-bracket-btn--primary:hover:not(:disabled) {
+    filter: brightness(1.08);
+}
+
+.footer-bracket-btn--primary:disabled {
+    opacity: 0.45;
 }
 
 .settings-btn {

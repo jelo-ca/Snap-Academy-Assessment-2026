@@ -28,14 +28,13 @@ showCards()
     [x] Roster: up to four picks (`Set` + insertion order = seeds); `#roster-count`; `#roster-slots` UI; Add / Added / Full on cards; remove from strip; `#btn-run-tournament` enabled when roster has 4
     [ ] Run bracket: click handler, semifinals (1v2, 3v4) → final, stat-weighted `Math.random()` (or your model), write names into `#bracket-sf1-a` … `#bracket-champion` and optional `*-meta`
 ~~[] Favorite fighters (optional separate from roster)~~
-[] Add/Update/Delete full roster management beyond tournament picks
+~~[] Add/Update/Delete full roster management beyond tournament picks~~
 [] Alternative list display
 
 ### Stretch
 
 [] Carousel style card selection
-[] Compare 4 fighters in a small elimination bracket (probabilistic outcomes) *(planned — same as above)*
-[] Make pretty
+[] ~~Make pretty~~ Make more pretty
 
 ## Resources Used
 
