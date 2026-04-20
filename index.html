@@ -491,13 +491,19 @@
         aria-label="Semifinals and final bracket graph"
       >
         <div class="bracket-tier bracket-tier--semis">
-          <div class="bracket-match" data-round="semi">
+          <div
+            class="bracket-match"
+            data-round="semi"
+            data-result-target="bracket-sf1-winner"
+            data-meta-target="bracket-sf1-meta"
+            data-meta-label="Winner"
+          >
             <span class="bracket-round-label">Semifinal 1</span>
             <div class="bracket-nodes">
-              <div class="bracket-node bracket-node--seed" id="fighter-a">
+              <div class="bracket-node bracket-node--seed" data-bracket-slot="a">
                 —
               </div>
-              <div class="bracket-node bracket-node--seed" id="fighter-b">
+              <div class="bracket-node bracket-node--seed" data-bracket-slot="b">
                 —
               </div>
             </div>
@@ -513,13 +519,19 @@
             </div>
             <p class="bracket-meta" id="bracket-sf1-meta"></p>
           </div>
-          <div class="bracket-match" data-round="semi">
+          <div
+            class="bracket-match"
+            data-round="semi"
+            data-result-target="bracket-sf2-winner"
+            data-meta-target="bracket-sf2-meta"
+            data-meta-label="Winner"
+          >
             <span class="bracket-round-label">Semifinal 2</span>
             <div class="bracket-nodes">
-              <div class="bracket-node bracket-node--seed" id="fighter-a">
+              <div class="bracket-node bracket-node--seed" data-bracket-slot="a">
                 —
               </div>
-              <div class="bracket-node bracket-node--seed" id="fighter-b">
+              <div class="bracket-node bracket-node--seed" data-bracket-slot="b">
                 —
               </div>
             </div>
@@ -542,18 +554,24 @@
         </div>
 
         <div class="bracket-tier bracket-tier--final">
-          <div class="bracket-match bracket-match--final" data-round="final">
+          <div
+            class="bracket-match bracket-match--final"
+            data-round="final"
+            data-result-target="bracket-champion"
+            data-meta-target="bracket-final-meta"
+            data-meta-label="Champion"
+          >
             <span class="bracket-round-label">Final</span>
             <div class="bracket-nodes bracket-nodes--final">
               <div
                 class="bracket-node bracket-node--finalist"
-                id="bracket-final-a"
+                data-bracket-slot="a"
               >
                 —
               </div>
               <div
                 class="bracket-node bracket-node--finalist"
-                id="bracket-final-b"
+                data-bracket-slot="b"
               >
                 —
               </div>

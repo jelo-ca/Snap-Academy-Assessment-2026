@@ -377,7 +377,6 @@ function clearRoster() {
     // console.log("roster", roster);
 }
 
-/** Syncs `#roster-slots` (four fixed slots) with `roster` Set insertion order. */
 function refreshRosterDisplay() {
     const rosterSlots = document.getElementById("roster-slots");
 
@@ -457,10 +456,6 @@ class BracketNode {
         console.log("winner: ", this.winner.fighter_name);
     }
 
-    getWinner() {
-        return this.winner;
-    }
-
     addChild(node) {
         this.children.push(node);
     }
@@ -517,6 +512,8 @@ function populateBracket() {
         node.setFighterB(getFighterByUid(roster_copy[index++]));
     }
     console.log(leafNodes);
+
+    renderTournament();
 }
 
 function getBracketRootNode() {
@@ -529,6 +526,7 @@ function simulateTournament(node) {
         const playedNode = playNextMatch(node);
         if (!playedNode) break;
     }
+    renderTournament();
     return node.winner ? node.winner : null;
 }
 
@@ -540,11 +538,13 @@ function playNextMatch(node) {
 
     if (left && !left.winner) {
         const resolved = playNextMatch(left);
+        renderTournament();
         if (resolved) return resolved;
     }
 
     if (right && !right.winner) {
         const resolved = playNextMatch(right);
+        renderTournament();
         if (resolved) return resolved;
     }
 
@@ -557,9 +557,42 @@ function playNextMatch(node) {
 
     if (node.fighter_a && node.fighter_b && !node.winner) {
         node.setWinner();
+        renderTournament();
         return node;
     }
+
+    renderTournament();
     return null;
+}
+
+function renderTournament() {
+    const semis = layers[Object.keys(layers)[0]] || [];
+    const nodes = [semis[0] || {}, semis[1] || {}, getBracketRootNode() || {}];
+    const name = (f) => (f ? f.fighter_name : "—");
+
+    document.querySelectorAll(".bracket-match").forEach((matchEl, index) => {
+        const node = nodes[index] || {};
+
+        const slotA = matchEl.querySelector('[data-bracket-slot="a"]');
+        const slotB = matchEl.querySelector('[data-bracket-slot="b"]');
+
+        if (slotA) slotA.textContent = name(node.fighter_a);
+        if (slotB) slotB.textContent = name(node.fighter_b);
+
+        const resultId = matchEl.dataset.resultTarget;
+        const metaId = matchEl.dataset.metaTarget;
+        const metaLabel = matchEl.dataset.metaLabel || "Winner";
+
+        const resultEl = resultId ? document.getElementById(resultId) : null;
+        if (resultEl) resultEl.textContent = name(node.winner);
+
+        const metaEl = metaId ? document.getElementById(metaId) : null;
+        if (metaEl) {
+            metaEl.textContent = node.winner ?
+                `${metaLabel}: ${name(node.winner)}` :
+                "";
+        }
+    });
 }
 
 // Simple strength calculation formula
