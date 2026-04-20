@@ -482,6 +482,7 @@ function createTournamentTree() {
     });
 
     console.log(bracket_nodes_stack);
+
     // Split into layers
     let layers = {};
     for (let i = 0; i < bracket_nodes_stack.length; i++) {
@@ -493,16 +494,21 @@ function createTournamentTree() {
         }
     }
 
+    console.log(layers);
+
     // Build Tree
-    for (let round in layers) {
-        for (let node of layers[round]) {
-            if (node.round in layers) {
-                node.children = layers[node.round];
-            }
+    for (let layer = 0; layer < Object.keys(layers).length - 1; layer++) {
+        const childLayer = layers[Object.keys(layers)[layer]];
+        const parentLayer = layers[Object.keys(layers)[layer + 1]];
+        for (let i = 0; i < parentLayer.length; i++) {
+            const leftChild = childLayer[2 * i];
+            const rightChild = childLayer[2 * i + 1];
+            if (leftChild) parentLayer[i].addChild(leftChild);
+            if (rightChild) parentLayer[i].addChild(rightChild);
         }
     }
 
-    console.log(tree);
+    console.log(layers);
 }
 
 createTournamentTree();
