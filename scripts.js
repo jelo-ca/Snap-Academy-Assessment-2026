@@ -436,6 +436,7 @@ function refreshRosterDisplay() {
 
 class BracketNode {
     constructor(round) {
+        this.id = null;
         this.round = round;
         this.fighter_a = null;
         this.fighter_b = null;
@@ -451,8 +452,13 @@ class BracketNode {
         this.fighter_b = fighter;
     }
 
-    setWinner(fighter) {
-        this.winner = fighter;
+    setWinner() {
+        this.winner = simulateFight(this.fighter_a, this.fighter_b);
+        console.log("winner: ", this.winner.fighter_name);
+    }
+
+    getWinner() {
+        return this.winner;
     }
 
     addChild(node) {
@@ -460,18 +466,46 @@ class BracketNode {
     }
 }
 
-const bracket_nodes = [];
-
+let bracket_nodes_stack = [];
 document.querySelectorAll(".bracket-match").forEach((node) => {
     n = new BracketNode(node.dataset.round);
-    bracket_nodes.push(n);
+    n.id = bracket_nodes_stack.length;
+    bracket_nodes_stack.push(n);
 });
 
-console.log(bracket_nodes);
+function createTournamentTree() {
+    let bracket_nodes_stack = [];
+    document.querySelectorAll(".bracket-match").forEach((node) => {
+        n = new BracketNode(node.dataset.round);
+        n.id = bracket_nodes_stack.length;
+        bracket_nodes_stack.push(n);
+    });
 
-function populateBracket() {
-    // TODO: Grab "semi" nodes and set roster fighters as fighterA and fighterB at random order
+    console.log(bracket_nodes_stack);
+    // Split into layers
+    let layers = {};
+    for (let i = 0; i < bracket_nodes_stack.length; i++) {
+        const node = bracket_nodes_stack[i];
+        if (node.round in layers) {
+            layers[node.round].push(node);
+        } else {
+            layers[node.round] = [node];
+        }
+    }
+
+    // Build Tree
+    for (let round in layers) {
+        for (let node of layers[round]) {
+            if (node.round in layers) {
+                node.children = layers[node.round];
+            }
+        }
+    }
+
+    console.log(tree);
 }
+
+createTournamentTree();
 
 // Simple strength calculation formula
 function calculateFighterStrength(fighter) {
@@ -523,8 +557,3 @@ function simulateFight(fighterA, fighterB) {
         return fighterB;
     }
 }
-
-console.log(
-    "winner: ",
-    simulateFight(fighters_data[0], fighters_data[1]).fighter_name,
-);
