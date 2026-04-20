@@ -519,44 +519,48 @@ function populateBracket() {
     console.log(leafNodes);
 }
 
-function getRootNode() {
+function getBracketRootNode() {
     return bracket_nodes[bracket_nodes.length - 1];
 }
 
 function simulateTournament(node) {
-    const left = node.children[0] ? node.children[0] : null;
-    const right = node.children[1] ? node.children[1] : null;
-    if (!left && !right) {
-        if (node.fighter_a && node.fighter_b && !node.winner) {
-            node.setWinner();
-        }
-        return node.winner ? node.winner : null;
-    }
-
-    const leftWinner = simulateTournament(left);
-    const rightWinner = simulateTournament(right);
-
-    if (leftWinner && rightWinner) {
-        node.setFighterA(leftWinner);
-        node.setFighterB(rightWinner);
-        if (!node.winner) {
-            node.setWinner();
-        }
+    if (!node) return null;
+    while (!node.winner) {
+        const playedNode = playNextMatch(node);
+        if (!playedNode) break;
     }
     return node.winner ? node.winner : null;
 }
 
-// function playNextMatch(node) {
-//     if (node.fighter_a && node.fighter_b) {
-//         return node.setWinner();
-//     } else {
-//         if (!node.children[0].winner) {
-//             return playNextMatch(node.children[0]);
-//         } else {
-//             return playNextMatch(node.children[1]);
-//         }
-//     }
-// }
+function playNextMatch(node) {
+    console.log("playNextMatch", node);
+    if (!node) return null;
+    const left = node.children[0] || null;
+    const right = node.children[1] || null;
+
+    if (left && !left.winner) {
+        const resolved = playNextMatch(left);
+        if (resolved) return resolved;
+    }
+
+    if (right && !right.winner) {
+        const resolved = playNextMatch(right);
+        if (resolved) return resolved;
+    }
+
+    if (left && right) {
+        if (left.winner && right.winner) {
+            node.setFighterA(left.winner);
+            node.setFighterB(right.winner);
+        }
+    }
+
+    if (node.fighter_a && node.fighter_b && !node.winner) {
+        node.setWinner();
+        return node;
+    }
+    return null;
+}
 
 // Simple strength calculation formula
 function calculateFighterStrength(fighter) {

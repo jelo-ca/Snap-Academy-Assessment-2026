@@ -635,7 +635,7 @@
             type="button"
             id="btn-footer-next-match"
             class="footer-bracket-btn"
-            onclick="simulateTournament(bracket_nodes[bracket_nodes.length - 1])"
+            onclick="playNextMatch(getBracketRootNode())"
             disabled
           >
             Play next match
@@ -645,7 +645,7 @@
           type="button"
           id="btn-footer-full-bracket"
           class="footer-bracket-btn footer-bracket-btn--primary"
-          onclick="simulateTournament(bracket_nodes[bracket_nodes.length - 1])"
+          onclick="simulateTournament(getBracketRootNode())"
           disabled
         >
           Simulate full bracket
