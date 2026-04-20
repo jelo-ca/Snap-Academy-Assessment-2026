@@ -493,6 +493,7 @@
         <div class="bracket-tier bracket-tier--semis">
           <div
             class="bracket-match"
+            data-node-id="0"
             data-round="semi"
             data-result-target="bracket-sf1-winner"
             data-meta-target="bracket-sf1-meta"
@@ -500,10 +501,18 @@
           >
             <span class="bracket-round-label">Semifinal 1</span>
             <div class="bracket-nodes">
-              <div class="bracket-node bracket-node--seed" data-bracket-slot="a">
+              <div
+                class="bracket-node bracket-node--seed"
+                data-bracket-slot="a"
+                data-bracket-field="fighter_a"
+              >
                 —
               </div>
-              <div class="bracket-node bracket-node--seed" data-bracket-slot="b">
+              <div
+                class="bracket-node bracket-node--seed"
+                data-bracket-slot="b"
+                data-bracket-field="fighter_b"
+              >
                 —
               </div>
             </div>
@@ -514,6 +523,7 @@
             <div
               class="bracket-node bracket-node--winner"
               id="bracket-sf1-winner"
+              data-bracket-field="winner"
             >
               —
             </div>
@@ -521,6 +531,7 @@
           </div>
           <div
             class="bracket-match"
+            data-node-id="1"
             data-round="semi"
             data-result-target="bracket-sf2-winner"
             data-meta-target="bracket-sf2-meta"
@@ -528,10 +539,18 @@
           >
             <span class="bracket-round-label">Semifinal 2</span>
             <div class="bracket-nodes">
-              <div class="bracket-node bracket-node--seed" data-bracket-slot="a">
+              <div
+                class="bracket-node bracket-node--seed"
+                data-bracket-slot="a"
+                data-bracket-field="fighter_a"
+              >
                 —
               </div>
-              <div class="bracket-node bracket-node--seed" data-bracket-slot="b">
+              <div
+                class="bracket-node bracket-node--seed"
+                data-bracket-slot="b"
+                data-bracket-field="fighter_b"
+              >
                 —
               </div>
             </div>
@@ -542,6 +561,7 @@
             <div
               class="bracket-node bracket-node--winner"
               id="bracket-sf2-winner"
+              data-bracket-field="winner"
             >
               —
             </div>
@@ -556,22 +576,25 @@
         <div class="bracket-tier bracket-tier--final">
           <div
             class="bracket-match bracket-match--final"
+            data-node-id="2"
             data-round="final"
             data-result-target="bracket-champion"
             data-meta-target="bracket-final-meta"
             data-meta-label="Champion"
           >
             <span class="bracket-round-label">Final</span>
-            <div class="bracket-nodes bracket-nodes--final">
+            <div class="bracket-nodes">
               <div
                 class="bracket-node bracket-node--finalist"
                 data-bracket-slot="a"
+                data-bracket-field="fighter_a"
               >
                 —
               </div>
               <div
                 class="bracket-node bracket-node--finalist"
                 data-bracket-slot="b"
+                data-bracket-field="fighter_b"
               >
                 —
               </div>
@@ -583,6 +606,7 @@
             <div
               class="bracket-node bracket-node--champion"
               id="bracket-champion"
+              data-bracket-field="winner"
             >
               —
             </div>

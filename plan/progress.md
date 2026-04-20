@@ -1,5 +1,11 @@
 # Progress log
 
+## 2026-04-20 (docs sync — bracket implementation)
+
+- Re-read `scripts.js` + `index.html` tournament sections and synced `README.md`, `plan/task_plan.md`, and `plan/findings.md` to current implementation.
+- Updated docs to reflect that bracket simulation is now wired: `populateBracket()`, `playNextMatch()`, `simulateTournament()`, and `renderTournament()` all active with stat-weighted outcomes.
+- Logged remaining cleanup caveats: implicit global `n` in bracket-node creation and `Shuffle fighters` label/action mismatch (currently seeds by roster order).
+
 ## 2026-04-18 (plan sync — BracketNode + stat model)
 
 - Read `scripts.js` (526 lines) to verify current state.

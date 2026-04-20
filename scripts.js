@@ -531,30 +531,38 @@ function simulateTournament(node) {
 }
 
 function playNextMatch(node) {
-    console.log("playNextMatch", node);
     if (!node) return null;
+
     const left = node.children[0] || null;
     const right = node.children[1] || null;
 
+    // Resolve child matches first
     if (left && !left.winner) {
         const resolved = playNextMatch(left);
-        renderTournament();
-        if (resolved) return resolved;
+        if (resolved) {
+            // Keep parent fighter slots synced immediately after child resolves
+            if (left.winner) node.setFighterA(left.winner);
+            if (right && right.winner) node.setFighterB(right.winner);
+            renderTournament();
+            return resolved;
+        }
     }
 
     if (right && !right.winner) {
         const resolved = playNextMatch(right);
-        renderTournament();
-        if (resolved) return resolved;
-    }
-
-    if (left && right) {
-        if (left.winner && right.winner) {
-            node.setFighterA(left.winner);
-            node.setFighterB(right.winner);
+        if (resolved) {
+            if (left && left.winner) node.setFighterA(left.winner);
+            if (right.winner) node.setFighterB(right.winner);
+            renderTournament();
+            return resolved;
         }
     }
 
+    // Always sync parent slots from children when available
+    if (left && left.winner) node.setFighterA(left.winner);
+    if (right && right.winner) node.setFighterB(right.winner);
+
+    // Play this node if both fighters are now ready
     if (node.fighter_a && node.fighter_b && !node.winner) {
         node.setWinner();
         renderTournament();

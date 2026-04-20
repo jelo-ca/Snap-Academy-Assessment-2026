@@ -14,7 +14,7 @@
 - [x] Fighter sorting — Name, Wins, Age, **Weight (kg)** *(low-high / high-low in `<select>`)*
 - [x] Fighter filtering — Weight class
 - [x] Fighter filtering — Record *(all / winning / undefeated in `applyFilters`)*
-- [ ] **Four-fighter tournament roster + stat-based bracket simulation** *(roster + stat model + `BracketNode` tree done; `populateBracket` stub + bracket run handler pending — Phase 4)*
+- [x] **Four-fighter tournament roster + stat-based bracket simulation** *(roster + stat model + `BracketNode` tree + bracket controls are wired)*
 - ~~Favorite fighters *(optional separate from roster)*~~ *(README strike-through — deferred)*
 - [ ] Add / Update / Delete **full** roster management **beyond tournament picks**
 - [ ] Alternative list display
@@ -37,9 +37,10 @@
 - **Units:** `isMetric` toggles; `editCardContent` uses `formatHeight` / `formatWeight`.
 - **Roster:** `Set`-backed, max 4; `refreshRosterDisplay` gates `btn-footer-full-bracket`, `btn-footer-shuffle`, `btn-footer-next-match` (disabled until 4 picked). `btn-add--added` CSS class toggled on added cards.
 - **Stat model:** `calculateFighterStrength(fighter)` — Laplace win-index `(w+3)/(w+l+6)` × experience `0.9 + 0.1*(totalFights/20)`; `getMatchupProbability(fighterA, fighterB)` returns `[probA, probB]` from strength ratio.
-- **`BracketNode` class:** fields `round`, `fighter_a`, `fighter_b`, `next_node`; methods `setFighterA` / `setFighterB` / `setNextNode`. `bracket_nodes = []` declared; DOM loop iterates `.bracket-match` elements but **never pushes nodes** — `n` leaks as implicit global and `bracket_nodes` stays empty.
-- **`populateBracket()`:** stub with TODO comment only — no logic yet.
-- **Not yet in file:** `shuffleFighters`, its `#btn-footer-shuffle` listener.
+- **Bracket graph model:** `BracketNode` with `round`, `fighter_a`, `fighter_b`, `winner`, `children`; layer-based tree is created from `.bracket-match` nodes.
+- **Bracket controls:** `populateBracket()` seeds semifinal slots from roster order; `playNextMatch()` resolves one unresolved bout depth-first; `simulateTournament()` resolves all remaining bouts.
+- **DOM rendering:** `renderTournament()` updates seed/finalist slots (`data-bracket-slot`), winner/champion targets, and `*-meta` labels via match `data-*` attributes.
+- **Known code quality caveat:** node creation still uses implicit global `n` in `document.querySelectorAll(".bracket-match")` loop (should be `const`).
 
 ## QA
 
@@ -47,7 +48,7 @@
 
 ## Working tree (session note)
 
-- **Uncommitted (2026-04-18):** `index.html`, `scripts.js`, `style.css` — card `btn-add--added` class; `BracketNode` class + stat model; bracket footer button gating. Commit when ready.
+- **Uncommitted (2026-04-20):** `index.html`, `scripts.js`, docs — bracket controls are wired to `populateBracket`, `playNextMatch`, `simulateTournament`; match slots are now driven by `data-bracket-slot`/`data-result-target`/`data-meta-target`.
 
 ## Implemented features
 
@@ -55,7 +56,7 @@
 - **Filter:** Weight checkboxes + record radios → `updateFilters` → `refreshDisplay` → `applyFilters`.
 - **Units:** Checkbox switch → `toggleMetricUnits` → `refreshDisplay` with updated formatting.
 - **Roster:** `.btn-add` → `addToRoster`; `editCardContent` sets Add / Added / Full + `btn-add--added`; `removeFromRoster` from strip.
-- **Stat model:** `calculateFighterStrength` + `getMatchupProbability` — usable for bracket simulation once wired.
+- **Stat model + simulation:** `calculateFighterStrength` + `getMatchupProbability` + `simulateFight` power single-match and full-bracket simulation paths.
 
 ## Data shape (per fighter)
 
@@ -77,11 +78,10 @@ Fields used in UI: `fighter_name`, `nickname`, `photo_url`, `url`, `age`, `count
 
 1. **`removeLastCard` / `titles`** — Starter still broken if invoked (references removed sample array).
 2. **Optional:** Lightweight checkbox for one dataset row.
-3. **`bracket_nodes` loop bug** — `n` never pushed; `bracket_nodes` stays empty. Fix: `const n = new BracketNode(...); bracket_nodes.push(n)`.
-4. **`populateBracket()`** — TODO stub; needs to assign roster fighters to semi `BracketNode`s and link `next_node` to final node.
-5. **`shuffleFighters`** — not yet written; needs to pick 4 random fighters, fill roster, refresh, seed bracket. Wire to `#btn-footer-shuffle`.
-6. **Bracket run handler** — `#btn-footer-full-bracket` click: traverse `BracketNode` tree, run bouts via `getMatchupProbability` + `Math.random()`, write winners to bracket DOM nodes, display champion.
-7. **MVP not yet built:** full CRUD beyond tournament picks, alternate list view, stretch items (carousel, "make pretty").
+3. **Implicit global `n`** in bracket-node setup — should be `const n` to avoid leaking globals.
+4. **Button label mismatch:** `Shuffle fighters` currently calls `populateBracket()` and preserves roster order; either rename label or implement randomized seeding.
+5. **`removeLastCard` / `titles`** starter utility still stale if invoked.
+6. **Remaining non-tournament scope:** full CRUD beyond tournament picks and stretch polish items (carousel / make pretty).
 
 ## External / rubric
 
