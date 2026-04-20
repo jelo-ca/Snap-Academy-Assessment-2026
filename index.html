@@ -635,7 +635,7 @@
             type="button"
             id="btn-footer-next-match"
             class="footer-bracket-btn"
-            onclick="getMatchupProbability(window.one_champion_fighters[0], window.one_champion_fighters[2])"
+            onclick="simulateTournament(bracket_nodes[bracket_nodes.length - 1])"
             disabled
           >
             Play next match
@@ -645,6 +645,7 @@
           type="button"
           id="btn-footer-full-bracket"
           class="footer-bracket-btn footer-bracket-btn--primary"
+          onclick="simulateTournament(bracket_nodes[bracket_nodes.length - 1])"
           disabled
         >
           Simulate full bracket

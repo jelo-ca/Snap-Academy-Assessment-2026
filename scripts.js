@@ -466,27 +466,22 @@ class BracketNode {
     }
 }
 
-let bracket_nodes_stack = [];
+let bracket_nodes = [];
+let root_node = bracket_nodes[bracket_nodes.length - 1];
+let layers = {};
+
 document.querySelectorAll(".bracket-match").forEach((node) => {
     n = new BracketNode(node.dataset.round);
-    n.id = bracket_nodes_stack.length;
-    bracket_nodes_stack.push(n);
+    n.id = bracket_nodes.length;
+    bracket_nodes.push(n);
 });
 
 function createTournamentTree() {
-    let bracket_nodes_stack = [];
-    document.querySelectorAll(".bracket-match").forEach((node) => {
-        n = new BracketNode(node.dataset.round);
-        n.id = bracket_nodes_stack.length;
-        bracket_nodes_stack.push(n);
-    });
-
-    console.log(bracket_nodes_stack);
+    // console.log(bracket_nodes);
 
     // Split into layers
-    let layers = {};
-    for (let i = 0; i < bracket_nodes_stack.length; i++) {
-        const node = bracket_nodes_stack[i];
+    for (let i = 0; i < bracket_nodes.length; i++) {
+        const node = bracket_nodes[i];
         if (node.round in layers) {
             layers[node.round].push(node);
         } else {
@@ -512,6 +507,56 @@ function createTournamentTree() {
 }
 
 createTournamentTree();
+
+function populateBracket() {
+    const leafNodes = layers[Object.keys(layers)[0]];
+    const roster_copy = [...roster];
+    let index = 0;
+    for (const node of leafNodes) {
+        node.setFighterA(getFighterByUid(roster_copy[index++]));
+        node.setFighterB(getFighterByUid(roster_copy[index++]));
+    }
+    console.log(leafNodes);
+}
+
+function getRootNode() {
+    return bracket_nodes[bracket_nodes.length - 1];
+}
+
+function simulateTournament(node) {
+    const left = node.children[0] ? node.children[0] : null;
+    const right = node.children[1] ? node.children[1] : null;
+    if (!left && !right) {
+        if (node.fighter_a && node.fighter_b && !node.winner) {
+            node.setWinner();
+        }
+        return node.winner ? node.winner : null;
+    }
+
+    const leftWinner = simulateTournament(left);
+    const rightWinner = simulateTournament(right);
+
+    if (leftWinner && rightWinner) {
+        node.setFighterA(leftWinner);
+        node.setFighterB(rightWinner);
+        if (!node.winner) {
+            node.setWinner();
+        }
+    }
+    return node.winner ? node.winner : null;
+}
+
+// function playNextMatch(node) {
+//     if (node.fighter_a && node.fighter_b) {
+//         return node.setWinner();
+//     } else {
+//         if (!node.children[0].winner) {
+//             return playNextMatch(node.children[0]);
+//         } else {
+//             return playNextMatch(node.children[1]);
+//         }
+//     }
+// }
 
 // Simple strength calculation formula
 function calculateFighterStrength(fighter) {
