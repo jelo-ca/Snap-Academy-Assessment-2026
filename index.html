@@ -23,12 +23,6 @@
     <section class="card-ux" aria-labelledby="card-ux-title">
       <div class="card-ux-inner">
         <div class="card-ux-layout">
-          <input
-            type="checkbox"
-            id="card-ux-flip-demo"
-            class="card-ux-demo-flip-input"
-          />
-
           <div class="card-ux-text-col">
             <h2 id="card-ux-title" class="card-ux-title">
               How each fighter card works
@@ -166,6 +160,11 @@
               </div>
 
               <div class="card-ux-sample-flip">
+                <input
+                  type="checkbox"
+                  id="card-ux-flip-demo"
+                  class="card-ux-demo-flip-input"
+                />
                 <div class="card-ux-sample-inner">
                   <div class="card-ux-sample-face card-ux-sample-face--front">
                     <label
@@ -502,18 +501,24 @@
             <span class="bracket-round-label">Semifinal 1</span>
             <div class="bracket-nodes">
               <div
-                class="bracket-node bracket-node--seed"
+                class="bracket-node bracket-node--seed bracket-node--vacant"
                 data-bracket-slot="a"
                 data-bracket-field="fighter_a"
               >
-                —
+                <span class="bracket-node-name">—</span>
+                <div class="bracket-node-photo-wrap" aria-hidden="true">
+                  <img class="bracket-node-photo" alt="" />
+                </div>
               </div>
               <div
-                class="bracket-node bracket-node--seed"
+                class="bracket-node bracket-node--seed bracket-node--vacant"
                 data-bracket-slot="b"
                 data-bracket-field="fighter_b"
               >
-                —
+                <span class="bracket-node-name">—</span>
+                <div class="bracket-node-photo-wrap" aria-hidden="true">
+                  <img class="bracket-node-photo" alt="" />
+                </div>
               </div>
             </div>
             <div
@@ -521,11 +526,14 @@
               aria-hidden="true"
             ></div>
             <div
-              class="bracket-node bracket-node--winner"
+              class="bracket-node bracket-node--winner bracket-node--vacant"
               id="bracket-sf1-winner"
               data-bracket-field="winner"
             >
-              —
+              <span class="bracket-node-name">—</span>
+              <div class="bracket-node-photo-wrap" aria-hidden="true">
+                <img class="bracket-node-photo" alt="" />
+              </div>
             </div>
             <p class="bracket-meta" id="bracket-sf1-meta"></p>
           </div>
@@ -540,18 +548,24 @@
             <span class="bracket-round-label">Semifinal 2</span>
             <div class="bracket-nodes">
               <div
-                class="bracket-node bracket-node--seed"
+                class="bracket-node bracket-node--seed bracket-node--vacant"
                 data-bracket-slot="a"
                 data-bracket-field="fighter_a"
               >
-                —
+                <span class="bracket-node-name">—</span>
+                <div class="bracket-node-photo-wrap" aria-hidden="true">
+                  <img class="bracket-node-photo" alt="" />
+                </div>
               </div>
               <div
-                class="bracket-node bracket-node--seed"
+                class="bracket-node bracket-node--seed bracket-node--vacant"
                 data-bracket-slot="b"
                 data-bracket-field="fighter_b"
               >
-                —
+                <span class="bracket-node-name">—</span>
+                <div class="bracket-node-photo-wrap" aria-hidden="true">
+                  <img class="bracket-node-photo" alt="" />
+                </div>
               </div>
             </div>
             <div
@@ -559,11 +573,14 @@
               aria-hidden="true"
             ></div>
             <div
-              class="bracket-node bracket-node--winner"
+              class="bracket-node bracket-node--winner bracket-node--vacant"
               id="bracket-sf2-winner"
               data-bracket-field="winner"
             >
-              —
+              <span class="bracket-node-name">—</span>
+              <div class="bracket-node-photo-wrap" aria-hidden="true">
+                <img class="bracket-node-photo" alt="" />
+              </div>
             </div>
             <p class="bracket-meta" id="bracket-sf2-meta"></p>
           </div>
@@ -585,18 +602,24 @@
             <span class="bracket-round-label">Final</span>
             <div class="bracket-nodes">
               <div
-                class="bracket-node bracket-node--finalist"
+                class="bracket-node bracket-node--finalist bracket-node--vacant"
                 data-bracket-slot="a"
                 data-bracket-field="fighter_a"
               >
-                —
+                <span class="bracket-node-name">—</span>
+                <div class="bracket-node-photo-wrap" aria-hidden="true">
+                  <img class="bracket-node-photo" alt="" />
+                </div>
               </div>
               <div
-                class="bracket-node bracket-node--finalist"
+                class="bracket-node bracket-node--finalist bracket-node--vacant"
                 data-bracket-slot="b"
                 data-bracket-field="fighter_b"
               >
-                —
+                <span class="bracket-node-name">—</span>
+                <div class="bracket-node-photo-wrap" aria-hidden="true">
+                  <img class="bracket-node-photo" alt="" />
+                </div>
               </div>
             </div>
             <div
@@ -604,11 +627,14 @@
               aria-hidden="true"
             ></div>
             <div
-              class="bracket-node bracket-node--champion"
+              class="bracket-node bracket-node--champion bracket-node--vacant"
               id="bracket-champion"
               data-bracket-field="winner"
             >
-              —
+              <span class="bracket-node-name">—</span>
+              <div class="bracket-node-photo-wrap" aria-hidden="true">
+                <img class="bracket-node-photo" alt="" />
+              </div>
             </div>
             <p class="bracket-meta" id="bracket-final-meta"></p>
           </div>
