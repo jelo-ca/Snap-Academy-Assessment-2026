@@ -19,10 +19,10 @@
 - Updated docs to reflect that bracket simulation is now wired: `populateBracket()`, `playNextMatch()`, `simulateTournament()`, and `renderTournament()` all active with stat-weighted outcomes.
 - Logged remaining cleanup caveats: implicit global `n` in bracket-node creation and `Shuffle fighters` label/action mismatch (currently seeds by roster order).
 
-## 2026-04-18 (plan sync — BracketNode + stat model)
+## 2026-04-18 (plan sync — MatchNode + stat model)
 
 - Read `scripts.js` (526 lines) to verify current state.
-- **New vs previous sync:** `BracketNode` class (`round`, `fighter_a`, `fighter_b`, `next_node`; `setFighterA` / `setFighterB` / `setNextNode`); `bracket_nodes = []` + DOM loop (bug: `n` not pushed, leaks as global); `populateBracket()` TODO stub; `calculateFighterStrength` (Laplace win-index, `/20` exp ref); `getMatchupProbability` returns `[probA, probB]`; `btn-add--added` class toggle on add button.
+- **New vs previous sync:** `MatchNode` class (`round`, `fighter_a`, `fighter_b`, `next_node`; `setFighterA` / `setFighterB` / `setNextNode`); `bracket_nodes = []` + DOM loop (bug: `n` not pushed, leaks as global); `populateBracket()` TODO stub; `calculateFighterStrength` (Laplace win-index, `/20` exp ref); `getMatchupProbability` returns `[probA, probB]`; `btn-add--added` class toggle on add button.
 - **Not in file:** `populateBracketSeeds`, `shuffleFighters`, shuffle listener (mentioned in earlier progress entry — those were not committed or were removed).
 - **Gating:** `refreshRosterDisplay` disables `btn-footer-full-bracket`, `btn-footer-shuffle`, `btn-footer-next-match` (3 buttons, not `btn-run-tournament`).
 - Full rewrite of `plan/task_plan.md`, `plan/findings.md`, `plan/progress.md` to match current code.

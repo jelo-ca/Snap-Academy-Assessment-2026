@@ -21,7 +21,7 @@ README title, summary, and feature list are **One Championship**-aligned and kep
 | Fighter sorting — Age | [x] | OK |
 | Fighter filtering — Weight class | [x] | `weight_class_filters` + `refreshDisplay` |
 | Fighter filtering — Record | [x] | `record_filter`: all / winning / undefeated |
-| **Four-fighter tournament roster + stat-based bracket simulation** | [x] | **Done (JS):** `Set` roster (`ROSTER_MAX` 4), add/remove, `refreshRosterDisplay`, `BracketNode` tree, `populateBracket`, `playNextMatch`, `simulateTournament`, and bracket DOM/meta updates. |
+| **Four-fighter tournament roster + stat-based bracket simulation** | [x] | **Done (JS):** `Set` roster (`ROSTER_MAX` 4), add/remove, `refreshRosterDisplay`, `MatchNode` tree, `populateBracket`, `playNextMatch`, `simulateTournament`, and bracket DOM/meta updates. |
 | Favorite fighters *(optional; README strike-through — separate from roster)* | — | Deferred / not required for current MVP checklist. |
 | Add / Update / Delete roster *(full management **beyond** tournament picks)* | [ ] | Not started |
 | Alternative list display | [x] | Marked complete in README. |
@@ -48,7 +48,7 @@ README title, summary, and feature list are **One Championship**-aligned and kep
 | Page shell + controls | `index.html` | Title, card strip, `details` for sort/filter/units (incl. weight sort options), hidden card template |
 | **Mini tournament (UI)** | `index.html` + `style.css` | **Roster strip** `#roster-slots` (4 slots), bracket footer buttons (`#btn-footer-full-bracket`, `#btn-footer-shuffle`, `#btn-footer-next-match`), **bracket graph** `#bracket-graph` + semifinal/final node IDs. Semantics: roster order → seeds (1v2, 3v4). |
 | Styling | `style.css` | Dark theme, card layout, controls panel, `.roster-section` / `.tournament-section` / `.bracket-graph` |
-| Logic | `scripts.js` | Catalog + filters + units; roster (`Set`, `refreshRosterDisplay`, add/remove); `BracketNode` tree + layered traversal; bracket controls (`populateBracket`, `playNextMatch`, `simulateTournament`); stat model (`calculateFighterStrength`, `getMatchupProbability`). |
+| Logic | `scripts.js` | Catalog + filters + units; roster (`Set`, `refreshRosterDisplay`, add/remove); `MatchNode` tree + layered traversal; bracket controls (`populateBracket`, `playNextMatch`, `simulateTournament`); stat model (`calculateFighterStrength`, `getMatchupProbability`). |
 | Data | `data/one_champion_fighters.js` | Global `one_champion_fighters` array (no fetch) |
 | Requirements | `INSTRUCTIONS.md` | Official rubric |
 | Product notes | `README.md` | Quick table (live + local run + rubric + `plan/`); feature checklist; collapsed progress log; **Reflection & notes** section for author text |
@@ -86,9 +86,9 @@ README title, summary, and feature list are **One Championship**-aligned and kep
 - [x] **Roster:** Up to 4 picks (`Set`, insertion order = seeds); `#roster-count`, `#roster-slots` filled/empty UI, **Add** / **Added** / **Full** on cards (`btn-add--added` CSS class), remove on strip, `clearRoster` available.
 - [x] **Button gating:** `refreshRosterDisplay` disables `btn-footer-full-bracket`, `btn-footer-shuffle`, `btn-footer-next-match` until roster has 4 fighters.
 - [x] **Stat model:** `calculateFighterStrength` (Laplace win-index `(w+3)/(w+l+6)` × experience `0.9 + 0.1*(total/20)`); `getMatchupProbability(fighterA, fighterB)` returns `[probA, probB]`.
-- [x] **`BracketNode` tree + layers:** nodes are created from `.bracket-match` and linked semifinal -> final via layer grouping.
+- [x] **`MatchNode` tree + layers:** nodes are created from `.bracket-match` and linked semifinal -> final via layer grouping.
 - [x] **`populateBracket()`:** seeds semifinal node slots from current roster order and renders bracket seeds.
-- [x] **Run bracket controls:** footer hooks call `playNextMatch(getBracketRootNode())` and `simulateTournament(getBracketRootNode())`; each bout resolves with `getMatchupProbability` + `Math.random()` in `simulateFight`.
+- [x] **Run bracket controls:** footer hooks call `playNextMatch(getMatchRootNode())` and `simulateTournament(getMatchRootNode())`; each bout resolves with `getMatchupProbability` + `Math.random()` in `simulateFight`.
 - [x] **DOM updates:** `renderTournament()` writes seed/finalist slots, winner/champion nodes, and `*-meta` labels.
 - [x] **README / Stretch:** tournament rows synchronized to completed implementation.
 - [ ] **Cleanup:** replace implicit global `n` in bracket-node setup (`const n = ...`) and align `Shuffle fighters` button label with its current non-random behavior (or implement true random shuffle).
@@ -105,7 +105,7 @@ README title, summary, and feature list are **One Championship**-aligned and kep
 
 | Error | Attempt | Resolution |
 |-------|---------|------------|
-| Implicit global in bracket setup (`n = new BracketNode(...)`) | 1 open | Cleanup pending: use `const n` (or inline push) to avoid global leak risk. |
+| Implicit global in bracket setup (`n = new MatchNode(...)`) | 1 open | Cleanup pending: use `const n` (or inline push) to avoid global leak risk. |
 
 ---
 

@@ -123,6 +123,46 @@ Sorting, filtering, and units flow through a single refresh path so the visible 
 
 ## Presentation snippets
 
+### Data structure snapshots (before implementation snippets)
+
+```js
+// Initial dataset (source of truth)
+const FIGHTERS_DATA = window.one_champion_fighters;
+let fighters_data = FIGHTERS_DATA;
+// Example fighter row shape:
+// {
+//   uid: 1,
+//   fighter_name: "John Doe",
+//   nickname: "The Example",
+//   age: 29,
+//   country: "Thailand",
+//   height: 1.75,
+//   weight: 70.0,
+//   weight_class: "lightweight",
+//   wins: 10,
+//   losses: 2,
+//   photo_url: "...",
+//   url: "..."
+// }
+
+// Roster dataset (stores fighter UIDs in insertion order)
+let roster = new Set();
+let ROSTER_MAX = 4;
+// Example roster state: Set { 12, 5, 19, 2 }
+
+// MatchNode data structure (tree node = one match)
+class MatchNode {
+  constructor(id, round) {
+    this.id = id;
+    this.round = round;
+    this.fighter_a = null;
+    this.fighter_b = null;
+    this.winner = null;
+    this.children = [];
+  }
+}
+```
+
 ### 1) Roster stack (`Set` + insertion order)
 
 ```js
@@ -171,11 +211,11 @@ function refreshRosterDisplay() {
 }
 ```
 
-### 2) Tournament tree creation (`BracketNode` + layers)
+### 2) Tournament tree creation (`MatchNode` + layers)
 
 ```js
 // scripts.js L436-462
-class BracketNode {
+class MatchNode {
   constructor(id, round) {
     this.id = id;
     this.round = round;
@@ -196,9 +236,9 @@ let layers = {};
 // scripts.js L467-484
 function createLayers() {
   document.querySelectorAll(".bracket-match").forEach((node) => {
-    const bracketNode = new BracketNode(Number(node.dataset.nodeId), node.dataset.round);
-    if (bracketNode.round in layers) layers[bracketNode.round].push(bracketNode);
-    else layers[node.dataset.round] = [bracketNode];
+    const matchNode = new MatchNode(Number(node.dataset.nodeId), node.dataset.round);
+    if (matchNode.round in layers) layers[matchNode.round].push(matchNode);
+    else layers[node.dataset.round] = [matchNode];
   });
 }
 
@@ -217,7 +257,7 @@ function createTournamentTree() {
 }
 
 // scripts.js L500-503
-function getBracketRootNode() {
+function getMatchRootNode() {
   return layers[Object.keys(layers)[Object.keys(layers).length - 1]][0];
 }
 

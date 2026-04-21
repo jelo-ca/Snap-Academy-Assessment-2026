@@ -14,7 +14,7 @@
 - [x] Fighter sorting — Name, Wins, Age, **Weight (kg)** *(low-high / high-low in `<select>`)*
 - [x] Fighter filtering — Weight class
 - [x] Fighter filtering — Record *(all / winning / undefeated in `applyFilters`)*
-- [x] **Four-fighter tournament roster + stat-based bracket simulation** *(roster + stat model + `BracketNode` tree + bracket controls are wired)*
+- [x] **Four-fighter tournament roster + stat-based bracket simulation** *(roster + stat model + `MatchNode` tree + bracket controls are wired)*
 - ~~Favorite fighters *(optional separate from roster)*~~ *(README strike-through — deferred)*
 - [ ] Add / Update / Delete **full** roster management **beyond tournament picks**
 - [x] Alternative list display *(grid vs list — `#catalog-view-grid` + CSS)*
@@ -37,7 +37,7 @@
 - **Units:** `isMetric` toggles; `editCardContent` uses `formatHeight` / `formatWeight`.
 - **Roster:** `Set`-backed, max 4; `refreshRosterDisplay` gates `btn-footer-full-bracket`, `btn-footer-shuffle`, `btn-footer-next-match` (disabled until 4 picked). `btn-add--added` CSS class toggled on added cards.
 - **Stat model:** `calculateFighterStrength(fighter)` — Laplace win-index `(w+3)/(w+l+6)` × experience `0.9 + 0.1*(totalFights/20)`; `getMatchupProbability(fighterA, fighterB)` returns `[probA, probB]` from strength ratio.
-- **Bracket graph model:** `BracketNode` with `round`, `fighter_a`, `fighter_b`, `winner`, `children`; layer-based tree is created from `.bracket-match` nodes.
+- **Bracket graph model:** `MatchNode` with `round`, `fighter_a`, `fighter_b`, `winner`, `children`; layer-based tree is created from `.bracket-match` nodes.
 - **Bracket controls:** `populateBracket()` seeds semifinal slots from roster order; `playNextMatch()` resolves one unresolved bout depth-first; `simulateTournament()` resolves all remaining bouts.
 - **DOM rendering:** `renderTournament()` updates seed/finalist slots (`data-bracket-slot`), winner/champion targets, and `*-meta` labels via match `data-*` attributes.
 - **Known code quality caveat:** node creation still uses implicit global `n` in `document.querySelectorAll(".bracket-match")` loop (should be `const`).

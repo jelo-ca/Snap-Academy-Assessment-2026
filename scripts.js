@@ -433,7 +433,7 @@ function refreshRosterDisplay() {
 
 // =========== MINI TOURNAMENT ===========
 
-class BracketNode {
+class MatchNode {
   constructor(id, round) {
     this.id = id;
     this.round = round;
@@ -468,14 +468,14 @@ function createLayers() {
   //Grabs each bracket node and splits them into layers for tree creation
   document.querySelectorAll(".bracket-match").forEach((node) => {
     {
-      const bracketNode = new BracketNode(
+      const matchNode = new MatchNode(
         Number(node.dataset.nodeId),
         node.dataset.round,
       );
-      if (bracketNode.round in layers) {
-        layers[bracketNode.round].push(bracketNode);
+      if (matchNode.round in layers) {
+        layers[matchNode.round].push(matchNode);
       } else {
-        layers[node.dataset.round] = [bracketNode];
+        layers[node.dataset.round] = [matchNode];
       }
     }
   });
@@ -497,7 +497,7 @@ function createTournamentTree() {
   }
 }
 
-function getBracketRootNode() {
+function getMatchRootNode() {
   // Last key in layers is the root node
   return layers[Object.keys(layers)[Object.keys(layers).length - 1]][0];
 }
