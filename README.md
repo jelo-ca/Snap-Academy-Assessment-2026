@@ -126,31 +126,30 @@ Sorting, filtering, and units flow through a single refresh path so the visible 
 ### Data structure snapshots (before implementation snippets)
 
 ```js
-// Initial dataset (source of truth)
+// Initial dataset: Array of Objects
 const FIGHTERS_DATA = window.one_champion_fighters;
 let fighters_data = FIGHTERS_DATA;
 // Example fighter row shape:
-// {
-//   uid: 1,
-//   fighter_name: "John Doe",
-//   nickname: "The Example",
-//   age: 29,
-//   country: "Thailand",
-//   height: 1.75,
-//   weight: 70.0,
-//   weight_class: "lightweight",
-//   wins: 10,
-//   losses: 2,
-//   photo_url: "...",
-//   url: "..."
-// }
+{
+uid: 1,
+fighter_name: "John Doe",
+nickname: "The Example",
+age: 29,
+country: "Thailand",
+height: 1.75,
+weight: 70.0,
+weight_class: "lightweight",
+wins: 10,
+losses: 2,
+photo_url: "...",
+ url: "..."
+}
 
-// Roster dataset (stores fighter UIDs in insertion order)
+// Roster dataset
 let roster = new Set();
 let ROSTER_MAX = 4;
-// Example roster state: Set { 12, 5, 19, 2 }
 
-// MatchNode data structure (tree node = one match)
+// MatchNode data structure
 class MatchNode {
   constructor(id, round) {
     this.id = id;
