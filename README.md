@@ -1,57 +1,115 @@
 # One Fighters
 
-## Summary
+A static web app that showcases **One Championship**–style fighter profiles: browse a small catalog, sort and filter fighters, compare units, and run a **four-fighter mini tournament** with a simple stat-based simulation.
 
-Catalog for One Championship fighters. Data sits in a global JS array (no fetch). Sort/filter cards, switch metric vs imperial on height & weight, open fighter pages in a new tab. The page includes **HTML/CSS** for a four-fighter roster strip and a mini bracket layout; **you** wire the roster and probabilistic tournament in `scripts.js` (per course / genAI policy).
+This repository was built for the **Snap Academy** assessment (see `INSTRUCTIONS.md` for the official rubric). There is **no build step** — open the HTML file locally or use the live site below.
 
-## Initial Features (From Sample)
+| | |
+|:---|:---|
+| **Live site** | [jelo-ca.github.io/Snap-Academy-Assessment-2026](https://jelo-ca.github.io/Snap-Academy-Assessment-2026/) |
+| **Run locally** | Open `index.html` in a modern browser |
+| **Requirements** | `INSTRUCTIONS.md` |
+| **Design / planning notes** | [`plan/`](plan/) (task plan, findings, session log) |
 
-removeLastCard()
-quoteAlert()
-editCardContent()
-showCards()
+---
 
-## Planned Features
+## Author reflection & notes
 
-### MVP
+### Reflection
 
-[x] Card display for fighters
-[x] Fighter Sorting
-    [x] Name
-    [x] Weight
-    [x] Wins
-    [x] Age
-[x] Fighter Filtering
-    [x] Weight class
-    [x] Record (all / winning record / undefeated)
-[x] Four-fighter tournament roster + stat-based bracket simulation
-    [x] Roster: up to four picks (`Set` + insertion order = seeds); `#roster-count`; `#roster-slots` UI; Add / Added / Full on cards; remove from strip; `#btn-run-tournament` enabled when roster has 4
-    [x] Run bracket: footer buttons now call `populateBracket()`, `playNextMatch(getBracketRootNode())`, and `simulateTournament(getBracketRootNode())`; semifinals feed final; stat-weighted `Math.random()` writes winners/champion and `*-meta`
-~~[] Favorite fighters (optional separate from roster)~~
-~~[] Add/Update/Delete full roster management beyond tournament picks~~
-[x] Alternative list display
+Hi! (˶ᵔᗜᵔ˶)ﾉﾞ
 
-### Stretch
+I want to thank the Snap Academy Team for giving me a chance to showcase my skills through this project!
 
-[] Carousel style card selection
-[] ~~Make pretty~~ Make more pretty
+This 5 day refresher on data structures and algorithms has been eye opening especially with modern AI assited coding. Concepts I thought I've got a good grasp on, like trees, made me spend more time than I expected as I implemented them by hand. It helped me see where the gaps on my knowledge are and I think I might make it a habit to do weekend projects coding logic without AI use.
 
-## Resources Used
+Other than the difficulties in coding, it was difficult to stop as more and more features came in to mind while developing the webpage. My initial feature ideas are logged but some of them got cut as life's responsibilities kept knocking on my door. I think the current state is something I'm happy to present (Bugs and all ♡).
 
-- https://www.geeksforgeeks.org/
-- https://www.xjavascript.com/
-- https://developer.mozilla.org/
-- https://www.javaspring.net/blog/javascript-building-a-hierarchical-tree/
+Thank you again for the opportunity!
 
-## Progress
+Cheers,
 
-- Extracted csv from Kaggle -> JSON using https://csvjson.com/csv2json -> global var to avoid fetch API.
-- Realized Kaggle didnt give photo links — hard-coded a dataset of 15 fighters from the One Championship website.
-- Updated HTML/CSS for One-themed layout; `editCardContent()` uses fighter objects and `setCardField()` to stay DRY on stats.
-- UI styling references https://www.onefc.com/.
-- Sorting: `<select>` + `switch` in `sortCards()`; asc/desc for name, age, wins, weight (`sortCardsByWeightAsc` / `sortCardsByWeightDesc`, options in `index.html`).
-- Wired `refreshDisplay()` so `showCards` always gets `applyFilters()` output -> weight class + record filters actually change the list.
-- Hold `FIGHTERS_DATA` const + `fighters_data` ref so sorted order and filters share the same array behavior.
-- Metric toggle in the controls (`toggleMetricUnits()`, `formatHeight`, `formatWeight`).
-- **Tournament (author JS):** roster flow + bracket simulation are wired — `BracketNode` tree, `populateBracket()`, `playNextMatch()`, and `simulateTournament()` now update bracket seed slots, winners, champion, and meta labels.
-- Not done yet: separate “favorites” list; full CRUD roster beyond tournament picks; carousel polish/stretch styling. Known cleanup: implicit global `n` in bracket node setup and footer label mismatch (`Shuffle fighters` currently seeds roster order, does not randomize). **`removeLastCard()`** still references removed starter `titles` — remove footer hook or fix when polishing.
+Jello
+
+### Notes
+
+- I may have used a loop hole on my knowledge on pure HTML/CSS animations when it came to the AI rule (ᵕ—ᴗ—)
+- I'm used to React, and switching back to vanilla JS was terrifying  (╥‸╥)
+- I wasn't sure if Fetch counted as an API... so I hard coded a global array for the dataset.
+- **Some of my code might be structured like python** as its the current language I've been primarily using for the past year.
+
+
+---
+
+## What you can do
+
+- **Browse the catalog** — Flip cards for stats, open each fighter’s official profile in a new tab.
+- **Sort** — By name, age, wins, or weight (ascending and descending).
+- **Filter** — By weight class and by record (all fighters, winning record only, or undefeated only).
+- **Change layout** — Switch between **grid** and **list** views.
+- **Units** — Toggle **metric** (m / kg) or **imperial** (ft / lbs) for height and weight.
+- **Mini tournament** — Pick up to four fighters into a roster, then step through or simulate a small elimination bracket. Match outcomes use a lightweight strength model and randomness, not real fight predictions.
+
+Fighter data is loaded from a **global JavaScript array** in `data/one_champion_fighters.js` (no `fetch` / API calls).
+
+---
+
+## Tech stack
+
+| | |
+|:---|:---|
+| **Markup & style** | `index.html`, `style.css` |
+| **Behavior** | `scripts.js` (application logic) |
+| **Data** | `data/one_champion_fighters.js` |
+
+---
+
+## Generative AI (course policy)
+
+For this submission, **generative AI assistance is limited to HTML and CSS**. All **JavaScript** in this repo is written by the author. The full rule set lives in `.cursor/rules/snap-academy-genai-limits.mdc`.
+
+---
+
+## Assignment scaffolding
+
+The starter project exposed a few global-style hooks (for example `showCards`, `editCardContent`, `quoteAlert`, `removeLastCard`). The app extends those patterns to drive the catalog, cards, and tournament UI.
+
+---
+
+## Feature status (self-check)
+
+**Core (MVP)**
+
+- [x] Fighter cards with consistent layout  
+- [x] Sorting: name, weight, wins, age  
+- [x] Filtering: weight class; record (all / winning / undefeated)  
+- [x] Four-fighter roster + probabilistic bracket simulation  
+- [x] Alternate catalog view (grid vs list)  
+
+**Stretch / polish**
+
+- [ ] Carousel-style card browsing  
+- [x] Side-by-side style “compare four” via the tournament bracket *(same feature area as the MVP tournament)*  
+- [x] Further visual polish  
+
+---
+
+## References
+
+| Category | Source | Purpose |
+|:--|:--|:--|
+| General learning | [MDN Web Docs](https://developer.mozilla.org/) | JavaScript, HTML, and CSS reference |
+| General learning | [GeeksforGeeks](https://www.geeksforgeeks.org/) | Supplemental syntax and examples |
+| General learning | [xjavascript.com](https://www.xjavascript.com/) | Additional JavaScript examples |
+| Bracket structure | [JavaSpring — hierarchical tree in JavaScript](https://www.javaspring.net/blog/javascript-building-a-hierarchical-tree/) | Tree-modeling approach for bracket logic |
+| Visual inspiration | [ONE Championship](https://www.onefc.com/) | Branding and layout direction |
+| Data conversion | [csvjson.com/csv2json](https://csvjson.com/csv2json) | Converted initial Kaggle CSV to JSON |
+
+Data note: A Kaggle export was used for early exploration, but photo URLs were incomplete. The shipped dataset was manually completed from official fighter pages (small curated set).
+
+---
+
+## Implementation notes (brief)
+
+Sorting, filtering, and units flow through a single refresh path so the visible list always matches the current controls. The tournament uses a small bracket tree and helper functions to seed matches, resolve bouts, and update the on-page bracket. For deeper technical detail and known follow-ups, see `plan/findings.md`.
+

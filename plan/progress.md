@@ -1,5 +1,18 @@
 # Progress log
 
+## 2026-04-20 (`/planning-with-files` — plan sync)
+
+- Re-read `plan/task_plan.md`, `plan/findings.md`, `plan/progress.md`; `session-catchup.py` exit 0 (no stdout).
+- `git status`: `README.md` modified; `plan/progress.md` modified; `plan/tournament-roster-dictionary.mmd` deleted (working tree not clean).
+- **Synced planning docs to current README + repo:** live site row ([GitHub Pages](https://jelo-ca.github.io/Snap-Academy-Assessment-2026/)); refactored README structure; **Reflection & notes** section; collapsed progress `<details>`.
+- **`plan/task_plan.md`:** Phase 2 → `complete` (optional array-ref doc still listed); Phase 3 — GitHub Pages checkbox **done** with URL; diagram row points to `tournament-bracket-graph.mmd`; product notes row describes new README sections.
+- **`plan/findings.md`:** MVP/Stretch checkboxes aligned with README (list view + compare-four stretch **[x]**); architecture adds published URL; working-tree note matches git; deduped open issue list.
+- **`plan/progress.md`:** this entry.
+
+## 2026-04-20 (`/planning-with-files` — README refresh)
+
+- Updated root `README.md`: run instructions + `INSTRUCTIONS.md` pointer; **`plan/`** planning-files pointer; tournament footer button IDs (`btn-footer-full-bracket`, `btn-footer-shuffle`, `btn-footer-next-match`) replacing stale `#btn-run-tournament`; Stretch row for compare-four bracket; **Generative AI scope** section linking `.cursor/rules/snap-academy-genai-limits.mdc`; catalog grid/list toggle + One FC resource in Progress/Resources.
+
 ## 2026-04-20 (docs sync — bracket implementation)
 
 - Re-read `scripts.js` + `index.html` tournament sections and synced `README.md`, `plan/task_plan.md`, and `plan/findings.md` to current implementation.

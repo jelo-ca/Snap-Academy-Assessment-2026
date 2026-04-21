@@ -17,19 +17,19 @@
 - [x] **Four-fighter tournament roster + stat-based bracket simulation** *(roster + stat model + `BracketNode` tree + bracket controls are wired)*
 - ~~Favorite fighters *(optional separate from roster)*~~ *(README strike-through — deferred)*
 - [ ] Add / Update / Delete **full** roster management **beyond tournament picks**
-- [ ] Alternative list display
+- [x] Alternative list display *(grid vs list — `#catalog-view-grid` + CSS)*
 
 **Planned Features — Stretch**
 
 - [ ] Carousel-style card selection
-- [ ] Compare **4** fighters — small elimination bracket *(probabilistic; same scope as MVP tournament line)*
+- [x] Compare **4** fighters — small elimination bracket *(probabilistic; same scope as MVP tournament line)*
 - [ ] Make pretty
 
 **Initial Features (from sample, per README):** `removeLastCard()`, `quoteAlert()`, `editCardContent()`, `showCards()`.
 
 ## Architecture
 
-- **Stack:** Plain HTML/CSS/JS, no bundler. Open `index.html` in a browser.
+- **Stack:** Plain HTML/CSS/JS, no bundler. Open `index.html` in a browser, or use the **published** build: [jelo-ca.github.io/Snap-Academy-Assessment-2026](https://jelo-ca.github.io/Snap-Academy-Assessment-2026/).
 - **Data:** `FIGHTERS_DATA` from global; `fighters_data` built with **`uid`** per row for stable roster keys. Roster: **`Set` of `uid`** (max 4), `getFighterByUid`, `refreshRosterDisplay` drives `#roster-slots`.
 - **Sort:** `sortCardsBy*` (name, wins, age, weight) return `fighters_data.sort(...)` (mutates in place). `sortedFighters` holds same array reference after init sort.
 - **Refresh path:** `sortCards` / `updateFilters` / `toggleMetricUnits` → `refreshDisplay()` → `showCards(applyFilters())`.
@@ -48,7 +48,7 @@
 
 ## Working tree (session note)
 
-- **Uncommitted (2026-04-20):** `index.html`, `scripts.js`, docs — bracket controls are wired to `populateBracket`, `playNextMatch`, `simulateTournament`; match slots are now driven by `data-bracket-slot`/`data-result-target`/`data-meta-target`.
+- **Uncommitted (2026-04-20):** `README.md` refactored (live URL, tables, `<details>` progress, Reflection section); `plan/progress.md` touched; `plan/tournament-roster-dictionary.mmd` removed from tree *(optional diagram file; `tournament-bracket-graph.mmd` remains)*.
 
 ## Implemented features
 
@@ -80,8 +80,7 @@ Fields used in UI: `fighter_name`, `nickname`, `photo_url`, `url`, `age`, `count
 2. **Optional:** Lightweight checkbox for one dataset row.
 3. **Implicit global `n`** in bracket-node setup — should be `const n` to avoid leaking globals.
 4. **Button label mismatch:** `Shuffle fighters` currently calls `populateBracket()` and preserves roster order; either rename label or implement randomized seeding.
-5. **`removeLastCard` / `titles`** starter utility still stale if invoked.
-6. **Remaining non-tournament scope:** full CRUD beyond tournament picks and stretch polish items (carousel / make pretty).
+5. **Remaining non-tournament scope:** full CRUD beyond tournament picks and stretch polish items (carousel / make pretty).
 
 ## External / rubric
 

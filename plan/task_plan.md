@@ -51,9 +51,9 @@ README title, summary, and feature list are **One Championship**-aligned and kep
 | Logic | `scripts.js` | Catalog + filters + units; roster (`Set`, `refreshRosterDisplay`, add/remove); `BracketNode` tree + layered traversal; bracket controls (`populateBracket`, `playNextMatch`, `simulateTournament`); stat model (`calculateFighterStrength`, `getMatchupProbability`). |
 | Data | `data/one_champion_fighters.js` | Global `one_champion_fighters` array (no fetch) |
 | Requirements | `INSTRUCTIONS.md` | Official rubric |
-| Product notes | `README.md` | Feature checklist + progress *(incl. tournament plan + Progress bullets)* |
+| Product notes | `README.md` | Quick table (live + local run + rubric + `plan/`); feature checklist; collapsed progress log; **Reflection & notes** section for author text |
 | AI scope | `.cursor/rules/snap-academy-genai-limits.mdc` | HTML/CSS assistance only |
-| Diagrams *(optional)* | `plan/*.mmd` | Bracket / roster dictionary sketches — reference only |
+| Diagrams *(optional)* | `plan/tournament-bracket-graph.mmd` | Bracket graph sketch — reference only |
 
 ## Phases
 
@@ -67,17 +67,17 @@ README title, summary, and feature list are **One Championship**-aligned and kep
 - [x] **Units** — Metric/imperial toggle refreshes cards with `formatHeight` / `formatWeight`. _(human JS + HTML/CSS for switch)_
 - [ ] Optional **HTML:** **Lightweight** weight-class checkbox (`findings.md`). _(human HTML)_
 
-### Phase 2 — Filtering UX and correctness — `in progress`
+### Phase 2 — Filtering UX and correctness — `complete`
 
 - [x] Manual QA: weight multi-select + record radios + sort order on full dataset. _(2026-04-18 — local smoke test passed.)_
-- [ ] Optional: reset or document behavior if `fighters_data` vs `sortedFighters` refs ever diverge (currently same array ref + in-place `.sort()`).
+- [ ] Optional (docs): reset or document behavior if `fighters_data` vs `sortedFighters` refs ever diverge (currently same array ref + in-place `.sort()`).
 
 ### Phase 3 — Polish and rubric — `in progress`
 
-- [x] README: One branding; MVP table and progress aligned with code (ongoing).
+- [x] README: One branding; MVP / Stretch tables and progress aligned with code; readable layout + **live** + **local** table; **Reflection & notes** placeholder.
 - [x] **`index.html`:** `<option>`s for `weight-asc` / `weight-desc` match `sortCards`.
 - [ ] Remove or fix dead code (`removeLastCard` / `titles` sample).
-- [ ] Optional: GitHub Pages deploy and smoke-test published URL.
+- [x] **GitHub Pages:** published at [jelo-ca.github.io/Snap-Academy-Assessment-2026](https://jelo-ca.github.io/Snap-Academy-Assessment-2026/) — smoke-test when convenient.
 
 ### Phase 4 — Mini tournament (README MVP) — `in progress`
 
