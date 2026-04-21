@@ -2092,6 +2092,75 @@ span {
     }
 }
 
+/* ≤640px: hide external callout tags; show numbered badges inline on the card elements */
+@media (max-width: 640px) {
+    .card-ux-annotate-layer {
+        display: none;
+    }
+
+    /* Shared badge shape */
+    .card-ux-sample-front-inner::before,
+    .btn-add--ux::before,
+    .card-ux-sample-name::before,
+    .card-ux-sample-hint::before,
+    .card-ux-sample-back-name::before,
+    .card-ux-sample-link-pill::before {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 1.15rem;
+        height: 1.15rem;
+        border-radius: 50%;
+        background: #ffd100;
+        color: #111;
+        font-family: "Barlow Condensed", Impact, sans-serif;
+        font-size: 0.58rem;
+        font-weight: 800;
+        line-height: 1;
+        flex-shrink: 0;
+        vertical-align: middle;
+    }
+
+    /* 1 – Hero photo: absolute badge top-left of the image */
+    .card-ux-sample-front-inner::before {
+        content: "1";
+        position: absolute;
+        top: 6px;
+        left: 6px;
+        z-index: 10;
+    }
+
+    /* 2 – Add to roster: prepend inside the button */
+    .btn-add--ux::before {
+        content: "2";
+        margin-right: 5px;
+    }
+
+    /* 3 – Name & nickname: prepend to the name line */
+    .card-ux-sample-name::before {
+        content: "3";
+        margin-right: 5px;
+    }
+
+    /* 4 – Flip hint: prepend to the hint line */
+    .card-ux-sample-hint::before {
+        content: "4";
+        margin-right: 5px;
+    }
+
+    /* 5 – Stat rows: inline badge before the back-face name (sits directly above stats) */
+    .card-ux-sample-back-name::before {
+        content: "5";
+        margin-right: 5px;
+    }
+
+    /* 6 – Official fighter page: prepend inside the pill */
+    .card-ux-sample-link-pill::before {
+        content: "6";
+        margin-right: 5px;
+    }
+}
+
 /* Narrow phones: stack catalog actions, full-width controls, comfortable tap targets */
 @media (max-width: 520px) {
     .catalog-toolbar-actions {
@@ -2150,6 +2219,51 @@ span {
     .btn-clear-roster {
         width: 100%;
         justify-content: center;
+    }
+
+    /* Hide overflowing callout annotations; show just the card demo */
+    .card-ux-annotate {
+        height: auto;
+        padding: 4px 0 8px;
+        display: flex;
+        justify-content: center;
+        overflow: hidden;
+    }
+
+    .card-ux-annotate-layer {
+        display: none;
+    }
+
+    .card-ux-annotate .card-ux-sample-flip {
+        position: relative;
+        left: auto;
+        top: auto;
+        transform: none;
+    }
+
+    .card-ux-annotate .card-ux-sample-flip:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+    }
+
+    /* Catalog section horizontal padding */
+    .catalog-section .catalog-toolbar {
+        padding-left: clamp(12px, 4vw, 18px);
+        padding-right: clamp(12px, 4vw, 18px);
+    }
+
+    #card-container {
+        padding-left: clamp(10px, 3vw, 16px);
+        padding-right: clamp(10px, 3vw, 16px);
+    }
+
+    /* Tighten bracket nodes on small screens */
+    .bracket-node-name {
+        font-size: 1rem;
+    }
+
+    .bracket-match {
+        padding: 6px 8px;
     }
 }
 
