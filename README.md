@@ -272,6 +272,24 @@ function populateBracket() {
   renderTournament();
 }
 
+// scripts.js L556-583
+function renderTournament() {
+  const nodes = Object.values(layers).flat();
+
+  document.querySelectorAll(".bracket-match").forEach((match, index) => {
+    const node = nodes[index];
+
+    const slotA = match.querySelector('[data-bracket-slot="a"]');
+    const slotB = match.querySelector('[data-bracket-slot="b"]');
+
+    fillBracketSlot(slotA, node.fighter_a);
+    fillBracketSlot(slotB, node.fighter_b);
+
+    const result = document.getElementById(match.dataset.resultTarget);
+    fillBracketSlot(result, node.winner);
+  });
+}
+
 // scripts.js L585-626
 function playNextMatch(node) {
   if (!node) return null;
@@ -322,3 +340,4 @@ function simulateTournament(node) {
   return node.winner ? node.winner : null;
 }
 ```
+
